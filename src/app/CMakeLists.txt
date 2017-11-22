@@ -1,0 +1,5 @@
+add_subdirectory(command)
+add_subdirectory(interface)
+add_subdirectory(main)
+add_subdirectory(persist)
+add_subdirectory(interaction)
