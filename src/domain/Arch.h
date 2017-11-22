@@ -1,4 +1,6 @@
 #pragma once
+#ifndef INCLUDED_ARCH_H
+#define INCLUDED_ARCH_H
 #include <QGraphicsItem>
 
 class Arch :
@@ -29,3 +31,4 @@ protected:
 	void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 };
 
+#endif

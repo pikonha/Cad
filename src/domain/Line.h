@@ -1,6 +1,7 @@
 #pragma once
+#ifndef INCLUDED_LINE_H
+#define INCLUDED_LINE_H
 #include <QGraphicsItem>
-#include <QMouseEvent>
 
 class Line : public QGraphicsItem
 {
@@ -17,3 +18,5 @@ public:
 	Line(const QPoint& x, const QPoint& y, QGraphicsItem* parent = 0);
 	~Line() {}
 };
+
+#endif

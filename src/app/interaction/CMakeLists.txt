@@ -9,3 +9,4 @@ find_package(Qt5Widgets CONFIG
 list(APPEND THIRD_PARTY_LIBS Qt5::Widgets Qt5::Core)
 
 target_link_libraries(interaction Qt5::Core)
+target_link_libraries(interaction Qt5::Widgets)

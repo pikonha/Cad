@@ -1,3 +1,6 @@
+#pragma once
+#ifndef INCLUDED_MAINSCREEN_H
+#define INCLUDED_MAINSCREEN_H
 #include <QApplication>
 #include <QtCore>
 #include <QtGui>
@@ -25,3 +28,5 @@ public:
 
 	void setTxtStatusBar();
 };
+
+#endif
