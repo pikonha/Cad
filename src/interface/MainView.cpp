@@ -1,8 +1,8 @@
 #include "MainView.h"
-#include "Arch.h"
+#include "../domain/Arch.h"
 #include "QWidget"
-#include "Line.h"
-#include "Bezier.h"
+#include "../domain/Line.h"
+#include "../domain/Bezier.h"
 #include "QPixmap"
 #include "MainScreen.h"
 #include <QFileDialog>
@@ -21,8 +21,8 @@ MainView::MainView()
 	scene = new QGraphicsScene(this);
 	setScene(scene);
 
-	setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-	setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 
