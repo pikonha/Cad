@@ -1,20 +1,10 @@
 #include "MainView.h"
-#include "../domain/Arch.h"
 #include "QWidget"
-#include "../domain/Line.h"
-#include "../domain/Bezier.h"
-#include "QPixmap"
 #include "MainScreen.h"
-#include <QFileDialog>
-#include <QFile>
+#include "../manager/Manager.h"
 
 MainView::MainView()
 {
-	firstClick = true;
-	auxDraw =  drawingArch = false;
-	shape = LINE;
-	currentItem = new Line();
-
 	setMinimumSize(1920, 1020);
 	showMaximized();
 
@@ -23,63 +13,6 @@ MainView::MainView()
 
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-}
-
-
-std::string MainView::getCurrentShape()
-{
-	switch (shape)
-	{
-	case LINE: return "Line";
-	case BEZIER: return "Bezier";
-	case ARCH: return "Arc";
-	}
-}
-
-void MainView::saveFile()
-{
-	QString file = QFileDialog::getSaveFileName(this, tr("Save file"), "", tr("Draw (*.png);; All files(*)"));
-
-	if (file.isEmpty())
-		return;
-	
-	QFile outFile(file);
-	map = grab();
-	map.save(file);
-	
-}
-
-void MainView::openFile()
-{
-	/*QString file = QFileDialog::getOpenFileName(this, tr("Open file"), "", tr("Draw (*.png);; All files(*)"));
-
-	if (file.isEmpty())
-		return;
-
-	QFile inFile(file);
-	
-	inFile.open(QIODevice::WriteOnly | QIODevice::Append);
-
-	map = grab();
-	map.load(file);
-
-	scene->update();*/
-}
-
-
-void MainView::clearItens()
-{
-	itens.clear();
-}
-
-void MainView::clearLastItem()
-{
-	if (itens.empty())
-		return;
-
-	scene->removeItem(itens.back());
-	itens.pop_back();
-	scene->update();	
 }
 
 
@@ -116,6 +49,8 @@ void MainView::drawAuxiliarLine() {
 
 void MainView::mousePressEvent(QMouseEvent* event)
 {
+	Manager::mousePressEvent();
+
 	if ( currentItem )
 		delete currentItem;	
 

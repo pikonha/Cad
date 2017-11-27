@@ -68,17 +68,8 @@ MainScreen::MainScreen(QMainWindow* parent) : QMainWindow(parent)
 MainScreen::~MainScreen()
 {
 	delete view;
-	delete main;	
 }
 
-MainScreen* MainScreen::main = nullptr;
-MainScreen* MainScreen::getInstance()
-{
-	if (!main)
-		main = new MainScreen();
-
-	return main;
-}
 
 int MainScreen::start(QApplication* app)
 {

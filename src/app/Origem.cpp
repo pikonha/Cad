@@ -1,8 +1,10 @@
-#include "../interface/MainScreen.h"
+#include "App.h"
 
 int main(int argc, char* argv[])
 {
-	QApplication app(argc, argv);
+	/*QApplication app(argc, argv);
 
-	MainScreen::getInstance()->start(&app);
+	MainScreen::getInstance()->start(&app);*/
+
+	App::getInstance()->start(argc, argv);
 }
