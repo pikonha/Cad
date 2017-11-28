@@ -4,13 +4,13 @@
 
 #include "Cmd.h"
 
-class CmdMouseClick : public Cmd 
+class CmdMouseClick : public Cmd
 {
 public:
-	CmdMouseClick();
-	~CmdMouseClick();
+	CmdMouseClick() {}
+	~CmdMouseClick() {}
 
-	void execute(MainView* view);
-}; 
+	void execute(Data& d, MainScreen& s);
+};
 
 #endif

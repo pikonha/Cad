@@ -3,8 +3,10 @@
 #include "MainScreen.h"
 #include "../manager/Manager.h"
 
-MainView::MainView()
+MainView::MainView(Manager* m)
 {
+	manager = m;
+
 	setMinimumSize(1920, 1020);
 	showMaximized();
 
@@ -16,129 +18,33 @@ MainView::MainView()
 }
 
 
-void MainView::draw()
+void MainView::draw(QGraphicsItem* item)
 {
-	if (currentItem)
-		delete currentItem;
-
-	if (shape == LINE)
-		currentItem = new Line(x, y);
-	
-	else if (shape == BEZIER) 
-		currentItem = new Bezier(x, y, z);
-		
-	else if (shape == ARCH)
-		currentItem = new Arch(x,y,z);
-
-	scene->addItem(currentItem);
+	scene->addItem(item);
 	scene->update();
 }
 
-void MainView::drawAuxiliarLine() {	
-	
-	if (auxDraw) {
-		scene->removeItem(auxLine);
-	}
-
-	auxLine = new Line(x, y);
-	scene->addItem(auxLine);
-	scene->update();
-
-	auxDraw = true;	
-}
 
 void MainView::mousePressEvent(QMouseEvent* event)
 {
-	Manager::mousePressEvent();
-
-	if ( currentItem )
-		delete currentItem;	
-
-	if (shape == LINE)
-		currentItem = new Line();
-
-	if (shape == BEZIER)
-		currentItem = new Bezier();
-
-	if (shape == ARCH)
-		currentItem = new Arch();
-
-
-	if (firstClick) {
-		x = event->pos();
-
-		if ( shape != LINE)
-			firstClick = false;
-	}
-	else
-	{
-		if (shape == BEZIER)
-		{
-			z = event->pos();	
-			auxDraw = false;
-
-			scene->removeItem(auxLine);
-
-		}
-		
-		draw();
-		itens.push_back(currentItem);
-		currentItem = nullptr;
-		drawingArch = false;
-
-		firstClick = true;
-	}
-
-	if (currentItem) 
-		setMouseTracking(true);
-
-	else
-		setMouseTracking(false);
+	mousePos = event->pos();
+	manager->mousePressEvent();
 
 	event->accept();
 }
 
 void MainView::mouseReleaseEvent(QMouseEvent* event)
 {
-	auxDraw = false;
-	setMouseTracking(false);
+	mousePos = event->pos();
+	manager->mouseReleaseEvent();
 
-	if ( shape == LINE ) {
-		itens.push_back(currentItem);
-		currentItem = nullptr;
-	}
-
-	if (shape == ARCH && currentItem && !firstClick) {
-		drawingArch = true;
-		setMouseTracking(true);
-	}
-
-	event->accept();
+	event->accept();	
 }
 
 void MainView::mouseMoveEvent(QMouseEvent* event)
 {
-	if (!currentItem)
-		return;
-
-	if ( !drawingArch)
-		y = event->pos();
-
-	
-	if (shape == LINE)
-		draw();
-
-	else if (!drawingArch)
-		drawAuxiliarLine();
-
-	if (drawingArch) {	
-
-		z = event->pos();
-
-		scene->removeItem(auxLine);
-
-		draw();
-	}
+	mousePos = event->pos();
+	manager->mouseMoveEvent();
 	
 	event->accept();
 }

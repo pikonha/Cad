@@ -2,25 +2,33 @@
 #ifndef INCLUDED_MANAGER_H
 #define INCLUDED_MANAGER_H
 
-namespace Manager
+class App;
+
+class Manager
 {
+private:
+	App* app;
+
+public:
+	Manager(App* appl) { app = appl; }
+	~Manager() {}
+
 	void mousePressEvent();
 	void mouseReleaseEvent();
 	void mouseMoveEvent();
 
 	void newFile();
+	void saveFile();
 	void openFile();
 	void clearFile();
 	void closeFile();
 
-	void line();
-	void bezier();
-	void arch();
+	void setLine();
+	void setBezier();
+	void setArch();
 
 	void clearLastItem();
-
-	void drawAuxLine();
-
+	void clearAllItems();
 };
 
 #endif

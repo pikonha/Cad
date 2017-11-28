@@ -7,13 +7,12 @@
 #include <QShortcut>
 #include <QStatusBar>
 
-MainScreen::MainScreen(QMainWindow* parent) : QMainWindow(parent)
+MainScreen::MainScreen(Manager* m, QMainWindow* parent) : QMainWindow(parent)
 {
-	//setMinimumSize(800, 600);
 	setFixedSize(1920, 1020);
 	showMaximized();
 
-	view = new MainView();
+	view = new MainView(m);
 	navbar = menuBar();	
 	status = new QStatusBar(this);
 	setStatusBar(status);
@@ -33,10 +32,10 @@ MainScreen::MainScreen(QMainWindow* parent) : QMainWindow(parent)
 	file->addAction(clear);
 	file->addAction(close);
 
-	QIcon* iconSave = new QIcon("C:/Users/lucas.picollo/Documents/QT/icons/save.png");
-	QIcon* iconClear = new QIcon("C:/Users/lucas.picollo/Documents/QT/icons/clean.png");
-	QIcon* iconClose = new QIcon("C:/Users/lucas.picollo/Documents/QT/icons/close.png");
-	QIcon* iconOpen = new QIcon("C:/Users/lucas.picollo/Documents/QT/icons/open.png");
+	QIcon* iconSave = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/save.png");
+	QIcon* iconClear = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/clean.png");
+	QIcon* iconClose = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/close.png");
+	QIcon* iconOpen = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/open.png");
 
 	open->setIcon(*iconOpen);
 	save->setIcon(*iconSave);
@@ -50,18 +49,18 @@ MainScreen::MainScreen(QMainWindow* parent) : QMainWindow(parent)
 	
 	setCentralWidget(view);
 
-	connect(line, &QAction::triggered, view, &MainView::setLine);	
-	connect(bezier, &QAction::triggered, view, &MainView::setBezier);	
-	connect(arc, &QAction::triggered, view, &MainView::setArch);	
+	connect(line, &QAction::triggered, m, &Manager::setLine);
+	connect(bezier, &QAction::triggered, m, &Manager::setBezier);
+	connect(arc, &QAction::triggered, m, &Manager::setArch);
+	
 
-	connect(open, &QAction::triggered, view, &MainView::openFile);
-	connect(save, &QAction::triggered, view, &MainView::saveFile);
-	connect(clear, &QAction::triggered, view->getScene(), &QGraphicsScene::clear);
-	connect(clear, &QAction::triggered, view, &MainView::clearItens);
+	connect(open, &QAction::triggered, m, &Manager::openFile);
+	connect(save, &QAction::triggered, m, &Manager::saveFile);
+	connect(clear, &QAction::triggered, m, &Manager::clearAllItems);
 	connect(close, &QAction::triggered, this, &MainScreen::close);
 
 	QShortcut* undone = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this);
-	connect(undone, &QShortcut::activated, view, &MainView::clearLastItem);
+	connect(undone, &QShortcut::activated, m, &Manager::clearLastItem);
 }
 
 
@@ -71,11 +70,9 @@ MainScreen::~MainScreen()
 }
 
 
-int MainScreen::start(QApplication* app)
+int MainScreen::start()
 {
 	show();
-
-	return app->exec();
 }
 
 void MainScreen::setZoom(double scale)

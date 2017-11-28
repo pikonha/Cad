@@ -1,12 +1,7 @@
 #include "CmdNew.h"
 
 
-
-CmdNew::CmdNew()
+void CmdNew::execute(Data& d, MainScreen& s)
 {
-}
 
-
-CmdNew::~CmdNew()
-{
 }

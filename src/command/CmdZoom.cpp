@@ -1,12 +1,6 @@
 #include "CmdZoom.h"
 
-
-
-CmdZoom::CmdZoom()
+void CmdZoom::execute(Data& d, MainScreen& s)
 {
-}
 
-
-CmdZoom::~CmdZoom()
-{
 }

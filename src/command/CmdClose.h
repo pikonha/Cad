@@ -7,10 +7,10 @@
 class CmdClose : public Cmd
 {
 public:
-	CmdClose();
-	~CmdClose();
+	CmdClose(){}
+	~CmdClose(){}
 
-	void execute(MainScreen* screen);
+	void execute(Data& d, MainScreen& s);
 };
 
 #endif

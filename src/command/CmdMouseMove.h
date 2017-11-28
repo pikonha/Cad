@@ -7,10 +7,10 @@
 class CmdMouseMove : public Cmd
 {
 public:
-	CmdMouseMove();
-	~CmdMouseMove();
+	CmdMouseMove() {}
+	~CmdMouseMove() {}
 
-	void execute(MainView* view);
+	void execute(Data& d, MainScreen& s);
 };
 
 #endif

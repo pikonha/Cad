@@ -1,12 +1,7 @@
 #include "CmdClose.h"
 
 
-
-CmdClose::CmdClose()
+void CmdClose::execute(Data& d, MainScreen& s)
 {
-}
 
-
-CmdClose::~CmdClose()
-{
 }

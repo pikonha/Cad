@@ -7,10 +7,10 @@
 class CmdClear : public Cmd
 {
 public:
-	CmdClear();
-	~CmdClear();
+	CmdClear(){}
+	~CmdClear(){}
 
-	void execute(MainView* view);
+	void execute(Data& d, MainScreen& s);
 };
 
 #endif

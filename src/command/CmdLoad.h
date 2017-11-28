@@ -7,10 +7,10 @@
 class CmdLoad : public Cmd
 {
 public:
-	CmdLoad();
-	~CmdLoad();
+	CmdLoad(){}
+	~CmdLoad(){}
 
-	void execute(MainView* view, Persist* persist);
+	void execute(Data& d, MainScreen& s);
 };
 
 #endif

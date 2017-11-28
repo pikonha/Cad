@@ -1,12 +1,7 @@
 #include "CmdClear.h"
 
 
-
-CmdClear::CmdClear()
+void CmdClear::execute(Data& d, MainScreen& s)
 {
-}
 
-
-CmdClear::~CmdClear()
-{
 }

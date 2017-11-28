@@ -7,10 +7,10 @@
 class CmdZoom :	public Cmd
 {
 public:
-	CmdZoom();
-	~CmdZoom();
+	CmdZoom() {}
+	~CmdZoom() {}
 
-	void execute(MainScreen* screen, MainView* view);
+	void execute(Data& d, MainScreen& s);
 };
 
 #endif

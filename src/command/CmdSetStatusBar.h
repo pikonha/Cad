@@ -7,10 +7,10 @@
 class CmdSetStatusBar :	public Cmd
 {
 public:
-	CmdSetStatusBar();
-	~CmdSetStatusBar();
+	CmdSetStatusBar(){}
+	~CmdSetStatusBar(){}
 
-	void execute(MainScreen* screen, MainView* view);
+	void execute(Data& d, MainScreen& s);
 };
 
 #endif

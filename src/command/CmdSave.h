@@ -7,10 +7,10 @@
 class CmdSave :	public Cmd
 {
 public:
-	CmdSave();
-	~CmdSave();
+	CmdSave(){}
+	~CmdSave() {}
 
-	void execute(MainView* view, Persist* persist);
+	void execute(Data& d, MainScreen& s);
 };
 
 #endif

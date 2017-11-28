@@ -7,10 +7,10 @@
 class CmdNew : public Cmd
 {
 public:
-	CmdNew();
-	~CmdNew();
+	CmdNew(){}
+	~CmdNew(){}
 
-	void execute(MainScreen* screen, MainView* view);
+	void execute(Data& d, MainScreen& s);
 };
 
 #endif

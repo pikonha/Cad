@@ -1,12 +1,6 @@
 #include "CmdSave.h"
 
-
-
-CmdSave::CmdSave()
+void CmdSave::execute(Data& d, MainScreen& s)
 {
-}
 
-
-CmdSave::~CmdSave()
-{
 }

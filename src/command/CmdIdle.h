@@ -10,7 +10,7 @@ public:
 	CmdIdle() {}
 	~CmdIdle() {}
 	
-	void execute() {}
+	void execute(Data& d, MainScreen& s) {}
 };
 
 

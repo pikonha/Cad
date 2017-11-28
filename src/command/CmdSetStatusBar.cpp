@@ -1,12 +1,7 @@
 #include "CmdSetStatusBar.h"
 
 
-
-CmdSetStatusBar::CmdSetStatusBar()
+void CmdSetStatusBar::execute(Data& d, MainScreen& s)
 {
-}
 
-
-CmdSetStatusBar::~CmdSetStatusBar()
-{
 }

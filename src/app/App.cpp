@@ -1,38 +1,23 @@
 #include "App.h"
-#include "CmdNew.h"
-#include "CmdIdle.h"
-#include "CmdSave.h"
-#include "CmdZoom.h"
-#include "CmdLoad.h"
-#include "CmdClear.h"
-#include "CmdClose.h"
-#include "CmdDrawLine.h"
-#include "CmdDrawArch.h"
-#include "CmdMouseMove.h"
-#include "CmdDrawBezier.h"
-#include "CmdMouseClick.h"
-#include "CmdMousePress.h"
-#include "CmdSetStatusBar.h"
-#include "Line.h"
-#include "Bezier.h"
-#include "Arch.h"
+#include "Manager.h"
+#include <qapplication.h>
+#include <QtCore>
 
 App::~App() {
 	delete cmd;
 	delete screen;
 	delete view;
+	delete data;
 }
 
 /////SETUP
 App::App()
 {
-	cmd = new CmdIdle();
-	screen = new MainScreen();
+	cmd = new CmdIdle();	
 	view = screen->getView();
-	form = LINE;
-	auxDraw = drawingArch = false;
-	firstClick = true;
-	currentItem = new Line();
+	data = new Data();	
+	manager = new Manager(this);
+	screen = new MainScreen(manager);
 }
 
 App* App::app = nullptr;
@@ -44,49 +29,22 @@ App* App::getInstance()
 	return app;
 }
 
-void App::start(int argc, char** argv)
+int App::start(int argc, char** argv)
 {
 	QApplication app(argc, argv);
-	screen->start(&app);
+	screen->start();
+
+	return app.exec();
 }
 
 /////CMD
-void App::newCmd(Cmd* command)
+void App::runCmd(Cmd* command)
 {
 	setCmd(command);
 	executeCmd();
+	deleteCmd();
 	setCmdIdle();
 }
-
-/////FORM
-std::string App::getForm()
-{
-	switch (form)
-	{
-	case LINE: return "Line";
-	case BEZIER: return "Bezier";
-	case ARCH: return "Arc";
-	}
-}
-
-/////ITEMS
-void App::clearItens()
-{
-	itens.clear();
-}
-
-void App::clearLastItem()
-{
-	if (itens.empty())
-		return;
-
-	view->getScene()->removeItem(itens.back());
-	itens.pop_back();
-	view->getScene()->update();
-}
-
-/////DRAW
-
 
 /////FILE
 void saveFile(){}

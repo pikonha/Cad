@@ -1,12 +1,6 @@
 #include "CmdLoad.h"
 
-
-
-CmdLoad::CmdLoad()
+void CmdLoad::execute(Data& d, MainScreen& s) 
 {
-}
 
-
-CmdLoad::~CmdLoad()
-{
 }
