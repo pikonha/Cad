@@ -1,5 +1,6 @@
 #include "App.h"
-#include "Manager.h"
+#include "../manager/Manager.h"
+#include "CmdIdle.h"
 #include <qapplication.h>
 #include <QtCore>
 
@@ -12,10 +13,10 @@ App::~App() {
 
 /////SETUP
 App::App()
-{
-	cmd = new CmdIdle();	
+{		
+	data = new Data();		
+	cmd = new CmdIdle();
 	view = screen->getView();
-	data = new Data();	
 	manager = new Manager(this);
 	screen = new MainScreen(manager);
 }
@@ -44,6 +45,15 @@ void App::runCmd(Cmd* command)
 	executeCmd();
 	deleteCmd();
 	setCmdIdle();
+}
+
+void App::executeCmd(){ 
+	cmd->execute(*data, *screen);
+}
+
+void App::setCmdIdle() 
+{
+	cmd = new CmdIdle();
 }
 
 /////FILE

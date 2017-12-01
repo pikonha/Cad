@@ -1,22 +1,30 @@
 #include "Manager.h"
-#include "../app/App.h"
-#include "../domain/Line.h"
-#include "../command/CmdNew.h"
-#include "../command/CmdIdle.h"
-#include "../command/CmdSave.h"
-#include "../command/CmdZoom.h"
-#include "../command/CmdLoad.h"
-#include "../command/CmdClear.h"
-#include "../command/CmdClose.h"
-#include "../command/CmdSetLine.h"
-#include "../command/CmdSetArch.h"
-#include "../command/CmdSetBezier.h"
-#include "../command/CmdMouseMove.h"
-#include "../command/CmdMouseClick.h"
-#include "../command/CmdMouseRelease.h"
-#include "../command/CmdSetStatusBar.h"
-#include "../command/CmdClearAllItems.h"
-#include "../command/CmdClearLastItem.h"
+#include "App.h"
+#include "CmdNew.h"
+#include "CmdIdle.h"
+#include "CmdSave.h"
+#include "CmdZoom.h"
+#include "CmdLoad.h"
+#include "CmdClear.h"
+#include "CmdClose.h"
+#include "CmdSetLine.h"
+#include "CmdSetArch.h"
+#include "CmdSetBezier.h"
+#include "CmdMouseMove.h"
+#include "CmdMouseClick.h"
+#include "CmdMouseRelease.h"
+#include "CmdSetStatusBar.h"
+#include "CmdClearAllItems.h"
+#include "CmdClearLastItem.h"
+
+
+Manager* Manager::getInstance()
+{
+	if (!manager)
+		manager = new Manager(App::getInstance());
+
+	return manager;
+}
 
 void Manager::mousePressEvent()
 {

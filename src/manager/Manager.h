@@ -7,10 +7,12 @@ class App;
 class Manager
 {
 private:
+	static Manager* manager;
 	App* app;
-
-public:
 	Manager(App* appl) { app = appl; }
+	
+public:
+	static Manager* getInstance();
 	~Manager() {}
 
 	void mousePressEvent();

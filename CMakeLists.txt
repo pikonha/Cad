@@ -10,8 +10,8 @@ find_package(Qt5Widgets CONFIG
 
 add_subdirectory(src/app)
 add_subdirectory(src/command)
-add_subdirectory(src/domain)
 add_subdirectory(src/interface)
 add_subdirectory(src/manager)
+add_subdirectory(src/data)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)

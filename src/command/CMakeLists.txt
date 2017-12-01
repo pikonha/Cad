@@ -6,5 +6,5 @@ add_library(cmd STATIC ${CMD})
 
 target_include_directories(cmd PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 
-target_link_libraries(cmd domain
-						interface)
+target_link_libraries(cmd interface
+						data)

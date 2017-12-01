@@ -2,10 +2,12 @@
 #ifndef INCLUDED_APP_H
 #define INCLUDED_APP_H
 
-#include "../interface/MainScreen.h"
-#include "../command/Cmd.h"
-#include "../domain/Data.h"
-#include "../command/CmdIdle.h"
+class Cmd;
+class Data;
+class Manager;
+class CmdIdle;
+class MainView;
+class MainScreen;
 
 class App
 {
@@ -34,9 +36,9 @@ public:
 
 	/////CMD	
 	void setCmd(Cmd* command) { cmd = command; }
-	void executeCmd() { cmd->execute(*data, *screen);  }
+	void executeCmd();
 	void deleteCmd() { delete cmd; }
-	void setCmdIdle() { cmd = new CmdIdle(); }
+	void setCmdIdle();
 
 	void runCmd(Cmd* command);
 
