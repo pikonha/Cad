@@ -6,15 +6,19 @@
 Data::Data()
 {
 	currentForm = LINE;
-	auxDraw = drawingArch = false;
+	auxDraw = false;
 	firstClick = true;
-	currentItem = new Line();
 }
 
 Data::~Data()
 {
-	delete currentItem;
 	delete auxLine;
+}
+
+/////LINE
+void Data::prepareLine()
+{
+	setForm(LINE);
 }
 
 /////FORM
@@ -29,21 +33,13 @@ Form Data::getForm()
 }
 
 /////ITEMS
+
 void Data::clearItens()
 {
 	itens.clear();
 }
 
-void Data::deleteCurrentItem() {
-	if (currentItem)
-		delete currentItem;
-}
 
-void Data::pushItem()
-{
-	itens.push_back(currentItem);
-	currentItem = nullptr;
-}
 
 void Data::setAuxLine()
 {

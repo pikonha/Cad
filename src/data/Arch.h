@@ -29,6 +29,8 @@ public:
 	~Arch() {}
 
 	std::vector<Point> getPoints();
+
+	void setZ(Point p) { z = p; }
 };
 
 

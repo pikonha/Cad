@@ -2,10 +2,10 @@
 #ifndef INCLUDED_APP_H
 #define INCLUDED_APP_H
 
+class MainCmd;
 class Cmd;
 class Data;
 class Manager;
-class CmdIdle;
 class MainView;
 class MainScreen;
 
@@ -14,7 +14,9 @@ class App
 private:
 	static App* app;
 
+	MainCmd* cmdmain;
 	Cmd* cmd;
+
 	MainScreen* screen;	
 	MainView* view;
 	Data* data;
@@ -29,18 +31,21 @@ public:
 	int start(int argc, char** argv);
 
 	/////GETTERS
-	Cmd* getCmd() { return cmd; }
+	MainCmd* getCmd() { return cmdmain; }
 	MainScreen* getScreen() { return screen; }
 	MainView* getView() { return view; }
 	Data* getData() { return data; }
 
 	/////CMD	
-	void setCmd(Cmd* command) { cmd = command; }
+	void setCmdMain(MainCmd* cmd) { cmdmain = cmd; }
+
+	void setCmd(Cmd* cmmd) { cmd = cmmd; }
 	void executeCmd();
 	void deleteCmd() { delete cmd; }
 	void setCmdIdle();
 
 	void runCmd(Cmd* command);
+
 
 	/////FILE
 	void saveFile();

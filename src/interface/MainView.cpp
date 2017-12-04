@@ -1,6 +1,14 @@
 #include "MainView.h"
 #include "QWidget"
 #include "MainScreen.h"
+#include "Item.h"
+#include "Line.h"
+#include "Bezier.h"
+#include "Arch.h"
+
+#include "LineModel.h"
+#include "BezierModel.h"
+#include "ArchModel.h"
 #include "../manager/Manager.h"
 
 MainView::MainView(Manager* m)
@@ -18,16 +26,23 @@ MainView::MainView(Manager* m)
 }
 
 
-void MainView::draw(QGraphicsItem* item)
+void MainView::draw(Item* item)
 {
+	itemCast(item);
 	scene->addItem(item);
-	scene->update();
+	scene->update();\
+}
+
+QGraphicsItem* itemCast(Item* item)
+{
+	if (Line* l = dynamic_cast<Line*>(item))
+		return new LineModel(l->getP1(), l->getP2());
 }
 
 
 void MainView::mousePressEvent(QMouseEvent* event)
 {
-	mousePos = event->pos();
+	mousePos = qpointToPoint(event->pos());
 	manager->mousePressEvent();
 
 	event->accept();
@@ -35,7 +50,7 @@ void MainView::mousePressEvent(QMouseEvent* event)
 
 void MainView::mouseReleaseEvent(QMouseEvent* event)
 {
-	mousePos = event->pos();
+	mousePos = qpointToPoint(event->pos());
 	manager->mouseReleaseEvent();
 
 	event->accept();	
@@ -43,7 +58,7 @@ void MainView::mouseReleaseEvent(QMouseEvent* event)
 
 void MainView::mouseMoveEvent(QMouseEvent* event)
 {
-	mousePos = event->pos();
+	mousePos = qpointToPoint(event->pos());
 	manager->mouseMoveEvent();
 	
 	event->accept();
@@ -52,14 +67,16 @@ void MainView::mouseMoveEvent(QMouseEvent* event)
 void MainView::wheelEvent(QWheelEvent* event)
 {
 	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-	double scaleF = 1.15;
-
-	if (event->delta() > 0)
-		scale(scaleF, scaleF);
-	else
-		scale(1 / scaleF, 1 / scaleF);
+	
+	manager->wheelEvent();
 
 	event->accept();
+}
+
+Point* MainView::qpointToPoint(QPoint p)
+{
+	Point* a = new Point(p.x(), p.y());
+	return a;
 }
 
 

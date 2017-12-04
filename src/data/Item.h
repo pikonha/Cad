@@ -22,6 +22,8 @@ public:
 	void setY(Point b) { y = b; }
 
 	virtual std::vector<Point> getPoints() = 0;
+
+
 };
 
 #endif

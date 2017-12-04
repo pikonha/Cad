@@ -1,7 +1,7 @@
 #pragma once
 #ifndef INCLUDED_CMD_H
 #define INCLUDED_CMD_H
-#include "../model/Data.h"
+#include "Data.h"
 #include "MainScreen.h"
 
 class Cmd {

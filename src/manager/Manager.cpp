@@ -1,16 +1,17 @@
 #include "Manager.h"
 #include "App.h"
+
+#include "MainCmdLine.h"
+
+
 #include "CmdNew.h"
 #include "CmdIdle.h"
 #include "CmdSave.h"
-#include "CmdZoom.h"
 #include "CmdLoad.h"
 #include "CmdClear.h"
 #include "CmdClose.h"
-#include "CmdSetLine.h"
-#include "CmdSetArch.h"
-#include "CmdSetBezier.h"
 #include "CmdMouseMove.h"
+#include "CmdWheelEvent.h"
 #include "CmdMouseClick.h"
 #include "CmdMouseRelease.h"
 #include "CmdSetStatusBar.h"
@@ -26,6 +27,24 @@ Manager* Manager::getInstance()
 	return manager;
 }
 
+/////LINE
+void Manager::setLine()
+{
+	app->setCmdMain(new MainCmdLine());
+}
+
+void Manager::setP1Line(Point p)
+{
+	app->getCmd()->setP1(app->getData, p);
+}
+
+void Manager::setP2Line(Point p)
+{
+	app->getCmd()->setP2(app->getData, p);
+}
+
+
+/////MOUSE
 void Manager::mousePressEvent()
 {
 	app->runCmd(new CmdMouseClick());
@@ -40,6 +59,11 @@ void Manager::mouseMoveEvent()
 {
 	app->runCmd(new CmdMouseMove());
 
+}
+
+void Manager::wheelEvent()
+{
+	app->runCmd(new CmdWheelEvent());
 }
 
 void Manager::newFile()
@@ -75,19 +99,4 @@ void Manager::clearLastItem()
 void Manager::clearAllItems()
 {
 	app->runCmd(new CmdClearAllItems());
-}
-
-void Manager::setLine()
-{
-	app->runCmd(new CmdSetLine());
-}
-
-void Manager::setBezier()
-{
-	app->runCmd(new CmdSetBezier());
-}
-
-void Manager::setArch()
-{
-	app->runCmd(new CmdSetArch());
 }

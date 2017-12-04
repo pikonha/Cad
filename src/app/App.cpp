@@ -1,5 +1,6 @@
 #include "App.h"
 #include "../manager/Manager.h"
+#include "MainCmdLine.h"
 #include "CmdIdle.h"
 #include <qapplication.h>
 #include <QtCore>
@@ -15,9 +16,9 @@ App::~App() {
 App::App()
 {		
 	data = new Data();		
-	cmd = new CmdIdle();
+	cmd = new MainCmdLine();
 	view = screen->getView();
-	manager = new Manager(this);
+	manager = Manager::getInstance();
 	screen = new MainScreen(manager);
 }
 
@@ -39,21 +40,22 @@ int App::start(int argc, char** argv)
 }
 
 /////CMD
+void App::executeCmd()
+{
+	cmd->execute(*data, *screen);
+}
+
+void App::setCmdIdle()
+{
+	cmd = new CmdIdle();
+}
+
 void App::runCmd(Cmd* command)
 {
 	setCmd(command);
 	executeCmd();
 	deleteCmd();
 	setCmdIdle();
-}
-
-void App::executeCmd(){ 
-	cmd->execute(*data, *screen);
-}
-
-void App::setCmdIdle() 
-{
-	cmd = new CmdIdle();
 }
 
 /////FILE

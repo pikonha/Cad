@@ -15,6 +15,8 @@ public:
 	Bezier(Point a, Point b, Point c) : Item(a, b) { z = c; }
 	~Bezier() {}
 
+	void setZ(Point p) { z = p; }
+
 	std::vector<Point> getPoints();
 };
 

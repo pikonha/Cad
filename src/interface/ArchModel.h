@@ -13,7 +13,7 @@ private:
 
 public:
 	ArchModel() {}
-	ArchModel(QPoint a, QPoint b, QPoint c);
+	ArchModel(Arch* a, QGraphicsItem* parent = 0);
 	~ArchModel() {}
 
 protected:

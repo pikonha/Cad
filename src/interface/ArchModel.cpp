@@ -3,15 +3,10 @@
 #include "Point.h"
 #include "Arch.h"
 
-ArchModel::ArchModel(QPoint a, QPoint b, QPoint c)
+ArchModel::ArchModel(Arch* a, QGraphicsItem* parent) : QGraphicsItem(parent)
 {
-	Point x(a.x(), a.y());
-	Point y(b.x(), b.y());
-	Point z(c.x(), c.y());
-
-	arch = new Arch(x, y, z);
+	arch = a;
 }
-
 
 QPainterPath ArchModel::getPath()
 {

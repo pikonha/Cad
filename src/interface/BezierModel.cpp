@@ -21,13 +21,9 @@ QPainterPath BezierModel::getPath()
 	return path;
 }
 
-BezierModel::BezierModel(QPoint x, QPoint y, QPoint z, QGraphicsItem* parent) : QGraphicsItem(parent)
+BezierModel::BezierModel(Bezier* b, QGraphicsItem* parent) : QGraphicsItem(parent)
 {
-	Point a(x.x(), x.y());
-	Point b(y.x(), y.y());
-	Point c(z.x(), z.y());
-
-	bezier = new Bezier(a, b, c);	
+	bezier = b;
 }
 
 QRectF BezierModel::boundingRect() const {

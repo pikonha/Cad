@@ -16,7 +16,7 @@ private:
 	QPainterPath getPath();
 public:
 	LineModel() {}
-	LineModel(QPoint x, QPoint y, QGraphicsItem* parent = 0);
+	LineModel(Line* l, QGraphicsItem* parent = 0);
 	~LineModel();
 };
 

@@ -3,18 +3,14 @@
 #include "Point.h"
 #include "Line.h"
 
-
 LineModel::~LineModel()
 {
 	delete line;
 }
 
-LineModel::LineModel(QPoint x, QPoint y, QGraphicsItem* parent) : QGraphicsItem(parent)
+LineModel::LineModel(Line* l, QGraphicsItem* parent) : QGraphicsItem(parent)
 {
-	Point a(x.x(), x.y());
-	Point b(y.x(), y.y());
-
-	line = new Line(a, b);
+	line = l;
 }
 
 

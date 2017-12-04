@@ -1,6 +1,7 @@
 #pragma once
 #ifndef INCLUDED_MANAGER_H
 #define INCLUDED_MANAGER_H
+#include "Point.h"
 
 class App;
 
@@ -18,6 +19,7 @@ public:
 	void mousePressEvent();
 	void mouseReleaseEvent();
 	void mouseMoveEvent();
+	void wheelEvent();
 
 	void newFile();
 	void saveFile();
@@ -25,7 +27,11 @@ public:
 	void clearFile();
 	void closeFile();
 
+	/////LINE
 	void setLine();
+	void setP1Line(Point p);
+	void setP2Line(Point p);
+
 	void setBezier();
 	void setArch();
 

@@ -18,7 +18,7 @@ protected:
 	QPainterPath getPath();
 public:
 	BezierModel() {}
-	BezierModel(QPoint x, QPoint y, QPoint z, QGraphicsItem* parent = 0);
+	BezierModel(Bezier* b, QGraphicsItem* parent = 0);
 
 	QPoint* pointConversor(Point p);
 };
