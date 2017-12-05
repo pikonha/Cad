@@ -1,24 +1,23 @@
-#include "Manager.h"
 #include "App.h"
-
-#include "MainCmdLine.h"
-
-
 #include "CmdNew.h"
+#include "Manager.h"
 #include "CmdIdle.h"
 #include "CmdSave.h"
 #include "CmdLoad.h"
 #include "CmdClear.h"
 #include "CmdClose.h"
+#include "MainCmdLine.h"
+#include "MainCmdArch.h"
 #include "CmdMouseMove.h"
 #include "CmdWheelEvent.h"
 #include "CmdMouseClick.h"
+#include "MainCmdBezier.h"
 #include "CmdMouseRelease.h"
 #include "CmdSetStatusBar.h"
 #include "CmdClearAllItems.h"
 #include "CmdClearLastItem.h"
 
-
+Manager* Manager::manager = nullptr;
 Manager* Manager::getInstance()
 {
 	if (!manager)
@@ -27,22 +26,21 @@ Manager* Manager::getInstance()
 	return manager;
 }
 
-/////LINE
+/////DOMAIN
 void Manager::setLine()
 {
-	app->setCmdMain(new MainCmdLine());
+	app->setCmdMain(new MainCmdLine(app->getData(), app->getView(), LINE));
 }
 
-void Manager::setP1Line(Point p)
+void Manager::setBezier()
 {
-	app->getCmd()->setP1(app->getData, p);
+	app->setCmdMain(new MainCmdBezier(app->getData(), app->getView(), BEZIER));
 }
 
-void Manager::setP2Line(Point p)
+void Manager::setArch()
 {
-	app->getCmd()->setP2(app->getData, p);
+	app->setCmdMain(new MainCmdArch(app->getData(), app->getView(), ARCH));
 }
-
 
 /////MOUSE
 void Manager::mousePressEvent()
@@ -66,6 +64,7 @@ void Manager::wheelEvent()
 	app->runCmd(new CmdWheelEvent());
 }
 
+/////FILE
 void Manager::newFile()
 {
 
@@ -91,6 +90,7 @@ void Manager::closeFile()
 
 }
 
+/////ITEMS
 void Manager::clearLastItem()
 {
 	app->runCmd(new CmdClearLastItem());
@@ -99,4 +99,10 @@ void Manager::clearLastItem()
 void Manager::clearAllItems()
 {
 	app->runCmd(new CmdClearAllItems());
+}
+
+/////APP
+MainCmd* Manager::getMainCmd()
+{
+	return app->getCmdMain();
 }

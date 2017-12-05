@@ -1,36 +1,18 @@
 #include "CmdMouseMove.h"
+#include "MainCmd.h"
+#include "LineModel.h"
+#include "Line.h"
 
 void CmdMouseMove(Data& d, MainScreen& s)
 {
-	if (!d.getCurrentItem())
-		return;
+	MainCmd* cmd = Manager::getInstance()->getMainCmd();
+	
+	if (cmd->getDrawing()) {
+		cmd->setP2(*s.getView()->getMousePos());
 
-	if (!d.getDrawingArch())
-		d.setY(s.getView()->getMousePos());
+		LineModel* line = new LineModel(new Line(cmd->getItem()->getP1(), cmd->getItem()->getP2()));
+		cmd->createAuxLine(line);
 
-	if (d.getForm() == LINE)
-	{
-		d.setNextDraw();
-		s.getView()->draw(d.getCurrentItem());
+		s.getView()->draw(cmd->getAuxLine());
 	}
-
-	if (!d.getDrawingArch())
-	{
-		if (d.getAuxDraw())
-			s.getView()->getScene()->removeItem(d.getAuxLine());
-
-		d.setAuxLine();
-		s.getView()->getScene()->addItem(d.getAuxLine());
-		s.getView()->getScene()->update();
-
-		d.setAuxDraw(true);
-	}
-	else
-	{
-		d.setZ(s.getView()->getMousePos());
-		s.getView()->getScene()->removeItem(d.getAuxLine());
-		d.setNextDraw();
-		s.getView()->draw(d.getCurrentItem());
-	}
-
 }

@@ -3,16 +3,6 @@
 #include "Point.h"
 #include "Line.h"
 
-LineModel::~LineModel()
-{
-	delete line;
-}
-
-LineModel::LineModel(Line* l, QGraphicsItem* parent) : QGraphicsItem(parent)
-{
-	line = l;
-}
-
 
 void LineModel::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
@@ -22,8 +12,8 @@ void LineModel::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
 
 QPainterPath LineModel::getPath()
 {
-	QPoint* a = new QPoint(line->getP1().getX(), line->getP1().getY());
-	QPoint* b = new QPoint(line->getP2().getX(), line->getP2().getY());
+	QPoint* a = new QPoint(item->getP1().getX(), item->getP1().getY());
+	QPoint* b = new QPoint(item->getP2().getX(), item->getP2().getY());
 
 	QPainterPath path(*a);
 	path.lineTo(*b);

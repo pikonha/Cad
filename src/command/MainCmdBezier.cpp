@@ -5,6 +5,7 @@
 void MainCmdBezier::execute()
 {
 	data->setForm(BEZIER);
+	bezier = new Bezier();
 }
 
 void MainCmdBezier::setP1(Point p)
@@ -20,30 +21,11 @@ void MainCmdBezier::setP2(Point p)
 void MainCmdBezier::setP3(Point p)
 {
 	bezier->setZ(p);
+	draw();
 }
 
 void MainCmdBezier::draw()
 {
 	BezierModel* b = new BezierModel(bezier);
-	screen->getView()->getScene()->addItem(b);
-}
-
-void MainCmdBezier::pressMouse()
-{
-	setP1(*screen->getView()->getMousePos());
-}
-
-void MainCmdBezier::moveMouse()
-{
-	if ( !drawingBezier )
-		setP2(*screen->getView()->getMousePos());
-	else
-		setP3(*screen->getView()->getMousePos());
-
-	draw();
-}
-
-void MainCmdBezier::releaseMouse()
-{
-	drawingBezier = true;
+	view->getScene()->addItem(b);
 }

@@ -2,24 +2,20 @@
 #ifndef INCLUDED_ARCHMODEL_H
 #define INCLUDED_ARCHMODEL_H
 #include <QGraphicsItem>
-#include "Point.h"
+#include "Model.h"
 
-class Arch;
-
-class ArchModel : public QGraphicsItem
+class ArchModel : public QGraphicsItem, public Model
 {
-private:
-	Arch* arch;
-
 public:
 	ArchModel() {}
-	ArchModel(Arch* a, QGraphicsItem* parent = 0);
+	ArchModel(Item* i, QGraphicsItem* parent = 0) : QGraphicsItem(parent), Model(i) {}
 	~ArchModel() {}
 
 protected:
-	QRectF boundingRect() const override { return QRect(0, 0, 1920, 1080); }
-	QPainterPath getPath();
+	QRectF boundingRect() const override;
 	void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
+
+	QPainterPath getPath();
 
 	QPoint* pointConversor(Point p);
 };

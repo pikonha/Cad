@@ -2,23 +2,20 @@
 #ifndef INCLUDED_BEZIERMODEL_H
 #define INCLUDED_BEZIERMODEL_H
 #include <QGraphicsItem>
-#include "Point.h"
+#include "Model.h"
 
-class Bezier;
-
-class BezierModel : public QGraphicsItem
+class BezierModel : public QGraphicsItem, public Model
 {
-private:
-	Bezier* bezier;
+public:
+	BezierModel() {}
+	BezierModel(Item* i, QGraphicsItem* parent = 0) : QGraphicsItem(parent), Model(i) {}
+	~BezierModel() {}
 
 protected:
 	QRectF boundingRect() const override;
 	void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 	QPainterPath getPath();
-public:
-	BezierModel() {}
-	BezierModel(Bezier* b, QGraphicsItem* parent = 0);
 
 	QPoint* pointConversor(Point p);
 };

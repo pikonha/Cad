@@ -4,6 +4,7 @@
 void MainCmdLine::execute()
 {
 	data->setForm(LINE);
+	line = new Line();
 }
 
 void MainCmdLine::setP1(Point p)
@@ -20,21 +21,8 @@ void MainCmdLine::setP2(Point p)
 void MainCmdLine::draw()
 {
 	LineModel* model = new LineModel(line);
-	screen->getView()->getScene()->addItem(model);
+	view->draw(model);
+	
+	save(model);
 }
 
-
-void MainCmdLine::pressMouse()
-{
-	setP1(*screen->getView()->getMousePos());
-}
-
-void MainCmdLine::moveMouse()
-{
-	setP2(*screen->getView()->getMousePos());
-}
-
-void MainCmdLine::releaseMouse()
-{
-	data->addItem(line);
-}

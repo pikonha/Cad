@@ -5,6 +5,7 @@
 void MainCmdArch::execute()
 {
 	data->setForm(ARCH);
+	arch = new Arch();
 }
 
 void MainCmdArch::setP1(Point p)
@@ -26,21 +27,5 @@ void MainCmdArch::setP3(Point p)
 void MainCmdArch::draw()
 {
 	ArchModel* a = new ArchModel(arch);
-	screen->getView()->getScene()->addItem(a);
-}
-
-void MainCmdArch::pressMouse()
-{
-	if (!drawingArch)
-		setP1(*screen->getView()->getMousePos());
-}
-
-void MainCmdArch::moveMouse()
-{
-	setP2(*screen->getView()->getMousePos());
-}
-
-void MainCmdArch::releaseMouse()
-{
-	drawingArch = true;
+	view->getScene()->addItem(a);
 }

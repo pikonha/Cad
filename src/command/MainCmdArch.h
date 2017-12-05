@@ -9,10 +9,9 @@ class MainCmdArch :	public MainCmd
 {
 private:
 	Arch* arch;
-	bool drawingArch;
 
 public:
-	MainCmdArch(Data* d, MainScreen* s) : MainCmd(d, s) { drawingArch = false; }
+	MainCmdArch(Data* d, MainView* s, Form f) : MainCmd(d, s, f) {}
 	~MainCmdArch() {}
 	
 	void execute();
@@ -21,11 +20,9 @@ public:
 	void setP2(Point p);
 	void setP3(Point p);
 
-	void draw();
+	Item* getItem() { return arch; }
 
-	void pressMouse();
-	void moveMouse();
-	void releaseMouse();	
+	void draw();
 };
 
 #endif

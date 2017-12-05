@@ -9,10 +9,8 @@ class MainCmdBezier : public MainCmd
 {
 private:
 	Bezier* bezier;
-
-	bool drawingBezier;
 public:
-	MainCmdBezier(Data* d, MainScreen* s) : MainCmd(d, s) { drawingBezier = false; }
+	MainCmdBezier(Data* d, MainView* s, Form f) : MainCmd(d, s, f) {}
 	~MainCmdBezier() {}
 	
 	void execute();
@@ -21,11 +19,10 @@ public:
 	void setP2(Point p);
 	void setP3(Point p);
 
+	Item* getItem() { return bezier; }
+
 	void draw();
 
-	void moveMouse();
-	void pressMouse();
-	void releaseMouse();
 };
 
 #endif

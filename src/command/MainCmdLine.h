@@ -9,9 +9,8 @@ class MainCmdLine :	public MainCmd
 {
 private:
 	Line* line;
-
 public:
-	MainCmdLine(Data* d, MainScreen* s) : MainCmd(d, s) {}
+	MainCmdLine(Data* d, MainView* s, Form f) : MainCmd(d, s, f) {}
 	~MainCmdLine() {}
 
 	void execute();
@@ -19,11 +18,9 @@ public:
 	void setP1(Point p);
 	void setP2(Point p);
 
-	void draw();
+	Item* getItem() { return line; }
 
-	void moveMouse();
-	void pressMouse();
-	void releaseMouse();
+	void draw();
 };
 
 #endif

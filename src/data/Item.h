@@ -23,7 +23,7 @@ public:
 
 	virtual std::vector<Point> getPoints() = 0;
 
-
+	bool operator==(Item* i);
 };
 
 #endif

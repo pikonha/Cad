@@ -16,7 +16,7 @@ public:
 	int getX() { return x; }
 	int getY() { return y; }
 
-
+	bool operator==(Point* p);
 };
 
 #endif

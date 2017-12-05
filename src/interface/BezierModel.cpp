@@ -11,23 +11,18 @@ void BezierModel::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 
 QPainterPath BezierModel::getPath()
 {
-	QPainterPath path(*pointConversor(bezier->getPoints().front()));
+	QPainterPath path(*pointConversor(item->getPoints().front()));
 
-	for (int i = 1; i < bezier->getPoints().size() ; i++) {
-
-		path.lineTo(*pointConversor(bezier->getPoints().at(i)));
-	}
+	for (int i = 1; i < item->getPoints().size() ; i++) 
+		path.lineTo(*pointConversor(item->getPoints().at(i)));
 
 	return path;
 }
 
-BezierModel::BezierModel(Bezier* b, QGraphicsItem* parent) : QGraphicsItem(parent)
-{
-	bezier = b;
-}
 
-QRectF BezierModel::boundingRect() const {
-	return QRectF(0, 0, 1920, 1080);
+QRectF BezierModel::boundingRect() const
+{
+	return QRect(0, 0, 1920, 1080); 
 }
 
 

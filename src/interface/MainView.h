@@ -2,9 +2,11 @@
 #ifndef INCLUDED_MAINVIEW_H
 #define INCLUDED_MAINVIEW_H
 #include <QtGui>
-#include "Point.h"
 #include <QGraphicsView>
 #include "../manager/Manager.h"
+
+class Point;
+class Model;
 
 class MainView : public QGraphicsView
 {
@@ -14,6 +16,8 @@ private:
 	Manager* manager;
 
 	Point* mousePos;
+
+	std::vector<QGraphicsItem*> items;
 public:
 	MainView(Manager* m);
 	~MainView() {}
@@ -22,11 +26,14 @@ public:
 
 	QGraphicsScene* getScene() { return scene; }
 
-	void draw(Item* item);	
+	void draw(QGraphicsItem* model);	
+
+	void save(QGraphicsItem* model);
+	void erase(Model* model);
+	void eraseLastItem();
 	
 	Point* qpointToPoint(QPoint p);
 
-	QGraphicsItem* itemCast(Item* item);
 protected:
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;

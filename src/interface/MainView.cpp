@@ -1,21 +1,17 @@
-#include "MainView.h"
 #include "QWidget"
-#include "MainScreen.h"
-#include "Item.h"
-#include "Line.h"
-#include "Bezier.h"
-#include "Arch.h"
-
+#include "Model.h"
+#include "MainView.h"
 #include "LineModel.h"
-#include "BezierModel.h"
 #include "ArchModel.h"
+#include "MainScreen.h"
+#include "BezierModel.h"
 #include "../manager/Manager.h"
 
 MainView::MainView(Manager* m)
 {
 	manager = m;
 
-	setMinimumSize(1920, 1020);
+	setMinimumSize(1920, 1080);
 	showMaximized();
 
 	scene = new QGraphicsScene(this);
@@ -25,18 +21,30 @@ MainView::MainView(Manager* m)
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-
-void MainView::draw(Item* item)
+void MainView::save(QGraphicsItem* model) 
 {
-	itemCast(item);
-	scene->addItem(item);
-	scene->update();\
+	items.push_back(model);
 }
 
-QGraphicsItem* itemCast(Item* item)
+void MainView::erase(Model* model) 
 {
-	if (Line* l = dynamic_cast<Line*>(item))
-		return new LineModel(l->getP1(), l->getP2());
+	for (int i = 0; i < items.size(); i++) {
+		Model* m = dynamic_cast<Model*>(items.at(i));
+		
+		if ( m->operator==(model) )
+			items.erase(items.begin() + i);
+	}
+}
+
+void MainView::eraseLastItem()
+{
+	items.erase(items.end());
+}
+
+void MainView::draw(QGraphicsItem* model)
+{
+	scene->addItem(model);
+	scene->update();
 }
 
 
@@ -75,8 +83,7 @@ void MainView::wheelEvent(QWheelEvent* event)
 
 Point* MainView::qpointToPoint(QPoint p)
 {
-	Point* a = new Point(p.x(), p.y());
-	return a;
+	return new Point(p.x(), p.y());
 }
 
 

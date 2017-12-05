@@ -31,25 +31,22 @@ public:
 	int start(int argc, char** argv);
 
 	/////GETTERS
-	MainCmd* getCmd() { return cmdmain; }
+	MainCmd* getCmdMain() { return cmdmain; }
+	Cmd* getCmd() { return cmd; }
 	MainScreen* getScreen() { return screen; }
 	MainView* getView() { return view; }
 	Data* getData() { return data; }
 
 	/////CMD	
-	void setCmdMain(MainCmd* cmd) { cmdmain = cmd; }
+	void setCmdMain(MainCmd* cmd);
+
+	void runCmd(Cmd* command);
 
 	void setCmd(Cmd* cmmd) { cmd = cmmd; }
 	void executeCmd();
 	void deleteCmd() { delete cmd; }
 	void setCmdIdle();
 
-	void runCmd(Cmd* command);
-
-
-	/////FILE
-	void saveFile();
-	void openFile();
 };
 
 #endif 

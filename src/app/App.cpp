@@ -16,7 +16,8 @@ App::~App() {
 App::App()
 {		
 	data = new Data();		
-	cmd = new MainCmdLine();
+	cmdmain = new MainCmdLine(data, view, LINE);
+	cmd = new CmdIdle();
 	view = screen->getView();
 	manager = Manager::getInstance();
 	screen = new MainScreen(manager);
@@ -40,6 +41,11 @@ int App::start(int argc, char** argv)
 }
 
 /////CMD
+void App::setCmdMain(MainCmd* cmd) {
+	cmdmain = cmd; 
+	cmdmain->execute();
+}
+
 void App::executeCmd()
 {
 	cmd->execute(*data, *screen);
@@ -57,7 +63,3 @@ void App::runCmd(Cmd* command)
 	deleteCmd();
 	setCmdIdle();
 }
-
-/////FILE
-void saveFile(){}
-void openFile(){}

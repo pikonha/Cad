@@ -2,22 +2,20 @@
 #ifndef INCLUDED_LINEMODEL_H
 #define INCLUDED_LINEMODEL_H
 #include <QGraphicsItem>
+#include "Model.h"
 
-class Line;
-
-class LineModel : public QGraphicsItem
+class LineModel : public QGraphicsItem, public Model
 {
-private:
-	Line* line;	
+public:
+	LineModel() {}
+	LineModel(Item* i, QGraphicsItem* parent = 0) : QGraphicsItem(parent), Model(i) {}
+	~LineModel() {}
 
+protected:
 	QRectF boundingRect() const override;
 	void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 	QPainterPath getPath();
-public:
-	LineModel() {}
-	LineModel(Line* l, QGraphicsItem* parent = 0);
-	~LineModel();
 };
 
 #endif

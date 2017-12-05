@@ -6,8 +6,8 @@
 
 class Cmd {
 public:
-	Cmd();
-	virtual ~Cmd();
+	Cmd() {}
+	virtual ~Cmd() {}
 
 	virtual void execute(Data& d, MainScreen& s) = 0;
 };
