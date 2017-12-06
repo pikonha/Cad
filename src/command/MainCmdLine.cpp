@@ -16,13 +16,10 @@ void MainCmdLine::setP2(Point p)
 {
 	line->setY(p);
 	draw();
-}
-	 
-void MainCmdLine::draw()
-{
-	LineModel* model = new LineModel(line);
-	view->draw(model);
-	
-	save(model);
-}
+}	 
 
+
+QGraphicsItem* MainCmdLine::getModel()
+{
+	return new LineModel(line);
+}

@@ -20,7 +20,7 @@ public:
 
 	Item* getItem() { return line; }
 
-	void draw();
+	QGraphicsItem* getModel();
 };
 
 #endif

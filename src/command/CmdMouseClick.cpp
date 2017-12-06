@@ -6,11 +6,13 @@ void CmdMouseClick::execute(Data& d, MainScreen& s)
 {
 	MainCmd* cmd = Manager::getInstance()->getMainCmd();
 
-	if (cmd->getDrawing())
-		cmd->setDrawing(false);
-
-	else {
+	if (!cmd->getDrawing()) {
 		cmd->setP1(*s.getView()->getMousePos());
-		cmd->setDrawing(true);
+
+		if (cmd->getForm() == LINE)
+			cmd->setDrawing(true);
+
+		else
+			cmd->setAuxDraw(true);
 	}
 }

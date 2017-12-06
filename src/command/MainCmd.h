@@ -1,11 +1,10 @@
 #pragma once
 #ifndef INCLUDED_MAINCMD_H
 #define INCLUDED_MAINCMD_H
-#include "Data.h"
 #include "MainView.h"
-#include "Item.h"
 #include "Form.h"
-#include "LineModel.h"
+#include "Data.h"
+#include "AuxLineModel.h"
 
 class MainCmd
 {
@@ -15,11 +14,11 @@ protected:
 	Form form;
 
 	bool drawing;
-	bool drawingAux;
+	bool auxDraw;
 
-	QGraphicsItem* auxLine;
+	AuxLineModel* auxLine;
 public:
-	MainCmd(Data* d, MainView* s, Form f) { data = d; view = s; form = f; drawing = drawingAux = false; }
+	MainCmd(Data* d, MainView* s, Form f) { data = d; view = s; form = f; drawing = auxDraw = false; }
 	~MainCmd() {}
 
 	virtual void execute() = 0;
@@ -27,23 +26,25 @@ public:
 	virtual void setP1(Point p) = 0;
 	virtual void setP2(Point p) = 0;
 	virtual void setP3(Point p) {}
-	
+
 	virtual void draw() = 0;
 
 	bool getDrawing() { return drawing; }
 	void setDrawing(bool d) { drawing = d; view->setMouseTracking(d); }
 
-	bool getDrawingAux() { return drawingAux; }
-	void setDrawingAux(bool b) { drawingAux = b; }
+	bool getAuxDraw() { return auxDraw; }
+	void setAuxDraw(bool status) { auxDraw = status; }
 
-	virtual void createAuxLine(LineModel* i) { auxLine = i; }
-	QGraphicsItem* getAuxLine() { retrun auxLine; }
-
-	void save(QGraphicsItem* model) { view->save(model); }
+	virtual void createAuxLine(Point p, Point o);
+	virtual AuxLineModel* getAuxLine();
 
 	Form getForm() { return form; }
 
 	virtual Item* getItem() = 0;
+
+	void draw();
+
+	virtual QGraphicsItem* getModel() = 0;
 };
 
 #endif

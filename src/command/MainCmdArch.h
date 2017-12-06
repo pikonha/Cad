@@ -3,6 +3,7 @@
 #define INCLUDED_MAINCMDARCH_H
 #include "MainCmd.h"
 
+class AuxLineModel;
 class Arch;
 
 class MainCmdArch :	public MainCmd
@@ -22,7 +23,7 @@ public:
 
 	Item* getItem() { return arch; }
 
-	void draw();
+	QGraphicsItem* getModel();
 };
 
 #endif

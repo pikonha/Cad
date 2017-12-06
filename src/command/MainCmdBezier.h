@@ -21,8 +21,7 @@ public:
 
 	Item* getItem() { return bezier; }
 
-	void draw();
-
+	QGraphicsItem* getModel();
 };
 
 #endif

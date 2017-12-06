@@ -1,6 +1,7 @@
 #include "MainCmdArch.h"
 #include "ArchModel.h"
 #include "Arch.h"
+#include "AuxLineModel.h"
 
 void MainCmdArch::execute()
 {
@@ -24,8 +25,8 @@ void MainCmdArch::setP3(Point p)
 	draw();
 }
 
-void MainCmdArch::draw()
+QGraphicsItem* MainCmdArch::getModel()
 {
-	ArchModel* a = new ArchModel(arch);
-	view->getScene()->addItem(a);
+	return new ArchModel(arch);
 }
+

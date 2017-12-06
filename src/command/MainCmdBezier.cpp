@@ -24,8 +24,7 @@ void MainCmdBezier::setP3(Point p)
 	draw();
 }
 
-void MainCmdBezier::draw()
+QGraphicsItem* MainCmdBezier::getModel()
 {
-	BezierModel* b = new BezierModel(bezier);
-	view->getScene()->addItem(b);
+	return new BezierModel(bezier);
 }

@@ -1,18 +1,21 @@
 #include "CmdMouseMove.h"
 #include "MainCmd.h"
-#include "LineModel.h"
-#include "Line.h"
 
 void CmdMouseMove(Data& d, MainScreen& s)
 {
 	MainCmd* cmd = Manager::getInstance()->getMainCmd();
 	
-	if (cmd->getDrawing()) {
-		cmd->setP2(*s.getView()->getMousePos());
+	if (cmd->getDrawing() || cmd->getAuxDraw())  {
+		
+		if(cmd->getForm() == LINE)
+			cmd->setP2(*s.getView()->getMousePos());
 
-		LineModel* line = new LineModel(new Line(cmd->getItem()->getP1(), cmd->getItem()->getP2()));
-		cmd->createAuxLine(line);
+		if (cmd->getForm() != LINE)
+		{
+			cmd->createAuxLine(cmd->getItem()->getP1(), cmd->getItem()->getP2());
+			s.getView()->draw(cmd->getAuxLine());
+		}
 
-		s.getView()->draw(cmd->getAuxLine());
+		
 	}
 }
