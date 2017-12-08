@@ -6,11 +6,11 @@
 #include "MainScreen.h"
 #include "BezierModel.h"
 #include "../manager/Manager.h"
+#include "../data/Point.h"
 
 MainView::MainView(Manager* m)
 {
 	manager = m;
-
 	setMinimumSize(1920, 1080);
 	showMaximized();
 

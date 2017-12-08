@@ -2,8 +2,7 @@
 #ifndef INCLUDED_MAINCMDBEZIER_H
 #define INCLUDED_MAINCMDBEZIER_H
 #include "MainCmd.h"
-
-class Bezier;
+#include "Bezier.h"
 
 class MainCmdBezier : public MainCmd
 {

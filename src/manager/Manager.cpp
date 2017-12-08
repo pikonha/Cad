@@ -1,4 +1,4 @@
-#include "App.h"
+#include "Cmd.h"
 #include "CmdNew.h"
 #include "Manager.h"
 #include "CmdIdle.h"
@@ -17,51 +17,58 @@
 #include "CmdClearAllItems.h"
 #include "CmdClearLastItem.h"
 
-Manager* Manager::manager = nullptr;
-Manager* Manager::getInstance()
+Manager::Manager(Data* d, MainScreen* s)
 {
-	if (!manager)
-		manager = new Manager(App::getInstance());
-
-	return manager;
+	data = d;
+	screen = s;
+	setLine();
+	cmd = new CmdIdle();
 }
 
-/////DOMAIN
+/////CMD
 void Manager::setLine()
 {
-	app->setCmdMain(new MainCmdLine(app->getData(), app->getView(), LINE));
+	cmdmain = new MainCmdLine(data, screen->getView(), LINE);
 }
 
 void Manager::setBezier()
 {
-	app->setCmdMain(new MainCmdBezier(app->getData(), app->getView(), BEZIER));
+	cmdmain = new MainCmdBezier(data, screen->getView(), BEZIER);
 }
 
 void Manager::setArch()
 {
-	app->setCmdMain(new MainCmdArch(app->getData(), app->getView(), ARCH));
+	cmdmain = new MainCmdArch(data, screen->getView(), ARCH);
+}
+
+void Manager::runCmd(Cmd* command)
+{
+	cmd = command;
+	cmd->execute(*data, *screen);
+	delete cmd;
+	cmd = new CmdIdle();
 }
 
 /////MOUSE
 void Manager::mousePressEvent()
 {
-	app->runCmd(new CmdMouseClick());
+	runCmd(new CmdMouseClick());
 }
 
 void Manager::mouseReleaseEvent()
 {
-	app->runCmd(new CmdMouseRelease());
+	runCmd(new CmdMouseRelease());
 }
 
 void Manager::mouseMoveEvent()
 {
-	app->runCmd(new CmdMouseMove());
+	runCmd(new CmdMouseMove());
 
 }
 
 void Manager::wheelEvent()
 {
-	app->runCmd(new CmdWheelEvent());
+	runCmd(new CmdWheelEvent());
 }
 
 /////FILE
@@ -93,16 +100,11 @@ void Manager::closeFile()
 /////ITEMS
 void Manager::clearLastItem()
 {
-	app->runCmd(new CmdClearLastItem());
+	runCmd(new CmdClearLastItem());
 }
 
 void Manager::clearAllItems()
 {
-	app->runCmd(new CmdClearAllItems());
+	runCmd(new CmdClearAllItems());
 }
 
-/////APP
-MainCmd* Manager::getMainCmd()
-{
-	return app->getCmdMain();
-}

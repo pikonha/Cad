@@ -9,10 +9,11 @@
 
 MainScreen::MainScreen(Manager* m, QMainWindow* parent) : QMainWindow(parent)
 {
+	manager = m;
 	setFixedSize(1920, 1020);
 	showMaximized();
 
-	view = new MainView(m);
+	view = new MainView();
 	navbar = menuBar();	
 	status = new QStatusBar(this);
 	setStatusBar(status);
@@ -49,18 +50,18 @@ MainScreen::MainScreen(Manager* m, QMainWindow* parent) : QMainWindow(parent)
 	
 	setCentralWidget(view);
 
-	connect(line, &QAction::triggered, m, &Manager::setLine);
-	connect(bezier, &QAction::triggered, m, &Manager::setBezier);
-	connect(arc, &QAction::triggered, m, &Manager::setArch);
-	
+	//connect(line, &QAction::triggered, m, &Manager::setLine);
+	//connect(bezier, &QAction::triggered, m, &Manager::setBezier);
+	//connect(arc, &QAction::triggered, m, &Manager::setArch);
+	//
 
-	connect(open, &QAction::triggered, m, &Manager::openFile);
-	connect(save, &QAction::triggered, m, &Manager::saveFile);
-	connect(clear, &QAction::triggered, m, &Manager::clearAllItems);
-	connect(close, &QAction::triggered, this, &MainScreen::close);
+	//connect(open, &QAction::triggered, m, &Manager::openFile);
+	//connect(save, &QAction::triggered, m, &Manager::saveFile);
+	//connect(clear, &QAction::triggered, m, &Manager::clearAllItems);
+	//connect(close, &QAction::triggered, this, &MainScreen::close);
 
-	QShortcut* undone = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this);
-	connect(undone, &QShortcut::activated, m, &Manager::clearLastItem);
+	//QShortcut* undone = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this);
+	//connect(undone, &QShortcut::activated, m, &Manager::clearLastItem);
 }
 
 
@@ -70,7 +71,7 @@ MainScreen::~MainScreen()
 }
 
 
-int MainScreen::start()
+void MainScreen::start()
 {
 	show();
 }

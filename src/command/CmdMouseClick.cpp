@@ -15,4 +15,9 @@ void CmdMouseClick::execute(Data& d, MainScreen& s)
 		else
 			cmd->setAuxDraw(true);
 	}
+	else
+		if (cmd->getForm() != LINE) {
+			s.getView()->save(cmd->getModel());
+			cmd->setDrawing(false);
+		}
 }

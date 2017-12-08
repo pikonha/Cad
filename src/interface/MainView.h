@@ -10,14 +10,14 @@ class Model;
 
 class MainView : public QGraphicsView
 {
-	Q_OBJECT
 private:
 	QGraphicsScene* scene;
-	Manager* manager;
 
 	Point* mousePos;
 
 	std::vector<QGraphicsItem*> items;
+
+	Manager* manager;
 public:
 	MainView(Manager* m);
 	~MainView() {}

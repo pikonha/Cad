@@ -10,12 +10,13 @@ private:
 	MainView* view;
 	QMenuBar* navbar;
 	QStatusBar* status;
-	
+
+	Manager* manager;
 public:	
 	MainScreen(Manager* m, QMainWindow* parent = 0);
-	virtual ~MainScreen();
+	~MainScreen();
 
-	int start();
+	void start();
 
 	void setZoom(double scale);
 

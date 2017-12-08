@@ -1,20 +1,21 @@
 #pragma once
 #ifndef INCLUDED_MANAGER_H
 #define INCLUDED_MANAGER_H
-#include "Point.h"
 
-class App;
 class MainCmd;
+class MainScreen;
+class Data;
+class Cmd;
 
 class Manager
 {
-private:
-	static Manager* manager;
-	App* app;
-	Manager(App* appl) { app = appl; }
-	
+private:	
+	MainScreen* screen;	
+	MainCmd* cmdmain;
+	Data* data;
+	Cmd* cmd;	
 public:
-	static Manager* getInstance();
+	Manager(Data* d, MainScreen* screen);
 	~Manager() {}
 
 	/////MOUSE
@@ -39,8 +40,11 @@ public:
 	void clearLastItem();
 	void clearAllItems();
 
-	/////APP
-	MainCmd* getMainCmd();
+	/////CMD
+	MainCmd* getCmdMain() { return cmdmain; }
+	Cmd* getCmd() { return cmd; }
+
+	void runCmd(Cmd* command);
 };
 
 #endif

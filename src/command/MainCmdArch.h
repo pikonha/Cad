@@ -2,9 +2,9 @@
 #ifndef INCLUDED_MAINCMDARCH_H
 #define INCLUDED_MAINCMDARCH_H
 #include "MainCmd.h"
-
+#include "Arch.h"
 class AuxLineModel;
-class Arch;
+
 
 class MainCmdArch :	public MainCmd
 {

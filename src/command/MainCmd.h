@@ -27,8 +27,6 @@ public:
 	virtual void setP2(Point p) = 0;
 	virtual void setP3(Point p) {}
 
-	virtual void draw() = 0;
-
 	bool getDrawing() { return drawing; }
 	void setDrawing(bool d) { drawing = d; view->setMouseTracking(d); }
 
