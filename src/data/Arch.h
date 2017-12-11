@@ -10,27 +10,27 @@ class Line;
 class Arch : public Item
 {
 private:
-	Point z;
+	Point* z;
 
 	Line* raio;
 	double angle;
-	Point center;
-	Point control;
+	Point* center;
+	Point* control;
 
 
-	double pointDistance(Point x, Point y);
-	int getQuadrant(Point a);
+	double pointDistance(Point* x, Point* y);
+	int getQuadrant(Point* a);
 	double getAngleArcSen(double cateto, double hipotenusa);
 	Point findArchPoint(double auxAngle);
 
 public:
 	Arch() {}
-	Arch(Point a, Point b, Point c);
+	Arch(Point* a, Point* b, Point* c);
 	~Arch() {}
 
-	std::vector<Point> getPoints();
+	std::vector<Point*> getPoints();
 
-	void setZ(Point p) { z = p; }
+	void setZ(Point* p) { z = p; }
 };
 
 

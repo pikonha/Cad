@@ -1,7 +1,6 @@
 #pragma once
 #ifndef INCLUDED_MAINVIEW_H
 #define INCLUDED_MAINVIEW_H
-#include <QtGui>
 #include <QGraphicsView>
 #include "../manager/Manager.h"
 
@@ -19,8 +18,10 @@ private:
 
 	Manager* manager;
 public:
-	MainView(Manager* m);
+	MainView();
 	~MainView() {}
+
+	void setManager(Manager* m) { manager = m; }
 
 	Point* getMousePos() { return mousePos; }
 

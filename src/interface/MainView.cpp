@@ -7,10 +7,10 @@
 #include "BezierModel.h"
 #include "../manager/Manager.h"
 #include "../data/Point.h"
+#include <QtGui>
 
-MainView::MainView(Manager* m)
+MainView::MainView()
 {
-	manager = m;
 	setMinimumSize(1920, 1080);
 	showMaximized();
 

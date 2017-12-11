@@ -28,17 +28,17 @@ Manager::Manager(Data* d, MainScreen* s)
 /////CMD
 void Manager::setLine()
 {
-	cmdmain = new MainCmdLine(data, screen->getView(), LINE);
+	cmdmain = new MainCmdLine(screen, LINE);
 }
 
 void Manager::setBezier()
 {
-	cmdmain = new MainCmdBezier(data, screen->getView(), BEZIER);
+	cmdmain = new MainCmdBezier(screen, BEZIER);
 }
 
 void Manager::setArch()
 {
-	cmdmain = new MainCmdArch(data, screen->getView(), ARCH);
+	cmdmain = new MainCmdArch(screen, ARCH);
 }
 
 void Manager::runCmd(Cmd* command)
@@ -63,7 +63,6 @@ void Manager::mouseReleaseEvent()
 void Manager::mouseMoveEvent()
 {
 	runCmd(new CmdMouseMove());
-
 }
 
 void Manager::wheelEvent()

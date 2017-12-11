@@ -1,9 +1,9 @@
 #include "MainCmdLine.h"
 #include "Item.h"
 
-void MainCmdLine::execute()
+void MainCmdLine::execute(Data& d, MainScreen& s)
 {
-	data->setForm(LINE);
+	d.setForm(LINE);
 	line = new Line();
 }
 

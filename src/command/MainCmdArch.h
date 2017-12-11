@@ -12,10 +12,10 @@ private:
 	Arch* arch;
 
 public:
-	MainCmdArch(Data* d, MainView* s, Form f) : MainCmd(d, s, f) {}
+	MainCmdArch(MainScreen* view, Form f) : MainCmd(view, f) {}
 	~MainCmdArch() {}
 	
-	void execute();
+	void execute(Data& d, MainScreen& s);
 
 	void setP1(Point p);
 	void setP2(Point p);

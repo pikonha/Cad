@@ -10,10 +10,10 @@ class MainCmdLine :	public MainCmd
 private:
 	Line* line;
 public:
-	MainCmdLine(Data* d, MainView* s, Form f) : MainCmd(d, s, f) {}
+	MainCmdLine(MainScreen* view, Form f) : MainCmd(view, f) {}
 	~MainCmdLine() {}
 
-	void execute();
+	void execute(Data& d, MainScreen& s);
 	
 	void setP1(Point p);
 	void setP2(Point p);

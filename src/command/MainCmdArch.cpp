@@ -3,9 +3,9 @@
 #include "Arch.h"
 #include "AuxLineModel.h"
 
-void MainCmdArch::execute()
+void MainCmdArch::execute(Data& d, MainScreen& s)
 {
-	data->setForm(ARCH);
+	d.setForm(ARCH);
 	arch = new Arch();
 }
 

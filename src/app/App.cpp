@@ -16,9 +16,6 @@ App::~App() {
 App::App()
 {		
 	data = new Data();		
-	view = screen->getView();
-	screen = new MainScreen(manager);
-	manager = new Manager(data, screen);
 }
 
 App* App::app = nullptr;
@@ -33,6 +30,11 @@ App* App::getInstance()
 int App::start(int argc, char** argv)
 {
 	QApplication app(argc, argv);
+	screen = new MainScreen(manager);
+	view = screen->getView();
+	manager = new Manager(data, screen);
+	view->setManager(manager);
+
 	screen->start();
 
 	return app.exec();

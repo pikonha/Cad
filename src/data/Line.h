@@ -8,10 +8,10 @@ class Line : public Item
 {
 public:
 	Line() {}
-	Line(Point a, Point b) : Item(a,b) {}
+	Line(Point* a, Point* b) : Item(a,b) {}
 	~Line() {}
 
-	std::vector<Point> getPoints();
+	std::vector<Point*> getPoints();
 };
 
 #endif

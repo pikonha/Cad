@@ -1,9 +1,10 @@
 #include "CmdMouseMove.h"
 #include "MainCmd.h"
+#include "..//app/App.h"
 
-void CmdMouseMove(Data& d, MainScreen& s)
+void CmdMouseMove::execute(Data& d, MainScreen& s)
 {
-	MainCmd* cmd = Manager::getInstance()->getMainCmd();
+	MainCmd* cmd = App::getInstance()->getManager()->getCmdMain();
 	
 	if (cmd->getAuxDraw())
 	{

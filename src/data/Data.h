@@ -13,7 +13,6 @@ private:
 	Form currentForm;
 
 	std::vector<Item*> itens;
-
 public:
 	Data() { currentForm = LINE;  }
 	~Data() { clearItens(); }

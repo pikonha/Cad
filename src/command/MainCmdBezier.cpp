@@ -2,9 +2,9 @@
 #include "Bezier.h"
 #include "BezierModel.h"
 
-void MainCmdBezier::execute()
+void MainCmdBezier::execute(Data& d, MainScreen& s)
 {
-	data->setForm(BEZIER);
+	d.setForm(BEZIER);
 	bezier = new Bezier();
 }
 

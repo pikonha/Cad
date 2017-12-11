@@ -4,16 +4,16 @@
 #include <math.h>
 
 
-Arch::Arch(Point a, Point b, Point c) : Item(a,b)
+Arch::Arch(Point* a, Point* b, Point* c) : Item(a,b)
 {
 	raio = new Line(a, b);
 	center = a;
 	control = c;
 }
 
-double Arch::pointDistance(Point x, Point y)
+double Arch::pointDistance(Point* x, Point* y)
 {
-	return std::sqrt(pow(y.getX() - x.getX(), 2) + pow(y.getY() - x.getY(), 2));
+	return std::sqrt(pow(y->getX() - x->getX(), 2) + pow(y->getY() - x->getY(), 2));
 }
 
 
@@ -29,18 +29,18 @@ Point Arch::findArchPoint(double auxAngle) {
 	double auxX = cos(ang) * raioLenght;
 	double auxY = sin(ang) * raioLenght;
 
-	double a = center.getX() + auxX;
-	double b = center.getY() - auxY;
+	double a = center->getX() + auxX;
+	double b = center->getY() - auxY;
 
 	return Point(a, b);
 }
 
-std::vector<Point> Arch::getPoints()
+std::vector<Point*> Arch::getPoints()
 {
 	double raioLenght = pointDistance(raio->getP1(), raio->getP2());
 	double incrementAngle;
 
-	std::vector<Point> points;
+	std::vector<Point*> points;
 	points.push_back(raio->getP2());
 
 	int quadrantControle = getQuadrant(control);
@@ -60,8 +60,8 @@ std::vector<Point> Arch::getPoints()
 		switch (quadrantControle) {
 		case 1:
 
-			if (raio->getP2().getX() < control.getX()) {
-				distanceEB = pointDistance(Point(center.getX(), raio->getP2().getY()), raio->getP2());
+			if (raio->getP2()->getX() < control->getX()) {
+				distanceEB = pointDistance(Point(center->getX(), raio->getP2()->getY()), raio->getP2());
 				angleG = getAngleArcSen(distanceEB, raioLenght);
 
 				distanceDC = pointDistance(Point(control.getX(), center.getY()), control);

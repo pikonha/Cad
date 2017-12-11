@@ -24,6 +24,8 @@ public:
 	/////SETUP
 	static App* getInstance();
 	int start(int argc, char** argv);
+
+	Manager* getManager() { return manager; }
 };
 
 #endif 
