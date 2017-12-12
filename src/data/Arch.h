@@ -24,7 +24,7 @@ private:
 	Point* findArchPoint(double auxAngle);
 
 public:
-	Arch() {}
+	Arch() : Item() {}
 	Arch(Point* a, Point* b, Point* c);
 	~Arch() {}
 

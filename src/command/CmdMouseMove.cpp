@@ -8,8 +8,11 @@ void CmdMouseMove::execute(Data& d, MainScreen& s)
 	
 	if (cmd->getAuxDraw())
 	{
+		cmd->setP2(s.getView()->getMousePos());
 		cmd->createAuxLine(cmd->getItem()->getP1(), cmd->getItem()->getP2());
 		s.getView()->draw(cmd->getAuxLine());
+		
+		return;
 	}
 
 
@@ -18,8 +21,8 @@ void CmdMouseMove::execute(Data& d, MainScreen& s)
 		if (cmd->getForm() == LINE)
 			cmd->setP2(s.getView()->getMousePos());
 
-		else
+		else {
 			cmd->setP3(s.getView()->getMousePos());
-		
+		}		
 	}
 }

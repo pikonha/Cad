@@ -11,7 +11,7 @@ private:
 	Point* z;
 
 public:
-	Bezier() {}
+	Bezier() : Item() {}
 	Bezier(Point* a, Point* b, Point* c) : Item(a, b) { z = c; }
 	~Bezier() {}
 

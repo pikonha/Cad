@@ -14,8 +14,8 @@ void CmdMouseRelease::execute(Data& d, MainScreen& s)
 	}
 	else
 	{
-		cmd->setDrawing(true, s.getView());
 		cmd->setAuxDraw(false, s.getView());
+		cmd->setDrawing(true, s.getView());
 	}
 
 }
