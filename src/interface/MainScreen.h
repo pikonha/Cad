@@ -23,6 +23,18 @@ public:
 	void setTxtStatusBar();
 
 	MainView* getView() { return view; }
+
+	void setLine();
+	void setBezier();
+	void setArch();
+	
+	void openFile();
+	void saveFile();
+	void clearAllItems();
+	void close();
+	void clearLastItem();
+
+
 };
 
 #endif

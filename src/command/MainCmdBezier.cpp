@@ -8,17 +8,17 @@ void MainCmdBezier::execute(Data& d, MainScreen& s)
 	bezier = new Bezier();
 }
 
-void MainCmdBezier::setP1(Point p)
+void MainCmdBezier::setP1(Point* p)
 {
 	bezier->setX(p);
 }
 
-void MainCmdBezier::setP2(Point p)
+void MainCmdBezier::setP2(Point* p)
 {
 	bezier->setY(p);
 }
 
-void MainCmdBezier::setP3(Point p)
+void MainCmdBezier::setP3(Point* p)
 {
 	bezier->setZ(p);
 	draw();

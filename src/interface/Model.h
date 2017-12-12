@@ -23,7 +23,7 @@ protected:
 
 	QPainterPath getPath();
 
-	QPoint* pointConversor(Point p);
+	QPoint* pointConversor(Point* p);
 };
 
 #endif

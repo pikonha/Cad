@@ -15,7 +15,8 @@ App::~App() {
 /////SETUP
 App::App()
 {		
-	data = new Data();		
+	data = new Data();
+	manager = new Manager(data);
 }
 
 App* App::app = nullptr;
@@ -29,11 +30,15 @@ App* App::getInstance()
 
 int App::start(int argc, char** argv)
 {
-	QApplication app(argc, argv);
+	QApplication app(argc, argv);		
+
 	screen = new MainScreen(manager);
 	view = screen->getView();
-	manager = new Manager(data, screen);
+
+	manager->setScreen(screen);
 	view->setManager(manager);
+
+	manager->setLine();
 
 	screen->start();
 

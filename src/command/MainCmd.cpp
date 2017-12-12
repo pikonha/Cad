@@ -1,6 +1,6 @@
 #include "MainCmd.h"
 
-void MainCmd::createAuxLine(Point p, Point o)
+void MainCmd::createAuxLine(Point* p, Point* o)
 {
 	if (auxLine)
 		delete auxLine;

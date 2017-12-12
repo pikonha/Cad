@@ -7,12 +7,12 @@ void MainCmdLine::execute(Data& d, MainScreen& s)
 	line = new Line();
 }
 
-void MainCmdLine::setP1(Point p)
+void MainCmdLine::setP1(Point* p)
 {
 	line->setX(p);
 }
 
-void MainCmdLine::setP2(Point p)
+void MainCmdLine::setP2(Point* p)
 {
 	line->setY(p);
 	draw();

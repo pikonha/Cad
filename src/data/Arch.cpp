@@ -21,7 +21,7 @@ double Arch::getAngleArcSen(double cateto, double hipotenusa) {
 	return asin(cateto / hipotenusa) * 180 / M_PI;
 }
 
-Point Arch::findArchPoint(double auxAngle) {
+Point* Arch::findArchPoint(double auxAngle) {
 	double raioLenght = pointDistance(raio->getP1(), raio->getP2());
 
 	double ang = auxAngle * M_PI / 180;
@@ -32,7 +32,7 @@ Point Arch::findArchPoint(double auxAngle) {
 	double a = center->getX() + auxX;
 	double b = center->getY() - auxY;
 
-	return Point(a, b);
+	return new Point(a, b);
 }
 
 std::vector<Point*> Arch::getPoints()
@@ -61,10 +61,10 @@ std::vector<Point*> Arch::getPoints()
 		case 1:
 
 			if (raio->getP2()->getX() < control->getX()) {
-				distanceEB = pointDistance(Point(center->getX(), raio->getP2()->getY()), raio->getP2());
+				distanceEB = pointDistance(new Point(center->getX(), raio->getP2()->getY()), raio->getP2());
 				angleG = getAngleArcSen(distanceEB, raioLenght);
 
-				distanceDC = pointDistance(Point(control.getX(), center.getY()), control);
+				distanceDC = pointDistance(new Point(control->getX(), center->getY()), control);
 				distanceAC = pointDistance(center, control);
 				angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -80,10 +80,10 @@ std::vector<Point*> Arch::getPoints()
 			}
 			else
 			{
-				distanceEB = pointDistance(Point(raio->getP2().getX(), center.getY()), raio->getP2());
+				distanceEB = pointDistance(new Point(raio->getP2()->getX(), center->getY()), raio->getP2());
 				angleG = getAngleArcSen(distanceEB, raioLenght);
 
-				distanceDC = pointDistance(Point(center.getX(), control.getY()), control);
+				distanceDC = pointDistance(new Point(center->getX(), control->getY()), control);
 				distanceAC = pointDistance(center, control);
 				angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -102,10 +102,10 @@ std::vector<Point*> Arch::getPoints()
 
 		case 2:
 
-			distanceEB = pointDistance(Point(raio->getP2().getX(), center.getY()), raio->getP2());
+			distanceEB = pointDistance(new Point(raio->getP2()->getX(), center->getY()), raio->getP2());
 			angleG = getAngleArcSen(distanceEB, raioLenght);
 
-			distanceDC = pointDistance(Point(control.getX(), center.getY()), control);
+			distanceDC = pointDistance(new Point(control->getX(), center->getY()), control);
 			distanceAC = pointDistance(center, control);
 			angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -121,10 +121,10 @@ std::vector<Point*> Arch::getPoints()
 			break;
 
 		case 3:
-			distanceEB = pointDistance(Point(raio->getP2().getX(), center.getY()), raio->getP2());
+			distanceEB = pointDistance(new Point(raio->getP2()->getX(), center->getY()), raio->getP2());
 			angleG = getAngleArcSen(distanceEB, raioLenght);
 
-			distanceDC = pointDistance(Point(center.getX(), control.getY()), control);
+			distanceDC = pointDistance(new Point(center->getX(), control->getY()), control);
 			distanceAC = pointDistance(center, control);
 			angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -140,10 +140,10 @@ std::vector<Point*> Arch::getPoints()
 
 		case 4:
 
-			distanceEB = pointDistance(Point(raio->getP2().getX(), center.getY()), raio->getP2());
+			distanceEB = pointDistance(new Point(raio->getP2()->getX(), center->getY()), raio->getP2());
 			angleG = getAngleArcSen(distanceEB, raioLenght);
 
-			distanceDC = pointDistance(Point(control.getX(), center.getY()), control);
+			distanceDC = pointDistance(new Point(control->getX(), center->getY()), control);
 			distanceAC = pointDistance(center, control);
 			angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -164,10 +164,10 @@ std::vector<Point*> Arch::getPoints()
 		switch (quadrantControle) {
 		case 1:
 
-			distanceEB = pointDistance(Point(center.getX(), raio->getP2().getY()), raio->getP2());
+			distanceEB = pointDistance(new Point(center->getX(), raio->getP2()->getY()), raio->getP2());
 			angleG = getAngleArcSen(distanceEB, raioLenght);
 
-			distanceDC = pointDistance(Point(center.getX(), control.getY()), control);
+			distanceDC = pointDistance(new Point(center->getX(), control->getY()), control);
 			distanceAC = pointDistance(center, control);
 			angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -185,11 +185,11 @@ std::vector<Point*> Arch::getPoints()
 
 		case 2:
 
-			if (raio->getP2().getX() < control.getX()) {
-				distanceEB = pointDistance(Point(raio->getP2().getX(), center.getY()), raio->getP2());
+			if (raio->getP2()->getX() < control->getX()) {
+				distanceEB = pointDistance(new Point(raio->getP2()->getX(), center->getY()), raio->getP2());
 				angleG = getAngleArcSen(distanceEB, raioLenght);
 
-				distanceDC = pointDistance(Point(center.getX(), control.getY()), control);
+				distanceDC = pointDistance(new Point(center->getX(), control->getY()), control);
 				distanceAC = pointDistance(center, control);
 				angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -205,10 +205,10 @@ std::vector<Point*> Arch::getPoints()
 			}
 			else
 			{
-				distanceEB = pointDistance(Point(center.getX(), raio->getP2().getY()), raio->getP2());
+				distanceEB = pointDistance(new Point(center->getX(), raio->getP2()->getY()), raio->getP2());
 				angleG = getAngleArcSen(distanceEB, raioLenght);
 
-				distanceDC = pointDistance(Point(control.getX(), center.getY()), control);
+				distanceDC = pointDistance(new Point(control->getX(), center->getY()), control);
 				distanceAC = pointDistance(center, control);
 				angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -225,10 +225,10 @@ std::vector<Point*> Arch::getPoints()
 			break;
 
 		case 3:
-			distanceEB = pointDistance(Point(center.getX(), raio->getP2().getY()), raio->getP2());
+			distanceEB = pointDistance(new Point(center->getX(), raio->getP2()->getY()), raio->getP2());
 			angleG = getAngleArcSen(distanceEB, raioLenght);
 
-			distanceDC = pointDistance(Point(center.getX(), control.getY()), control);
+			distanceDC = pointDistance(new Point(center->getX(), control->getY()), control);
 			distanceAC = pointDistance(center, control);
 			angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -243,10 +243,10 @@ std::vector<Point*> Arch::getPoints()
 			}
 			break;
 		case 4:
-			distanceEB = pointDistance(Point(center.getX(), raio->getP2().getY()), raio->getP2());
+			distanceEB = pointDistance(new Point(center->getX(), raio->getP2()->getY()), raio->getP2());
 			angleG = getAngleArcSen(distanceEB, raioLenght);
 
-			distanceDC = pointDistance(Point(control.getX(), center.getY()), control);
+			distanceDC = pointDistance(new Point(control->getX(), center->getY()), control);
 			distanceAC = pointDistance(center, control);
 			angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -266,10 +266,10 @@ std::vector<Point*> Arch::getPoints()
 	case 3:
 		switch (quadrantControle) {
 		case 1:
-			distanceEB = pointDistance(Point(raio->getP2().getX(), center.getY()), raio->getP2());
+			distanceEB = pointDistance(new Point(raio->getP2()->getX(), center->getY()), raio->getP2());
 			angleG = getAngleArcSen(distanceEB, raioLenght);
 
-			distanceDC = pointDistance(Point(center.getX(), control.getY()), control);
+			distanceDC = pointDistance(new Point(center->getX(), control->getY()), control);
 			distanceAC = pointDistance(center, control);
 			angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -284,10 +284,10 @@ std::vector<Point*> Arch::getPoints()
 			}
 			break;
 		case 2:
-			distanceEB = pointDistance(Point(raio->getP2().getX(), center.getY()), raio->getP2());
+			distanceEB = pointDistance(new Point(raio->getP2()->getX(), center->getY()), raio->getP2());
 			angleG = getAngleArcSen(distanceEB, raioLenght);
 
-			distanceDC = pointDistance(Point(control.getX(), center.getY()), control);
+			distanceDC = pointDistance(new Point(control->getX(), center->getY()), control);
 			distanceAC = pointDistance(center, control);
 			angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -303,12 +303,12 @@ std::vector<Point*> Arch::getPoints()
 			break;
 		case 3:
 
-			if (raio->getP2().getX() < control.getX())
+			if (raio->getP2()->getX() < control->getX())
 			{
-				distanceEB = pointDistance(Point(raio->getP2().getX(), center.getY()), raio->getP2());
+				distanceEB = pointDistance(new Point(raio->getP2()->getX(), center->getY()), raio->getP2());
 				angleG = getAngleArcSen(distanceEB, raioLenght);
 
-				distanceDC = pointDistance(Point(center.getX(), control.getY()), control);
+				distanceDC = pointDistance(new Point(center->getX(), control->getY()), control);
 				distanceAC = pointDistance(center, control);
 				angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -324,10 +324,10 @@ std::vector<Point*> Arch::getPoints()
 			}
 			else
 			{
-				distanceEB = pointDistance(Point(center.getX(), raio->getP2().getY()), raio->getP2());
+				distanceEB = pointDistance(new Point(center->getX(), raio->getP2()->getY()), raio->getP2());
 				angleG = getAngleArcSen(distanceEB, raioLenght);
 
-				distanceDC = pointDistance(Point(control.getX(), center.getY()), control);
+				distanceDC = pointDistance(new Point(control->getX(), center->getY()), control);
 				distanceAC = pointDistance(center, control);
 				angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -345,10 +345,10 @@ std::vector<Point*> Arch::getPoints()
 
 			break;
 		case 4:
-			distanceEB = pointDistance(Point(raio->getP2().getX(), center.getY()), raio->getP2());
+			distanceEB = pointDistance(new Point(raio->getP2()->getX(), center->getY()), raio->getP2());
 			angleG = getAngleArcSen(distanceEB, raioLenght);
 
-			distanceDC = pointDistance(Point(control.getX(), center.getY()), control);
+			distanceDC = pointDistance(new Point(control->getX(), center->getY()), control);
 			distanceAC = pointDistance(center, control);
 			angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -367,10 +367,10 @@ std::vector<Point*> Arch::getPoints()
 	case 4:
 		switch (quadrantControle) {
 		case 1:
-			distanceEB = pointDistance(Point(center.getX(), raio->getP2().getY()), raio->getP2());
+			distanceEB = pointDistance(new Point(center->getX(), raio->getP2()->getY()), raio->getP2());
 			angleG = getAngleArcSen(distanceEB, raioLenght);
 
-			distanceDC = pointDistance(Point(center.getX(), control.getY()), control);
+			distanceDC = pointDistance(new Point(center->getX(), control->getY()), control);
 			distanceAC = pointDistance(center, control);
 			angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -385,10 +385,10 @@ std::vector<Point*> Arch::getPoints()
 			}
 			break;
 		case 2:
-			distanceEB = pointDistance(Point(center.getX(), raio->getP2().getY()), raio->getP2());
+			distanceEB = pointDistance(new Point(center->getX(), raio->getP2()->getY()), raio->getP2());
 			angleG = getAngleArcSen(distanceEB, raioLenght);
 
-			distanceDC = pointDistance(Point(control.getX(), center.getY()), control);
+			distanceDC = pointDistance(new Point(control->getX(), center->getY()), control);
 			distanceAC = pointDistance(center, control);
 			angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -403,10 +403,10 @@ std::vector<Point*> Arch::getPoints()
 			}
 			break;
 		case 3:
-			distanceEB = pointDistance(Point(center.getX(), raio->getP2().getY()), raio->getP2());
+			distanceEB = pointDistance(new Point(center->getX(), raio->getP2()->getY()), raio->getP2());
 			angleG = getAngleArcSen(distanceEB, raioLenght);
 
-			distanceDC = pointDistance(Point(center.getX(), control.getY()), control);
+			distanceDC = pointDistance(new Point(center->getX(), control->getY()), control);
 			distanceAC = pointDistance(center, control);
 			angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -421,12 +421,12 @@ std::vector<Point*> Arch::getPoints()
 			}
 			break;
 		case 4:
-			if (raio->getP2().getX() < control.getX())
+			if (raio->getP2()->getX() < control->getX())
 			{
-				distanceEB = pointDistance(Point(center.getX(), raio->getP2().getY()), raio->getP2());
+				distanceEB = pointDistance(new Point(center->getX(), raio->getP2()->getY()), raio->getP2());
 				angleG = getAngleArcSen(distanceEB, raioLenght);
 
-				distanceDC = pointDistance(Point(control.getX(), center.getY()), control);
+				distanceDC = pointDistance(new Point(control->getX(), center->getY()), control);
 				distanceAC = pointDistance(center, control);
 				angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -442,10 +442,10 @@ std::vector<Point*> Arch::getPoints()
 			}
 			else
 			{
-				distanceEB = pointDistance(Point(raio->getP2().getX(), center.getY()), raio->getP2());
+				distanceEB = pointDistance(new Point(raio->getP2()->getX(), center->getY()), raio->getP2());
 				angleG = getAngleArcSen(distanceEB, raioLenght);
 
-				distanceDC = pointDistance(Point(center.getX(), control.getY()), control);
+				distanceDC = pointDistance(new Point(center->getX(), control->getY()), control);
 				distanceAC = pointDistance(center, control);
 				angleB = getAngleArcSen(distanceDC, distanceAC);
 
@@ -469,19 +469,19 @@ std::vector<Point*> Arch::getPoints()
 }
 
 
-int Arch::getQuadrant(Point p)
+int Arch::getQuadrant(Point* p)
 {
-	if (p.getX() >= center.getX())
+	if (p->getX() >= center->getX())
 	{
-		if (p.getY() <= center.getY())
+		if (p->getY() <= center->getY())
 			return 1;
 
 		else
 			return 4;
 	}
-	else if (p.getX() < center.getX())
+	else if (p->getX() < center->getX())
 	{
-		if (p.getY() <= center.getY())
+		if (p->getY() <= center->getY())
 			return 2;
 
 		else

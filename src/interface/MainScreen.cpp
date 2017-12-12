@@ -50,18 +50,18 @@ MainScreen::MainScreen(Manager* m, QMainWindow* parent) : QMainWindow(parent)
 	
 	setCentralWidget(view);
 
-	//connect(line, &QAction::triggered, m, &Manager::setLine);
-	//connect(bezier, &QAction::triggered, m, &Manager::setBezier);
-	//connect(arc, &QAction::triggered, m, &Manager::setArch);
-	//
+	connect(line, &QAction::triggered, this, &MainScreen::setLine);
+	connect(bezier, &QAction::triggered, this, &MainScreen::setBezier);
+	connect(arc, &QAction::triggered, this, &MainScreen::setArch);
+	
 
-	//connect(open, &QAction::triggered, m, &Manager::openFile);
-	//connect(save, &QAction::triggered, m, &Manager::saveFile);
-	//connect(clear, &QAction::triggered, m, &Manager::clearAllItems);
-	//connect(close, &QAction::triggered, this, &MainScreen::close);
+	connect(open, &QAction::triggered, this,  &MainScreen::openFile);
+	connect(save, &QAction::triggered, this,  &MainScreen::saveFile);
+	connect(clear, &QAction::triggered, this, &MainScreen::clearAllItems);
+	connect(close, &QAction::triggered, this, &MainScreen::close);
 
-	//QShortcut* undone = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this);
-	//connect(undone, &QShortcut::activated, m, &Manager::clearLastItem);
+	QShortcut* undone = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this);
+	connect(undone, &QShortcut::activated, this, &MainScreen::clearLastItem);
 }
 
 
@@ -84,4 +84,43 @@ void MainScreen::setZoom(double scale)
 void MainScreen::setTxtStatusBar()
 {
 	//status->messageChanged(view->getCurrentShape);
+}
+
+void MainScreen::setLine()
+{
+	manager->setLine();
+}
+
+void MainScreen::setBezier()
+{
+	manager->setBezier();
+}
+
+void MainScreen::setArch()
+{
+	manager->setArch();
+}
+
+void MainScreen::openFile()
+{
+
+}
+void MainScreen::saveFile()
+{
+
+}
+
+void MainScreen::clearAllItems()
+{
+
+}
+
+void MainScreen::close()
+{
+
+}
+
+void MainScreen::clearLastItem()
+{
+
 }

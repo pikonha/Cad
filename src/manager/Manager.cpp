@@ -17,28 +17,38 @@
 #include "CmdClearAllItems.h"
 #include "CmdClearLastItem.h"
 
-Manager::Manager(Data* d, MainScreen* s)
+Manager::Manager(Data* d) : cmdmain(nullptr), cmd(nullptr)
 {
 	data = d;
-	screen = s;
-	setLine();
 	cmd = new CmdIdle();
 }
 
 /////CMD
 void Manager::setLine()
 {
-	cmdmain = new MainCmdLine(screen, LINE);
+	if (cmdmain)
+		delete cmdmain;
+
+	cmdmain = new MainCmdLine(screen);
+	cmdmain->execute(*data, *screen);
 }
 
 void Manager::setBezier()
 {
-	cmdmain = new MainCmdBezier(screen, BEZIER);
+	if (cmdmain)
+		delete cmdmain;
+
+	cmdmain = new MainCmdBezier(screen);
+	cmdmain->execute(*data, *screen);
 }
 
 void Manager::setArch()
 {
-	cmdmain = new MainCmdArch(screen, ARCH);
+	if (cmdmain)
+		delete cmdmain;
+
+	cmdmain = new MainCmdArch(screen);
+	cmdmain->execute(*data, *screen);
 }
 
 void Manager::runCmd(Cmd* command)
@@ -58,6 +68,11 @@ void Manager::mousePressEvent()
 void Manager::mouseReleaseEvent()
 {
 	runCmd(new CmdMouseRelease());
+
+	if (cmdmain->getForm() == LINE) {
+		cmdmain = new MainCmdLine(screen);
+		cmdmain->execute(*data, *screen);
+	}
 }
 
 void Manager::mouseMoveEvent()

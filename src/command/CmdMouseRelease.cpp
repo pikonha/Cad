@@ -9,6 +9,7 @@ void CmdMouseRelease::execute(Data& d, MainScreen& s)
 	if (cmd->getForm() == LINE) 
 	{
 		s.getView()->save(cmd->getModel());
+		d.addItem(cmd->getItem());
 		cmd->setDrawing(false, s.getView());
 	}
 	else

@@ -19,9 +19,9 @@ void Model::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
 	painter->drawPath(getPath());
 }
 
-QPoint* Model::pointConversor(Point p)
+QPoint* Model::pointConversor(Point* p)
 {
-	return new QPoint(p.getX(), p.getY());
+	return new QPoint(p->getX(), p->getY());
 }
 
 QPainterPath Model::getPath()

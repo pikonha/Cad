@@ -8,16 +8,16 @@
 class Bezier : public Item
 {
 private:
-	Point z;
+	Point* z;
 
 public:
 	Bezier() {}
-	Bezier(Point a, Point b, Point c) : Item(a, b) { z = c; }
+	Bezier(Point* a, Point* b, Point* c) : Item(a, b) { z = c; }
 	~Bezier() {}
 
-	void setZ(Point p) { z = p; }
+	void setZ(Point* p) { z = p; }
 
-	std::vector<Point> getPoints();
+	std::vector<Point*> getPoints();
 };
 
 

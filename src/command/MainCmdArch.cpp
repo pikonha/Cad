@@ -9,17 +9,17 @@ void MainCmdArch::execute(Data& d, MainScreen& s)
 	arch = new Arch();
 }
 
-void MainCmdArch::setP1(Point p)
+void MainCmdArch::setP1(Point* p)
 {
 	arch->setX(p);
 }
 
-void MainCmdArch::setP2(Point p)
+void MainCmdArch::setP2(Point* p)
 {
 	arch->setY(p);
 }
 
-void MainCmdArch::setP3(Point p)
+void MainCmdArch::setP3(Point* p)
 {
 	arch->setZ(p);
 	draw();

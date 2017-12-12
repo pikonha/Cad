@@ -11,7 +11,7 @@ protected:
 	Point* y;
 
 public:
-	Item() { x = y = new Point(); }
+	Item() { x = new Point(); y = new Point(); }
 	Item(Point* a, Point* b) { x = a; y = b; }
 	virtual ~Item() {}
 

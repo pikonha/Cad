@@ -16,10 +16,10 @@ void CmdMouseMove::execute(Data& d, MainScreen& s)
 	if (cmd->getDrawing() )  {
 		
 		if (cmd->getForm() == LINE)
-			cmd->setP2(*s.getView()->getMousePos());
+			cmd->setP2(s.getView()->getMousePos());
 
 		else
-			cmd->setP3(*s.getView()->getMousePos());
+			cmd->setP3(s.getView()->getMousePos());
 		
 	}
 }

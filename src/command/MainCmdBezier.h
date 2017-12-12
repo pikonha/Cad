@@ -9,14 +9,14 @@ class MainCmdBezier : public MainCmd
 private:
 	Bezier* bezier;
 public:
-	MainCmdBezier(MainScreen* view, Form f) : MainCmd(view, f) {}
+	MainCmdBezier(MainScreen* view) : MainCmd(view) { form = BEZIER; }
 	~MainCmdBezier() {}
 	
 	void execute(Data& d, MainScreen& s);
 
-	void setP1(Point p);
-	void setP2(Point p);
-	void setP3(Point p);
+	void setP1(Point* p);
+	void setP2(Point* p);
+	void setP3(Point* p);
 
 	Item* getItem() { return bezier; }
 

@@ -15,8 +15,10 @@ private:
 	Data* data;
 	Cmd* cmd;	
 public:
-	Manager(Data* d, MainScreen* screen);
+	Manager(Data* d);
 	~Manager() {}
+
+	void setScreen(MainScreen* s) { screen = s; }
 
 	/////MOUSE
 	void mousePressEvent();

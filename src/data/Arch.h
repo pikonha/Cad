@@ -21,7 +21,7 @@ private:
 	double pointDistance(Point* x, Point* y);
 	int getQuadrant(Point* a);
 	double getAngleArcSen(double cateto, double hipotenusa);
-	Point findArchPoint(double auxAngle);
+	Point* findArchPoint(double auxAngle);
 
 public:
 	Arch() {}
