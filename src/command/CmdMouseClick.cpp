@@ -2,6 +2,7 @@
 #include "Item.h"
 #include "MainCmd.h"
 #include "../app/App.h"
+#include <iostream>
 
 void CmdMouseClick::execute(Data& d, MainScreen& s)
 {
