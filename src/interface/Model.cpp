@@ -26,10 +26,11 @@ QPoint* Model::pointConversor(Point* p)
 
 QPainterPath Model::getPath()
 {
-	QPainterPath path(*pointConversor(item->getPoints().front()));
+	std::vector<Point*> points = item->getPoints();
+	QPainterPath path(*pointConversor(points.front()));
 
-	for (int i = 1; i < item->getPoints().size(); i++)
-		path.lineTo(*pointConversor(item->getPoints().at(i)));
+	for (int i = 1; i < points.size(); i++)
+		path.lineTo(*pointConversor(points.at(i)));
 
 	return path;
 }
