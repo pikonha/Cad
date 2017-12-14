@@ -4,8 +4,7 @@
 #include "Point.h"
 #include "Item.h"
 #include <vector>
-
-class Line;
+#include "Line.h"
 
 class Arch : public Item
 {
@@ -24,13 +23,18 @@ private:
 	Point* findArchPoint(double auxAngle);
 
 public:
-	Arch() : Item() {}
+	Arch() : Item() { z = new Point(); }
 	Arch(Point* a, Point* b, Point* c);
 	~Arch() {}
 
 	std::vector<Point*> getPoints();
 
-	void setZ(Point* p) { z = p; }
+	void setZ(Point* p) { delete z; z = p; }
+
+	void setRaio() { raio = new Line(x, y); }
+
+	void setCenter(Point* p) { center = p; }
+	void setControl(Point* p) { control = p; }
 };
 
 

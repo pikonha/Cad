@@ -17,7 +17,7 @@
 #include "CmdClearAllItems.h"
 #include "CmdClearLastItem.h"
 
-Manager::Manager(Data* d) : cmdmain(nullptr), cmd(nullptr)
+Manager::Manager(Data* d) : cmdmain(nullptr)
 {
 	data = d;
 	cmd = new CmdIdle();
@@ -69,10 +69,8 @@ void Manager::mouseReleaseEvent()
 {
 	runCmd(new CmdMouseRelease());
 
-	if (cmdmain->getForm() == LINE) {
-		cmdmain = new MainCmdLine(screen);
-		cmdmain->execute(*data, *screen);
-	}
+	if (cmdmain->getForm() == LINE)
+		setLine();
 }
 
 void Manager::mouseMoveEvent()

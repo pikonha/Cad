@@ -12,16 +12,19 @@ void MainCmdArch::execute(Data& d, MainScreen& s)
 void MainCmdArch::setP1(Point* p)
 {
 	arch->setX(p);
+	arch->setCenter(p);
 }
 
 void MainCmdArch::setP2(Point* p)
 {
 	arch->setY(p);
+	arch->setRaio();	
 }
 
 void MainCmdArch::setP3(Point* p)
 {
 	arch->setZ(p);
+	arch->setControl(p);
 	draw();
 }
 

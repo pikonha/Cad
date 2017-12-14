@@ -6,6 +6,7 @@
 
 Arch::Arch(Point* a, Point* b, Point* c) : Item(a,b)
 {
+	z = c;
 	raio = new Line(a, b);
 	center = a;
 	control = c;
