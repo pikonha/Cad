@@ -21,7 +21,6 @@ void MainCmdBezier::setP2(Point* p)
 void MainCmdBezier::setP3(Point* p)
 {
 	bezier->setZ(p);
-
 	draw();
 }
 

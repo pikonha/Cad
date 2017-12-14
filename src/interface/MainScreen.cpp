@@ -14,6 +14,8 @@ MainScreen::MainScreen(Manager* m, QMainWindow* parent) : QMainWindow(parent)
 	showMaximized();
 
 	view = new MainView();
+	view->setManager(m);
+
 	navbar = menuBar();	
 	status = new QStatusBar(this);
 	setStatusBar(status);

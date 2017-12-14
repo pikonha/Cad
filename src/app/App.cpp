@@ -7,7 +7,6 @@
 
 App::~App() {
 	delete screen;
-	delete view;
 	delete data;
 	delete manager;
 }
@@ -33,11 +32,8 @@ int App::start(int argc, char** argv)
 	QApplication app(argc, argv);		
 
 	screen = new MainScreen(manager);
-	view = screen->getView();
 
 	manager->setScreen(screen);
-	view->setManager(manager);
-
 	manager->setLine();
 
 	screen->start();

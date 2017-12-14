@@ -27,7 +27,7 @@ public:
 	Arch(Point* a, Point* b, Point* c);
 	~Arch() {}
 
-	std::vector<Point*> getPoints();
+	std::vector<Point*> getPoints() override;
 
 	void setZ(Point* p) { delete z; z = p; }
 

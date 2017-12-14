@@ -29,6 +29,8 @@ public:
 
 	bool getDrawing() { return drawing; }
 	void setDrawing(bool d, MainView* view) { drawing = d; view->setMouseTracking(d); }
+	
+	void setAuxLine(AuxLineModel* model) { auxLine = model; }
 
 	bool getAuxDraw() { return auxDraw; }
 	void setAuxDraw(bool status, MainView* view) { auxDraw = status; view->setMouseTracking(status); }

@@ -1,8 +1,6 @@
 #include "CmdMouseClick.h"
-#include "Item.h"
 #include "MainCmd.h"
 #include "../app/App.h"
-#include <iostream>
 
 void CmdMouseClick::execute(Data& d, MainScreen& s)
 {
@@ -23,13 +21,6 @@ void CmdMouseClick::execute(Data& d, MainScreen& s)
 		{
 			s.getView()->save(cmd->getModel());
 			d.addItem(cmd->getItem());
-			cmd->setDrawing(false, s.getView());
-
-			if (cmd->getForm() == BEZIER)
-				App::getInstance()->getManager()->setBezier();
-
-			else
-				App::getInstance()->getManager()->setArch();
 		}
 	}
 }

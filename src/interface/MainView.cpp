@@ -1,10 +1,7 @@
 #include "QWidget"
 #include "Model.h"
 #include "MainView.h"
-#include "LineModel.h"
-#include "ArchModel.h"
 #include "MainScreen.h"
-#include "BezierModel.h"
 #include "../manager/Manager.h"
 #include "../data/Point.h"
 #include <QtGui>

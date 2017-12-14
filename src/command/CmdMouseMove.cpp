@@ -18,6 +18,11 @@ void CmdMouseMove::execute(Data& d, MainScreen& s)
 
 	if (cmd->getDrawing() )  {
 		
+		if (cmd->getAuxLine()) {
+			delete cmd->getAuxLine();
+			cmd->setAuxLine(nullptr);
+		}
+
 		if (cmd->getForm() == LINE)
 			cmd->setP2(s.getView()->getMousePos());
 

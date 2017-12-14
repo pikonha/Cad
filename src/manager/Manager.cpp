@@ -63,6 +63,15 @@ void Manager::runCmd(Cmd* command)
 void Manager::mousePressEvent()
 {
 	runCmd(new CmdMouseClick());
+
+	if (cmdmain->getDrawing())
+	{
+		if (cmdmain->getForm() == BEZIER)
+			setBezier();
+
+		else if ( cmdmain->getForm() == ARCH)
+			setArch();
+	}
 }
 
 void Manager::mouseReleaseEvent()

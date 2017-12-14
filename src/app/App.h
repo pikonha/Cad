@@ -13,7 +13,6 @@ private:
 	static App* app;
 
 	Data* data;
-	MainView* view;
 	Manager* manager;
 	MainScreen* screen;	
 
@@ -25,7 +24,7 @@ public:
 	static App* getInstance();
 	int start(int argc, char** argv);
 
-	Manager* getManager() { return manager; }
+	Manager* getManager() const { return manager; }
 };
 
 #endif 

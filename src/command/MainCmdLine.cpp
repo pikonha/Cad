@@ -1,5 +1,6 @@
 #include "MainCmdLine.h"
 #include "Item.h"
+#include "LineModel.h"
 
 void MainCmdLine::execute(Data& d, MainScreen& s)
 {

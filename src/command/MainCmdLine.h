@@ -2,8 +2,8 @@
 #ifndef INCLUDED_MAINCMDLINE_H
 #define INCLUDED_MAINCMDLINE_H
 #include "MainCmd.h"
-#include "Line.h"
-#include "LineModel.h"
+
+class Line;
 
 class MainCmdLine :	public MainCmd
 {
