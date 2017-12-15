@@ -15,10 +15,11 @@ protected:
 
 	bool drawing;
 	bool auxDraw;
+	bool secondClick;
 
 	AuxLineModel* auxLine;
 public:
-	MainCmd(MainScreen* v) : auxLine(nullptr) { screen = v; drawing = auxDraw = false; }
+	MainCmd(MainScreen* v) : auxLine(nullptr) { screen = v; drawing = auxDraw = secondClick= false; }
 	virtual ~MainCmd() {}
 
 	virtual void execute(Data& d, MainScreen& s) = 0;
@@ -31,6 +32,9 @@ public:
 	void setDrawing(bool d, MainView* view) { drawing = d; view->setMouseTracking(d); }
 	
 	void setAuxLine(AuxLineModel* model) { auxLine = model; }
+
+	void setSecondClick(bool b) { secondClick = b; }
+	bool getSecondClick() { return secondClick; }
 
 	bool getAuxDraw() { return auxDraw; }
 	void setAuxDraw(bool status, MainView* view) { auxDraw = status; view->setMouseTracking(status); }

@@ -21,6 +21,9 @@ void CmdMouseClick::execute(Data& d, MainScreen& s)
 		{
 			s.getView()->save(cmd->getModel());
 			d.addItem(cmd->getItem());
+
+			cmd->setDrawing(false, s.getView());
+			cmd->setSecondClick(true);
 		}
 	}
 }

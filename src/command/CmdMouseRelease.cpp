@@ -6,7 +6,7 @@ void CmdMouseRelease::execute(Data& d, MainScreen& s)
 {
 	MainCmd* cmd = App::getInstance()->getManager()->getCmdMain();
 
-	if (cmd->getForm() == LINE) 
+	if (cmd->getForm() == LINE)
 	{
 		s.getView()->save(cmd->getModel());
 		d.addItem(cmd->getItem());
@@ -14,9 +14,10 @@ void CmdMouseRelease::execute(Data& d, MainScreen& s)
 	}
 	else
 	{
-		cmd->setAuxDraw(false, s.getView());
-		cmd->setDrawing(true, s.getView());
-		
+		if (!cmd->getSecondClick()) {
+			cmd->setAuxDraw(false, s.getView());
+			cmd->setDrawing(true, s.getView());
+		}
 	}
 
 }
