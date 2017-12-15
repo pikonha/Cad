@@ -12,7 +12,7 @@ private:
 	Arch* arch;
 
 public:
-	MainCmdArch(MainScreen* view) : MainCmd(view) { form = ARCH; }
+	MainCmdArch(MainScreen& view) : MainCmd(view) { form = ARCH; }
 	~MainCmdArch() {}
 	
 	void execute(Data& d, MainScreen& s);

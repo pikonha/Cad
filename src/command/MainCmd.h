@@ -2,7 +2,7 @@
 #ifndef INCLUDED_MAINCMD_H
 #define INCLUDED_MAINCMD_H
 #include "MainScreen.h"
-#include "Form.h"
+#include "FormType.h"
 #include "Data.h"
 #include "Cmd.h"
 #include "AuxLineModel.h"
@@ -10,8 +10,8 @@
 class MainCmd : public Cmd
 {
 protected:
-	Form form;
-	MainScreen* screen;
+	FormType form;
+	MainScreen& screen;
 
 	bool drawing;
 	bool auxDraw;
@@ -19,7 +19,7 @@ protected:
 
 	AuxLineModel* auxLine;
 public:
-	MainCmd(MainScreen* v) : auxLine(nullptr) { screen = v; drawing = auxDraw = secondClick= false; }
+	MainCmd(MainScreen& v) : auxLine(nullptr), screen(v) {drawing = auxDraw = secondClick= false; }
 	virtual ~MainCmd() {}
 
 	virtual void execute(Data& d, MainScreen& s) = 0;
@@ -42,7 +42,7 @@ public:
 	virtual void createAuxLine(Point* p, Point* o);
 	virtual AuxLineModel* getAuxLine();
 
-	Form getForm() { return form; }
+	FormType getForm() { return form; }
 
 	virtual Item* getItem() = 0;
 

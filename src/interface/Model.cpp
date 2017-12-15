@@ -21,7 +21,7 @@ void Model::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
 
 QPoint* Model::pointConversor(Point* p)
 {
-	return new QPoint(p->getX(), p->getY());
+	return new QPoint(p->x, p->y);
 }
 
 QPainterPath Model::getPath()

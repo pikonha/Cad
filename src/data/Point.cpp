@@ -1,9 +1,14 @@
+#include <cstdlib>
 #include "Point.h"
 
-bool Point::operator==(Point * p)
+bool Point::operator==(const Point& p)
 {
-	if (x == p->getX() && y == p->getY())
-		return true;
+   return (std::abs(x - p.x) + std::abs(y - p.y)) == 0;
+}
 
-	return false;
+Point& Point::operator=(const Point& p)
+{
+   x= p.x;
+   y= p.y;
+   return *this;
 }

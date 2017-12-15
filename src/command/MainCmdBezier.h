@@ -9,7 +9,7 @@ class MainCmdBezier : public MainCmd
 private:
 	Bezier* bezier;
 public:
-	MainCmdBezier(MainScreen* view) : MainCmd(view) { form = BEZIER; }
+	MainCmdBezier(MainScreen& view) : MainCmd(view) { form = BEZIER; }
 	~MainCmdBezier() {}
 	
 	void execute(Data& d, MainScreen& s);

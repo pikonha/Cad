@@ -7,18 +7,19 @@
 #include <QShortcut>
 #include <QStatusBar>
 
-MainScreen::MainScreen(Manager* m, QMainWindow* parent) : QMainWindow(parent)
+MainScreen::~MainScreen()
 {
-	manager = m;
+   delete view;
+}
+
+MainScreen::MainScreen(QMainWindow* parent) : manager(nullptr), QMainWindow(parent)
+{
 	setFixedSize(1920, 1020);
 	showMaximized();
 
 	view = new MainView();
-	view->setManager(m);
 
 	navbar = menuBar();	
-	status = new QStatusBar(this);
-	setStatusBar(status);
 
 	QMenu* file = new QMenu("File");
 	QAction* line = new QAction("Line");
@@ -52,10 +53,9 @@ MainScreen::MainScreen(Manager* m, QMainWindow* parent) : QMainWindow(parent)
 	
 	setCentralWidget(view);
 
-	connect(line, &QAction::triggered, this, &MainScreen::setLine);
-	connect(bezier, &QAction::triggered, this, &MainScreen::setBezier);
-	connect(arc, &QAction::triggered, this, &MainScreen::setArch);
-	
+	connect(line, &QAction::triggered, this, &MainScreen::startLineCommand);
+	connect(bezier, &QAction::triggered, this, &MainScreen::startBezierCommand);
+	connect(arc, &QAction::triggered, this, &MainScreen::startArchCommand);	
 
 	connect(open, &QAction::triggered, this,  &MainScreen::openFile);
 	connect(save, &QAction::triggered, this,  &MainScreen::saveFile);
@@ -66,63 +66,58 @@ MainScreen::MainScreen(Manager* m, QMainWindow* parent) : QMainWindow(parent)
 	connect(undone, &QShortcut::activated, this, &MainScreen::clearLastItem);
 }
 
-
-MainScreen::~MainScreen()
-{
-	delete view;
-}
-
-
 void MainScreen::start()
 {
 	show();
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+void MainScreen::startLineCommand() const
+{
+   manager->startLineCommand();
+}
+
+void MainScreen::startBezierCommand() const
+{
+   manager->startBezierCommand();
+}
+
+void MainScreen::startArchCommand() const
+{
+   manager->startArchCommand();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 void MainScreen::setZoom(double scale)
 {
 	
 }
 
-void MainScreen::setTxtStatusBar()
-{
-	//status->messageChanged(view->getCurrentShape);
-}
-
-void MainScreen::setLine()
-{
-	manager->setLine();
-}
-
-void MainScreen::setBezier()
-{
-	manager->setBezier();
-}
-
-void MainScreen::setArch()
-{
-	manager->setArch();
-}
-
 void MainScreen::openFile()
 {
 
 }
+
 void MainScreen::saveFile()
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
 void MainScreen::clearAllItems()
 {
-
+	manager->clearAllItems();
 }
 
 void MainScreen::close()
 {
-
+	exit(0);
 }
 
 void MainScreen::clearLastItem()
 {
-
+	manager->clearLastItem();
 }

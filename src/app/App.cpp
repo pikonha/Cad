@@ -5,37 +5,47 @@
 #include "Data.h"
 #include "MainScreen.h"
 
-App::~App() {
-	delete screen;
-	delete data;
-	delete manager;
+App* App::app= nullptr;
+
+App::~App() 
+{
+   if (screen)
+		delete screen;
+
+   if (data)
+	   delete data;
+
+   if (manager)
+	   delete manager;
 }
 
 /////SETUP
 App::App()
 {		
-	data = new Data();
-	manager = new Manager(data);
+	data= nullptr;
+	screen= nullptr;
+	manager= nullptr;
 }
 
-App* App::app = nullptr;
-App* App::getInstance()
+
+App& App::getInstance()
 {
 	if (!app)
-		app = new App();
+		app= new App;
 
-	return app;
+	return *app;
 }
 
 int App::start(int argc, char** argv)
 {
 	QApplication app(argc, argv);		
 
-	screen = new MainScreen(manager);
+	screen= new MainScreen();
 
-	manager->setScreen(screen);
-	manager->setLine();
+	data= new Data;
+	manager= new Manager(*data,*screen);
 
+	screen->setManager(*manager);
 	screen->start();
 
 	return app.exec();

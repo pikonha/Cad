@@ -17,82 +17,78 @@
 #include "CmdClearAllItems.h"
 #include "CmdClearLastItem.h"
 
-Manager::Manager(Data* d) : cmdmain(nullptr)
+Manager::Manager(Data& d,MainScreen& s) : data(d),screen(s),cmdmain(nullptr)
 {
-	data = d;
-	cmd = new CmdIdle();
+   cmd= new CmdIdle();
+   startLineCommand();
 }
 
 /////CMD
-void Manager::setLine()
+void Manager::startLineCommand()
 {
-	if (cmdmain)
-		delete cmdmain;
+   if (cmdmain)
+      delete cmdmain;
 
-	cmdmain = new MainCmdLine(screen);
-	cmdmain->execute(*data, *screen);
+   cmdmain= new MainCmdLine(screen);
+   cmdmain->execute(data,screen);
 }
 
-void Manager::setBezier()
+void Manager::startBezierCommand()
 {
-	if (cmdmain)
-		delete cmdmain;
+   if (cmdmain)
+      delete cmdmain;
 
-	cmdmain = new MainCmdBezier(screen);
-	cmdmain->execute(*data, *screen);
+   cmdmain= new MainCmdBezier(screen);
+   cmdmain->execute(data,screen);
 }
 
-void Manager::setArch()
+void Manager::startArchCommand()
 {
-	if (cmdmain)
-		delete cmdmain;
+   if (cmdmain)
+      delete cmdmain;
 
-	cmdmain = new MainCmdArch(screen);
-	cmdmain->execute(*data, *screen);
+   cmdmain= new MainCmdArch(screen);
+   cmdmain->execute(data,screen);
 }
 
 void Manager::runCmd(Cmd* command)
 {
-	cmd = command;
-	cmd->execute(*data, *screen);
-	delete cmd;
-	cmd = new CmdIdle();
+   cmd= command;
+   cmd->execute(data,screen);
+   delete cmd;
+   cmd= new CmdIdle();
 }
 
 /////MOUSE
 void Manager::mousePressEvent()
 {
-	runCmd(new CmdMouseClick());
+   runCmd(new CmdMouseClick());
 }
 
 void Manager::mouseReleaseEvent()
 {
-	runCmd(new CmdMouseRelease());
+   runCmd(new CmdMouseRelease());
 
-	if (cmdmain->getForm() == LINE)
-		setLine();
-
-	else
-	{
-		if (cmdmain->getSecondClick())
-		{
-			if (cmdmain->getForm() == BEZIER)
-				setBezier();
-
-			else if (cmdmain->getForm() == ARCH)
-				setArch();
-		}
-	}
+   if (cmdmain->getForm() != LINE) {
+      if (cmdmain->getSecondClick()) {
+         if (cmdmain->getForm() == BEZIER)
+            startBezierCommand();
+         else if (cmdmain->getForm() == ARCH)
+            startArchCommand();
+      }
+   }
+   else
+      startLineCommand();
 }
 
 void Manager::mouseMoveEvent()
 {
-	runCmd(new CmdMouseMove());
+   runCmd(new CmdMouseMove());
 }
 
 void Manager::wheelEvent()
 {
-	runCmd(new CmdWheelEvent());
+   runCmd(new CmdWheelEvent());
 }
 
 /////FILE
@@ -113,7 +109,7 @@ void Manager::openFile()
 
 void Manager::clearFile()
 {
-
+   runCmd(new CmdClearAllItems);
 }
 
 void Manager::closeFile()
@@ -124,11 +120,11 @@ void Manager::closeFile()
 /////ITEMS
 void Manager::clearLastItem()
 {
-	runCmd(new CmdClearLastItem());
+   runCmd(new CmdClearLastItem());
 }
 
 void Manager::clearAllItems()
 {
-	runCmd(new CmdClearAllItems());
+   runCmd(new CmdClearAllItems());
 }
 

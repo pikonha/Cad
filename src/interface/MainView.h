@@ -21,7 +21,7 @@ public:
 	MainView();
 	~MainView() {}
 
-	void setManager(Manager* m) { manager = m; }
+	void setManager(Manager& m) { manager = &m; }
 
 	Point* getMousePos() { return mousePos; }
 

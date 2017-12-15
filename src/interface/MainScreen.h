@@ -9,24 +9,21 @@ class MainScreen : public QMainWindow
 private:
 	MainView* view;
 	QMenuBar* navbar;
-	QStatusBar* status;
 
 	Manager* manager;
 public:	
-	MainScreen(Manager* m, QMainWindow* parent = 0);
+	MainScreen(QMainWindow* parent = 0);
 	~MainScreen();
 
 	void start();
 
 	void setZoom(double scale);
 
-	void setTxtStatusBar();
-
 	MainView* getView() { return view; }
 
-	void setLine();
-	void setBezier();
-	void setArch();
+	void startLineCommand() const;
+	void startBezierCommand() const;
+	void startArchCommand() const;
 	
 	void openFile();
 	void saveFile();
@@ -34,7 +31,10 @@ public:
 	void close();
 	void clearLastItem();
 
-
+	void setManager(Manager& m) {
+		manager= &m;
+		view->setManager(*manager);
+	}
 };
 
 #endif

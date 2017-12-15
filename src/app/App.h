@@ -21,10 +21,10 @@ public:
 	~App();
 
 	/////SETUP
-	static App* getInstance();
+	static App& getInstance();
 	int start(int argc, char** argv);
 
-	Manager* getManager() const { return manager; }
+	Manager& getManager() const { return *manager; }
 };
 
 #endif 

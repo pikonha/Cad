@@ -15,5 +15,5 @@ AuxLineModel* MainCmd::getAuxLine()
 
 void MainCmd::draw()
 {
-	screen->getView()->draw(getModel());
+	screen.getView()->draw(getModel());
 }

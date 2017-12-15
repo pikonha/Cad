@@ -10,7 +10,7 @@ class MainCmdLine :	public MainCmd
 private:
 	Line* line;
 public:
-	MainCmdLine(MainScreen* view) : MainCmd(view) { form = LINE; }
+	MainCmdLine(MainScreen& view) : MainCmd(view) { form = LINE; }
 	~MainCmdLine() {}
 
 	void execute(Data& d, MainScreen& s);

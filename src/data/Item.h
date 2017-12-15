@@ -13,7 +13,7 @@ protected:
 public:
 	Item() { x = new Point(); y = new Point(); }
 	Item(Point* a, Point* b) { x = a; y = b; }
-	virtual ~Item() {}
+	virtual ~Item() { delete x; delete y; }
 
 	Point* getP1() { return x; }
 	Point* getP2() { return y; }

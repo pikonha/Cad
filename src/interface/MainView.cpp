@@ -1,6 +1,7 @@
 #include "QWidget"
 #include "Model.h"
 #include "MainView.h"
+#include "Item.h"
 #include "MainScreen.h"
 #include "../manager/Manager.h"
 #include "../data/Point.h"
@@ -35,7 +36,10 @@ void MainView::erase(Model* model)
 
 void MainView::eraseLastItem()
 {
-	items.erase(items.end());
+	if (items.size() > 0) {
+		items.pop_back();
+		scene->update();
+	}
 }
 
 void MainView::draw(QGraphicsItem* model)

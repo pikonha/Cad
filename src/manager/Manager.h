@@ -10,15 +10,15 @@ class Cmd;
 class Manager
 {
 private:	
-	MainScreen* screen;	
-	MainCmd* cmdmain;
-	Data* data;
-	Cmd* cmd;	
-public:
-	Manager(Data* d);
-	~Manager() {}
+	Data& data;
+	MainScreen& screen;
 
-	void setScreen(MainScreen* s) { screen = s; }
+	Cmd* cmd;
+	MainCmd* cmdmain;
+
+public:
+	Manager(Data& d, MainScreen& s);
+	~Manager() {}
 
 	/////MOUSE
 	void mousePressEvent();
@@ -34,17 +34,17 @@ public:
 	void closeFile();
 
 	/////DOMAIN
-	void setLine();
-	void setBezier();
-	void setArch();
+	void startLineCommand();
+	void startBezierCommand();
+	void startArchCommand();
 
 	/////ITEMS
 	void clearLastItem();
 	void clearAllItems();
 
 	/////CMD
-	MainCmd* getCmdMain() { return cmdmain; }
-	Cmd* getCmd() { return cmd; }
+	MainCmd& getCmdMain() { return *cmdmain; }
+	Cmd& getCmd() { return *cmd; }
 
 	void runCmd(Cmd* command);
 };

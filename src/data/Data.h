@@ -1,34 +1,35 @@
 #pragma once
 #ifndef INCLUDED_DATA_H
 #define INCLUDED_DATA_H
-#include <vector>
+
+#include <deque>
 #include "Point.h"
-#include "Form.h"
+#include "FormType.h"
 
 class Item;
 
 class Data
 {
 private:
-	Form currentForm;
+	FormType currentForm;
 
-	std::vector<Item*> itens;
+	std::deque<Item*> itens;
 public:
-	Data() { currentForm = LINE;  }
 	~Data() { clearItens(); }
+	Data() { currentForm= LINE; }
 
 	/////FORM
-	Form getForm() { return currentForm;  }
-	void setForm(Form shape) { currentForm = shape; }
+	FormType getForm() { return currentForm; }
+	void setForm(const FormType fType) { currentForm = fType; }
 
 	/////ITENS	
 	void addItem(Item* item) { itens.push_back(item); }
 	void clearItens();
 
-	std::vector<Item*> getItens() { return itens; }
+	std::deque<Item*> getItens() { return itens; }
 
 	Item* getLastItem() { return itens.back(); }
-	void deleteLastItem() { itens.pop_back(); }	
+	void deleteLastItem() { itens.pop_back(); }
 
 };
 

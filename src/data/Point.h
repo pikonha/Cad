@@ -4,19 +4,16 @@
 
 class Point
 {
-private:
+public:
 	int x;
 	int y;
 
 public:
-	Point() {}
-	Point(int a, int b) { x = a; y = b; }
-	~Point() {}
+   Point() : x(0), y(0) {}
+	Point(int _x,int _y) : x(_x), y(_y) {}
 
-	int getX() { return x; }
-	int getY() { return y; }
-
-	bool operator==(Point* p);
+	bool operator==(const Point& p);
+   Point& operator=(const Point& p);
 };
 
 #endif
