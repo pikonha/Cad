@@ -33,3 +33,50 @@ QGraphicsItem* MainCmdArch::getModel()
 	return new ArchModel(arch);
 }
 
+void MainCmdArch::mousePressEvent(Point& p)
+{
+   if (!drawing)
+   {
+      setP1(&p);
+      setAuxDraw(true,screen.getView());
+   }
+   else
+   {
+      setDrawing(false,screen.getView());
+      secondClick = true;
+   }
+}
+
+void MainCmdArch::mouseReleaseEvent(Point& p,Data& d)
+{
+   if (!secondClick)
+   {
+      setAuxDraw(false,screen.getView());
+      setDrawing(true,screen.getView());
+   }
+   else {
+      d.addItem(getItem());
+      screen.getView()->save(getModel());
+   }
+}
+
+void MainCmdArch::mouseMoveEvent(Point& p)
+{
+   if ( auxDraw )
+   {
+      setP2(&p);
+      createAuxLine(arch->getP1(),arch->getP2());
+
+      screen.getView()->draw(getAuxLine());
+   }
+   else if( drawing )
+   {
+      if (auxLine) {
+         delete auxLine;
+         auxLine = nullptr;
+      }
+
+      setP3(&p);
+   }
+}
+

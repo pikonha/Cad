@@ -1,12 +1,22 @@
 #include "CmdClearAllItems.h"
+#include "QGraphicsItem"
 #include "Item.h"
 
 void CmdClearAllItems::execute(Data& d, MainScreen& s)
 {
+   std::deque<Item*>* itens = d.getItens();
+   std::deque<QGraphicsItem*> * items = s.getView()->getItems();
 
-	for (int i = 0; i < d.getItens().size(); i++)
-		delete d.getItens().at(i);
+   while (itens->size() > 0) {
+      delete itens->at(0);
+      itens->pop_front();
+   }
 
-	d.getItens().clear();
+   while (items->size() > 0) {
+      delete items->at(0);
+      items->pop_front();
+   }
+
+	itens->clear();
 	s.getView()->getScene()->clear();
 }

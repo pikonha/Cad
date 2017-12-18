@@ -21,6 +21,11 @@ public:
 	Item* getItem() { return line; }
 
 	QGraphicsItem* getModel();
+
+public :
+   void mousePressEvent(Point& p) override;
+   void mouseReleaseEvent(Point& p,Data& d) override;
+   void mouseMoveEvent(Point& p) override;
 };
 
 #endif

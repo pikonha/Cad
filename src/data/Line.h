@@ -7,7 +7,7 @@
 class Line : public Item
 {
 public:
-	Line() {}
+	Line() : Item() {}
 	Line(Point* a, Point* b) : Item(a,b) {}
 	~Line() {}
 

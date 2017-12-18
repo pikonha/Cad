@@ -30,7 +30,6 @@ public:
 	void newFile();
 	void saveFile();
 	void openFile();
-	void clearFile();
 	void closeFile();
 
 	/////DOMAIN

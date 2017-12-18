@@ -34,14 +34,6 @@ void MainView::erase(Model* model)
 	}
 }
 
-void MainView::eraseLastItem()
-{
-	if (items.size() > 0) {
-		items.pop_back();
-		scene->update();
-	}
-}
-
 void MainView::draw(QGraphicsItem* model)
 {
 	scene->addItem(model);

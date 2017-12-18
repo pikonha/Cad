@@ -4,16 +4,11 @@
 #include "CmdIdle.h"
 #include "CmdSave.h"
 #include "CmdLoad.h"
-#include "CmdClear.h"
 #include "CmdClose.h"
 #include "MainCmdLine.h"
 #include "MainCmdArch.h"
-#include "CmdMouseMove.h"
 #include "CmdWheelEvent.h"
-#include "CmdMouseClick.h"
 #include "MainCmdBezier.h"
-#include "CmdMouseRelease.h"
-#include "CmdSetStatusBar.h"
 #include "CmdClearAllItems.h"
 #include "CmdClearLastItem.h"
 
@@ -62,28 +57,29 @@ void Manager::runCmd(Cmd* command)
 /////MOUSE
 void Manager::mousePressEvent()
 {
-   runCmd(new CmdMouseClick());
+   cmdmain->mousePressEvent(*screen.getView()->getMousePos());
 }
 
 void Manager::mouseReleaseEvent()
 {
-   runCmd(new CmdMouseRelease());
+   cmdmain->mouseReleaseEvent(*screen.getView()->getMousePos(), data);
 
-   if (cmdmain->getForm() != LINE) {
-      if (cmdmain->getSecondClick()) {
-         if (cmdmain->getForm() == BEZIER)
-            startBezierCommand();
-         else if (cmdmain->getForm() == ARCH)
-            startArchCommand();
-      }
-   }
-   else
+   if (cmdmain->getForm() == LINE)
       startLineCommand();
+  
+   else if (cmdmain->getSecondClick()) 
+   {
+      if (cmdmain->getForm() == BEZIER)
+         startBezierCommand();
+
+      else if (cmdmain->getForm() == ARCH)
+         startArchCommand();
+   }
 }
 
 void Manager::mouseMoveEvent()
 {
-   runCmd(new CmdMouseMove());
+   cmdmain->mouseMoveEvent(*screen.getView()->getMousePos());
 }
 
 void Manager::wheelEvent()
@@ -107,10 +103,6 @@ void Manager::openFile()
 
 }
 
-void Manager::clearFile()
-{
-   runCmd(new CmdClearAllItems);
-}
 
 void Manager::closeFile()
 {

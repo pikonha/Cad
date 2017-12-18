@@ -16,16 +16,16 @@ private:
 	Point* center;
 	Point* control;
 
-
 	double pointDistance(Point* x, Point* y);
 	int getQuadrant(Point* a);
 	double getAngleArcSen(double cateto, double hipotenusa);
 	Point* findArchPoint(double auxAngle);
 
 public:
+   ~Arch() {}
+
 	Arch() : Item() { z = new Point(); }
-	Arch(Point* a, Point* b, Point* c);
-	~Arch() {}
+   Arch(Point* a,Point* b,Point* c);	
 
 	std::vector<Point*> getPoints() override;
 

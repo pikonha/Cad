@@ -26,10 +26,9 @@ public:
 	void addItem(Item* item) { itens.push_back(item); }
 	void clearItens();
 
-	std::deque<Item*> getItens() { return itens; }
+	std::deque<Item*>* getItens() { return &itens; }
 
 	Item* getLastItem() { return itens.back(); }
-	void deleteLastItem() { itens.pop_back(); }
 
 };
 

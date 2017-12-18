@@ -1,11 +1,9 @@
 #include "MainScreen.h"
-#include "QStatusBar"
 #include <QAction>
 #include <QMenuBar>
 #include <QMenu>
 #include <QIcon>
 #include <QShortcut>
-#include <QStatusBar>
 
 MainScreen::~MainScreen()
 {

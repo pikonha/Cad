@@ -24,6 +24,11 @@ public:
 	Item* getItem() { return arch; }
 
 	QGraphicsItem* getModel();
+
+public:
+   void mousePressEvent(Point& p) override;
+   void mouseReleaseEvent(Point& p,Data& d) override;
+   void mouseMoveEvent(Point& p) override;
 };
 
 #endif

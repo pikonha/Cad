@@ -3,7 +3,6 @@
 #define INCLUDED_MAINCMD_H
 #include "MainScreen.h"
 #include "FormType.h"
-#include "Data.h"
 #include "Cmd.h"
 #include "AuxLineModel.h"
 
@@ -19,8 +18,8 @@ protected:
 
 	AuxLineModel* auxLine;
 public:
-	MainCmd(MainScreen& v) : auxLine(nullptr), screen(v) {drawing = auxDraw = secondClick= false; }
-	virtual ~MainCmd() {}
+   virtual ~MainCmd() {}
+	MainCmd(MainScreen& v) : auxLine(nullptr), screen(v) {drawing = auxDraw = secondClick= false; }	
 
 	virtual void execute(Data& d, MainScreen& s) = 0;
 
@@ -28,15 +27,8 @@ public:
 	virtual void setP2(Point* p) = 0;
 	virtual void setP3(Point* p) {}
 
-	bool getDrawing() { return drawing; }
 	void setDrawing(bool d, MainView* view) { drawing = d; view->setMouseTracking(d); }
-	
-	void setAuxLine(AuxLineModel* model) { auxLine = model; }
-
-	void setSecondClick(bool b) { secondClick = b; }
-	bool getSecondClick() { return secondClick; }
-
-	bool getAuxDraw() { return auxDraw; }
+   bool getSecondClick() { return secondClick; }
 	void setAuxDraw(bool status, MainView* view) { auxDraw = status; view->setMouseTracking(status); }
 
 	virtual void createAuxLine(Point* p, Point* o);
@@ -49,6 +41,11 @@ public:
 	void draw();
 
 	virtual QGraphicsItem* getModel() = 0;
+
+public:
+   virtual void mousePressEvent(Point& p) = 0;
+   virtual void mouseReleaseEvent(Point& p, Data& d) = 0;
+   virtual void mouseMoveEvent(Point& p) = 0;
 };
 
 #endif

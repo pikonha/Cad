@@ -24,3 +24,22 @@ QGraphicsItem* MainCmdLine::getModel()
 {
 	return new LineModel(line);
 }
+
+void MainCmdLine::mousePressEvent(Point& p)
+{
+   setP1(&p);
+   setDrawing(true, screen.getView());
+}
+
+void MainCmdLine::mouseReleaseEvent(Point& p, Data& d)
+{
+   screen.getView()->save(getModel());
+   d.addItem(getItem());
+
+   setDrawing(false, screen.getView());
+}
+
+void MainCmdLine::mouseMoveEvent(Point& p)
+{
+   setP2(&p);
+}

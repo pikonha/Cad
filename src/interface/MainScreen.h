@@ -31,10 +31,7 @@ public:
 	void close();
 	void clearLastItem();
 
-	void setManager(Manager& m) {
-		manager= &m;
-		view->setManager(*manager);
-	}
+	void setManager(Manager& m) {	manager= &m; view->setManager(*manager);	}
 };
 
 #endif

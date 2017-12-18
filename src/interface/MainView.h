@@ -3,6 +3,7 @@
 #define INCLUDED_MAINVIEW_H
 #include <QGraphicsView>
 #include "../manager/Manager.h"
+#include <deque>
 
 class Point;
 class Model;
@@ -14,7 +15,7 @@ private:
 
 	Point* mousePos;
 
-	std::vector<QGraphicsItem*> items;
+	std::deque<QGraphicsItem*> items;
 
 	Manager* manager;
 public:
@@ -31,9 +32,10 @@ public:
 
 	void save(QGraphicsItem* model);
 	void erase(Model* model);
-	void eraseLastItem();
 	
 	Point* qpointToPoint(QPoint p);
+
+   std::deque<QGraphicsItem*>* getItems() { return &items; }
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;
