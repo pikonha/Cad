@@ -1,23 +1,23 @@
 #pragma once
 #ifndef INCLUDED_BEZIER_H
 #define INCLUDED_BEZIER_H
-#include "Item.h"
+#include "Geometry.h"
 #include <vector>
 #include "Point.h"
 
-class Bezier : public Item
+class Bezier : public Geometry
 {
 private:
-	Point* z;
+	Point p3;
 
 public:
-	Bezier() : Item() { z = new Point(); }
-	Bezier(Point* a, Point* b, Point* c) : Item(a, b) { z = c; }
+	Bezier() : Geometry() {}
+	Bezier(const Point& _p1, const Point& _p2, const Point& _p3) : Geometry(_p1, _p2) { p3 = _p3; }
 	~Bezier() {}
 
-	void setZ(Point* p) { z = p; }
+	void setZ(const Point& p) { p3 = p; }
 
-	std::vector<Point*> getPoints() override;
+	std::vector<Point> getPoints() override;
 };
 
 

@@ -3,8 +3,8 @@
 #define INCLUDED_DATA_H
 
 #include <deque>
-#include "Point.h"
 #include "FormType.h"
+#include "Geometry.h"
 
 class Item;
 
@@ -13,9 +13,9 @@ class Data
 private:
 	FormType currentForm;
 
-	std::deque<Item*> itens;
+	std::deque<Geometry*> allGeos;
 public:
-	~Data() { clearItens(); }
+	~Data() { clearGeometries(); }
 	Data() { currentForm= LINE; }
 
 	/////FORM
@@ -23,12 +23,12 @@ public:
 	void setForm(const FormType fType) { currentForm = fType; }
 
 	/////ITENS	
-	void addItem(Item* item) { itens.push_back(item); }
-	void clearItens();
+	void addGeometry(Geometry* geo) { allGeos.push_back(geo); }
+	void clearGeometries();
 
-	std::deque<Item*>* getItens() { return &itens; }
+	std::deque<Geometry*>& getGeometries() { return allGeos; }
 
-	Item* getLastItem() { return itens.back(); }
+	Geometry* getLastGeometry() { return allGeos.back(); }
 
 };
 

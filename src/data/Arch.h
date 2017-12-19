@@ -1,40 +1,38 @@
 #pragma once
 #ifndef INCLUDED_ARCH_H
 #define INCLUDED_ARCH_H
-#include "Point.h"
-#include "Item.h"
+
 #include <vector>
 #include "Line.h"
 
-class Arch : public Item
+class Arch : public Geometry
 {
 private:
-	Point* z;
+	Point p3;
 
-	Line* raio;
+	Line raio;
 	double angle;
-	Point* center;
-	Point* control;
+	Point center;
+	Point control;
 
-	double pointDistance(Point* x, Point* y);
-	int getQuadrant(Point* a);
+	int getQuadrant(const Point& a);
 	double getAngleArcSen(double cateto, double hipotenusa);
-	Point* findArchPoint(double auxAngle);
+	Point findArchPoint(double auxAngle);
 
 public:
    ~Arch() {}
 
-	Arch() : Item() { z = new Point(); }
-   Arch(Point* a,Point* b,Point* c);	
+	Arch() : Geometry() {}
+   Arch(const Point& _p1, const Point& _p2, const Point& _p3);	
 
-	std::vector<Point*> getPoints() override;
+	std::vector<Point> getPoints() override;
 
-	void setZ(Point* p) { delete z; z = p; }
+	void setP3(const Point& p) { p3 = p; }
 
-	void setRaio() { raio = new Line(x, y); }
+	void setRaio() { raio= Line(p1, p2); }
 
-	void setCenter(Point* p) { center = p; }
-	void setControl(Point* p) { control = p; }
+	void setCenter( const Point& p) { center = p; }
+	void setControl( const Point& p) { control = p; }
 };
 
 

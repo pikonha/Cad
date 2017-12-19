@@ -1,45 +1,50 @@
 #include "MainCmdLine.h"
-#include "Item.h"
+#include "Geometry.h"
 #include "LineModel.h"
 
 void MainCmdLine::execute(Data& d, MainScreen& s)
 {
 	d.setForm(LINE);
-	line = new Line();
+	line= new Line();
 }
 
-void MainCmdLine::setP1(Point* p)
+void MainCmdLine::setP1(const Point& p)
 {
-	line->setX(p);
+	line->setP1(p);
 }
 
-void MainCmdLine::setP2(Point* p)
+void MainCmdLine::setP2(const Point& p)
 {
-	line->setY(p);
+	line->setP2(p);
 	draw();
 }	 
 
 
-QGraphicsItem* MainCmdLine::getModel()
+QGraphicsItem* MainCmdLine::getQtGraphicGeo()
 {
-	return new LineModel(line);
+   if (geoModel)
+      delete geoModel;
+
+   geoModel = new LineModel(line);
+   
+   return geoModel;
 }
 
 void MainCmdLine::mousePressEvent(Point& p)
 {
-   setP1(&p);
-   setDrawing(true, screen.getView());
+   setP1(p);
+   setDrawing(true);
 }
 
 void MainCmdLine::mouseReleaseEvent(Point& p, Data& d)
 {
-   screen.getView()->save(getModel());
-   d.addItem(getItem());
+   screen.getView()->save(getQtGraphicGeo());
+   d.addGeometry(&getGeometry());
 
-   setDrawing(false, screen.getView());
+   setDrawing(false);
 }
 
 void MainCmdLine::mouseMoveEvent(Point& p)
 {
-   setP2(&p);
+   setP2(p);
 }

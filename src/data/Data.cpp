@@ -1,14 +1,11 @@
 #include "Data.h"
-#include "Item.h"
 
-/////ITEMS
-
-void Data::clearItens()
+void Data::clearGeometries()
 {
-	for (int i = 0; i < itens.size(); i++)
-		delete itens[i];
+	for (int i = 0; i < allGeos.size(); i++)
+		delete allGeos[i];
 
-	itens.clear();
+   allGeos.clear();
 }
 
 

@@ -57,12 +57,12 @@ void Manager::runCmd(Cmd* command)
 /////MOUSE
 void Manager::mousePressEvent()
 {
-   cmdmain->mousePressEvent(*screen.getView()->getMousePos());
+   cmdmain->mousePressEvent(screen.getView()->getMousePos());
 }
 
 void Manager::mouseReleaseEvent()
 {
-   cmdmain->mouseReleaseEvent(*screen.getView()->getMousePos(), data);
+   cmdmain->mouseReleaseEvent(screen.getView()->getMousePos(), data);
 
    if (cmdmain->getForm() == LINE)
       startLineCommand();
@@ -79,7 +79,7 @@ void Manager::mouseReleaseEvent()
 
 void Manager::mouseMoveEvent()
 {
-   cmdmain->mouseMoveEvent(*screen.getView()->getMousePos());
+   cmdmain->mouseMoveEvent(screen.getView()->getMousePos());
 }
 
 void Manager::wheelEvent()
@@ -95,7 +95,7 @@ void Manager::newFile()
 
 void Manager::saveFile()
 {
-
+   runCmd(new CmdSave());
 }
 
 void Manager::openFile()
@@ -106,7 +106,7 @@ void Manager::openFile()
 
 void Manager::closeFile()
 {
-
+   runCmd(new CmdClose());
 }
 
 /////ITEMS

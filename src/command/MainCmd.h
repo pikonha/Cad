@@ -16,31 +16,33 @@ protected:
 	bool auxDraw;
 	bool secondClick;
 
+   QGraphicsItem* geoModel;
+
 	AuxLineModel* auxLine;
 public:
    virtual ~MainCmd() {}
-	MainCmd(MainScreen& v) : auxLine(nullptr), screen(v) {drawing = auxDraw = secondClick= false; }	
+	MainCmd(MainScreen& v) : auxLine(nullptr), geoModel(nullptr), screen(v) {drawing = auxDraw = secondClick= false; }	
 
 	virtual void execute(Data& d, MainScreen& s) = 0;
 
-	virtual void setP1(Point* p) = 0;
-	virtual void setP2(Point* p) = 0;
-	virtual void setP3(Point* p) {}
+	virtual void setP1(const Point& p) = 0;
+	virtual void setP2(const Point& p) = 0;
+	virtual void setP3(const Point& p) {}
 
-	void setDrawing(bool d, MainView* view) { drawing = d; view->setMouseTracking(d); }
+	void setDrawing(bool drwOk) { drawing = drwOk; screen.getView()->setMouseTracking(drwOk); }
    bool getSecondClick() { return secondClick; }
-	void setAuxDraw(bool status, MainView* view) { auxDraw = status; view->setMouseTracking(status); }
+	void setAuxDraw(bool status) { auxDraw = status; screen.getView()->setMouseTracking(status); }
 
-	virtual void createAuxLine(Point* p, Point* o);
+	virtual void createAuxLine(const Point& p, const Point& o);
 	virtual AuxLineModel* getAuxLine();
 
 	FormType getForm() { return form; }
 
-	virtual Item* getItem() = 0;
+	virtual Geometry& getGeometry() = 0;
 
 	void draw();
 
-	virtual QGraphicsItem* getModel() = 0;
+	virtual QGraphicsItem* getQtGraphicGeo() = 0;
 
 public:
    virtual void mousePressEvent(Point& p) = 0;

@@ -15,12 +15,12 @@ public:
 
 	void execute(Data& d, MainScreen& s);
 	
-	void setP1(Point* p);
-	void setP2(Point* p);
+	void setP1(const Point& p) override;
+	void setP2(const Point& p) override;
 
-	Item* getItem() { return line; }
+   Geometry& getGeometry() override { return *line; }
 
-	QGraphicsItem* getModel();
+	QGraphicsItem* getQtGraphicGeo() override;
 
 public :
    void mousePressEvent(Point& p) override;

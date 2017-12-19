@@ -1,29 +1,29 @@
 #pragma once
 #ifndef INCLUDED_MODEL_H
 #define INCLUDED_MODEL_H
-#include "Item.h"
+#include "Geometry.h"
 #include <QGraphicsItem>
 
 class Model : public QGraphicsItem
 {
 public:
-	Model() {}
-	Model(Item* i, QGraphicsItem* parent = 0) : QGraphicsItem(parent) { item = i; }
-	virtual ~Model() {}
+   virtual ~Model() {}
 
-	Item* getItem() { return item; }
+	Model(Geometry* ig, QGraphicsItem* parent = 0) : QGraphicsItem(parent), geo(ig) {}
+
+   Geometry& getGeo() const { return *geo; }
 
 	bool operator==(Model* m);
 	
 protected:
-	Item* item;
+   Geometry* geo;
 
 	QRectF boundingRect() const override;
 	void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 	QPainterPath getPath();
 
-	QPoint* pointConversor(Point* p);
+	QPoint pointConversor(const Point& p);
 };
 
 #endif

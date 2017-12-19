@@ -1,11 +1,11 @@
-#include "QWidget"
+#include <QtGui>
+#include <QWidget>
 #include "Model.h"
 #include "MainView.h"
-#include "Item.h"
+#include "Geometry.h"
 #include "MainScreen.h"
 #include "../manager/Manager.h"
 #include "../data/Point.h"
-#include <QtGui>
 
 MainView::MainView()
 {
@@ -74,21 +74,7 @@ void MainView::wheelEvent(QWheelEvent* event)
 	event->accept();
 }
 
-Point* MainView::qpointToPoint(QPoint p)
+Point MainView::qpointToPoint(QPoint p)
 {
-	return new Point(p.x(), p.y());
+	return Point(p.x(), p.y());
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -9,40 +9,45 @@ void MainCmdArch::execute(Data& d, MainScreen& s)
 	arch = new Arch();
 }
 
-void MainCmdArch::setP1(Point* p)
+void MainCmdArch::setP1(const Point& p)
 {
-	arch->setX(p);
+	arch->setP1(p);
 	arch->setCenter(p);
 }
 
-void MainCmdArch::setP2(Point* p)
+void MainCmdArch::setP2(const Point& p)
 {
-	arch->setY(p);
+	arch->setP2(p);
 	arch->setRaio();	
 }
 
-void MainCmdArch::setP3(Point* p)
+void MainCmdArch::setP3(const Point& p)
 {
-	arch->setZ(p);
+	arch->setP3(p);
 	arch->setControl(p);
 	draw();
 }
 
-QGraphicsItem* MainCmdArch::getModel()
+QGraphicsItem* MainCmdArch::getQtGraphicGeo()
 {
-	return new ArchModel(arch);
+   if (geoModel)
+      delete geoModel;
+
+   geoModel = new ArchModel(arch);
+
+   return geoModel;
 }
 
 void MainCmdArch::mousePressEvent(Point& p)
 {
    if (!drawing)
    {
-      setP1(&p);
-      setAuxDraw(true,screen.getView());
+      setP1(p);
+      setAuxDraw(true);
    }
    else
    {
-      setDrawing(false,screen.getView());
+      setDrawing(false);
       secondClick = true;
    }
 }
@@ -51,12 +56,12 @@ void MainCmdArch::mouseReleaseEvent(Point& p,Data& d)
 {
    if (!secondClick)
    {
-      setAuxDraw(false,screen.getView());
-      setDrawing(true,screen.getView());
+      setAuxDraw(false);
+      setDrawing(true);
    }
    else {
-      d.addItem(getItem());
-      screen.getView()->save(getModel());
+      d.addGeometry(&getGeometry());
+      screen.getView()->save(getQtGraphicGeo());
    }
 }
 
@@ -64,7 +69,7 @@ void MainCmdArch::mouseMoveEvent(Point& p)
 {
    if ( auxDraw )
    {
-      setP2(&p);
+      setP2(p);
       createAuxLine(arch->getP1(),arch->getP2());
 
       screen.getView()->draw(getAuxLine());
@@ -76,7 +81,7 @@ void MainCmdArch::mouseMoveEvent(Point& p)
          auxLine = nullptr;
       }
 
-      setP3(&p);
+      setP3(p);
    }
 }
 

@@ -1,17 +1,18 @@
 #pragma once 
 #ifndef INCLUDED_LINE_H
 #define INCLUDED_LINE_H
-#include "Item.h"
+#include "Geometry.h"
 #include "Point.h"
 
-class Line : public Item
+class Line : public Geometry
 {
 public:
-	Line() : Item() {}
-	Line(Point* a, Point* b) : Item(a,b) {}
-	~Line() {}
+   ~Line() {}
+	Line() : Geometry() {}
+	Line(const Point& _p1, const Point& _p2) : Geometry(_p1, _p2) {}
+	
 
-	std::vector<Point*> getPoints();
+	std::vector<Point> getPoints() override;
 };
 
 #endif

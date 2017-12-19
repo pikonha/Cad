@@ -17,13 +17,13 @@ public:
 	
 	void execute(Data& d, MainScreen& s);
 
-	void setP1(Point* p);
-	void setP2(Point* p);
-	void setP3(Point* p);
+	void setP1(const Point& p) override;
+	void setP2(const Point& p) override;
+	void setP3(const Point& p) override;
 
-	Item* getItem() { return arch; }
+	Geometry& getGeometry() override { return *arch; }
 
-	QGraphicsItem* getModel();
+	QGraphicsItem* getQtGraphicGeo() override;
 
 public:
    void mousePressEvent(Point& p) override;

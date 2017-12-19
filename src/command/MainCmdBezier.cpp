@@ -8,37 +8,42 @@ void MainCmdBezier::execute(Data& d, MainScreen& s)
 	bezier = new Bezier();
 }
 
-void MainCmdBezier::setP1(Point* p)
+void MainCmdBezier::setP1(const Point& p)
 {
-	bezier->setX(p);
+	bezier->setP1(p);
 }
 
-void MainCmdBezier::setP2(Point* p)
+void MainCmdBezier::setP2(const Point& p)
 {
-	bezier->setY(p);
+	bezier->setP2(p);
 }
 
-void MainCmdBezier::setP3(Point* p)
+void MainCmdBezier::setP3(const Point& p)
 {
 	bezier->setZ(p);
 	draw();
 }
 
-QGraphicsItem* MainCmdBezier::getModel()
+QGraphicsItem* MainCmdBezier::getQtGraphicGeo()
 {
-	return new BezierModel(bezier);
+   if (geoModel)
+      delete geoModel;
+
+   geoModel = new BezierModel(bezier);
+
+   return geoModel;
 }
 
 void MainCmdBezier::mousePressEvent(Point& p)
 {
    if (!drawing)
    {
-      setP1(&p);
-      setAuxDraw(true,screen.getView());
+      setP1(p);
+      setAuxDraw(true);
    }
    else
    {
-      setDrawing(false,screen.getView());
+      setDrawing(false);
       secondClick = true;
    }
 }
@@ -47,13 +52,13 @@ void MainCmdBezier::mouseReleaseEvent(Point& p,Data& d)
 {
    if (!secondClick)
    {
-      setAuxDraw(false,screen.getView());
-      setDrawing(true,screen.getView());
+      setAuxDraw(false);
+      setDrawing(true);
    }
    else
    {
-      d.addItem(getItem());
-      screen.getView()->save(getModel());
+      d.addGeometry(&getGeometry());
+      screen.getView()->save(getQtGraphicGeo());
    }
 }
 
@@ -61,7 +66,7 @@ void MainCmdBezier::mouseMoveEvent(Point& p)
 {  
    if (auxDraw)
    {
-      setP2(&p);
+      setP2(p);
       createAuxLine(bezier->getP1(),bezier->getP2());
 
       screen.getView()->draw(getAuxLine());
@@ -74,6 +79,6 @@ void MainCmdBezier::mouseMoveEvent(Point& p)
          auxLine = nullptr;
       }
 
-      setP3(&p);
+      setP3(p);
    }
 }

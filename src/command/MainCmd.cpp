@@ -1,6 +1,6 @@
 #include "MainCmd.h"
 
-void MainCmd::createAuxLine(Point* p, Point* o)
+void MainCmd::createAuxLine(const Point& p, const Point& o)
 {
 	if (auxLine)
 		delete auxLine;
@@ -15,5 +15,5 @@ AuxLineModel* MainCmd::getAuxLine()
 
 void MainCmd::draw()
 {
-	screen.getView()->draw(getModel());
+	screen.getView()->draw(getQtGraphicGeo());
 }

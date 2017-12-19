@@ -1,11 +1,12 @@
 #pragma once
 #ifndef INCLUDED_MAINVIEW_H
 #define INCLUDED_MAINVIEW_H
-#include <QGraphicsView>
-#include "../manager/Manager.h"
-#include <deque>
 
-class Point;
+#include <deque>
+#include <QGraphicsView>
+#include "Point.h"
+#include "../manager/Manager.h"
+
 class Model;
 
 class MainView : public QGraphicsView
@@ -13,7 +14,7 @@ class MainView : public QGraphicsView
 private:
 	QGraphicsScene* scene;
 
-	Point* mousePos;
+	Point mousePos;
 
 	std::deque<QGraphicsItem*> items;
 
@@ -24,7 +25,7 @@ public:
 
 	void setManager(Manager& m) { manager = &m; }
 
-	Point* getMousePos() { return mousePos; }
+	Point getMousePos() { return mousePos; }
 
 	QGraphicsScene* getScene() { return scene; }
 
@@ -33,9 +34,9 @@ public:
 	void save(QGraphicsItem* model);
 	void erase(Model* model);
 	
-	Point* qpointToPoint(QPoint p);
+	Point qpointToPoint(QPoint p);
 
-   std::deque<QGraphicsItem*>* getItems() { return &items; }
+   std::deque<QGraphicsItem*>& getItems() { return items; }
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;

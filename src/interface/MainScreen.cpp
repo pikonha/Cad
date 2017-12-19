@@ -100,7 +100,7 @@ void MainScreen::openFile()
 
 void MainScreen::saveFile()
 {
-
+   manager->saveFile();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -112,7 +112,7 @@ void MainScreen::clearAllItems()
 
 void MainScreen::close()
 {
-	exit(0);
+   manager->closeFile();
 }
 
 void MainScreen::clearLastItem()

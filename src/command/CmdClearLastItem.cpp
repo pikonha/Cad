@@ -1,20 +1,22 @@
 #include "CmdClearLastItem.h"
-#include "Item.h"
+#include "Geometry.h"
 #include "QGraphicsItem"
 
 void CmdClearLastItem::execute(Data& d, MainScreen& s)
 {
-   if (d.getItens()->size() > 0)
-   {
-      delete d.getItens()->back();
-      d.getItens()->pop_back();
-   }
-   
-   if (s.getView()->getItems()->size() > 0)
-   {
-      delete s.getView()->getItems()->back();
-      s.getView()->getItems()->pop_back();
-   }
+   std::deque<QGraphicsItem*>& models = s.getView()->getItems();
+   std::deque<Geometry*>& allGeos = d.getGeometries();
 
-   s.getView()->getScene()->update();
+
+   if (models.size() > 0)
+   {
+      s.getView()->getScene()->removeItem( models.back() );
+
+      allGeos.pop_back();
+
+      delete models.back();
+      models.pop_back();
+
+      s.getView()->getScene()->update();
+   }   
 }

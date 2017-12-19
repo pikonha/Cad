@@ -6,9 +6,8 @@
 class LineModel : public Model
 {
 public:
-	LineModel() : Model() {}
-	LineModel(Item* i, QGraphicsItem* parent = 0) : Model(i, parent) {}
-	~LineModel() {}
+	LineModel(Geometry* i, QGraphicsItem* parent = 0) : Model(i, parent) {}
+   ~LineModel() {}
 };
 
 #endif
