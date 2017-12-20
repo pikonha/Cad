@@ -13,7 +13,7 @@ public:
 	MainCmdLine(MainScreen& view) : MainCmd(view) { form = LINE; }
 	~MainCmdLine() {}
 
-	void execute(Data& d, MainScreen& s);
+	void execute(Data& d, MainScreen& s) override;
 	
 	void setP1(const Point& p) override;
 	void setP2(const Point& p) override;

@@ -58,7 +58,7 @@ void MainCmdBezier::mouseReleaseEvent(Point& p,Data& d)
    else
    {
       d.addGeometry(&getGeometry());
-      screen.getView()->save(getQtGraphicGeo());
+      screen.getView()->save(geoModel);
    }
 }
 
@@ -70,7 +70,6 @@ void MainCmdBezier::mouseMoveEvent(Point& p)
       createAuxLine(bezier->getP1(),bezier->getP2());
 
       screen.getView()->draw(getAuxLine());
-      return;
    }
    else if (drawing)
    {

@@ -61,7 +61,7 @@ void MainCmdArch::mouseReleaseEvent(Point& p,Data& d)
    }
    else {
       d.addGeometry(&getGeometry());
-      screen.getView()->save(getQtGraphicGeo());
+      screen.getView()->save(geoModel);
    }
 }
 

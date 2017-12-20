@@ -38,7 +38,7 @@ void MainCmdLine::mousePressEvent(Point& p)
 
 void MainCmdLine::mouseReleaseEvent(Point& p, Data& d)
 {
-   screen.getView()->save(getQtGraphicGeo());
+   screen.getView()->save(geoModel);
    d.addGeometry(&getGeometry());
 
    setDrawing(false);

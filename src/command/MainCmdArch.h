@@ -15,7 +15,7 @@ public:
 	MainCmdArch(MainScreen& view) : MainCmd(view) { form = ARCH; }
 	~MainCmdArch() {}
 	
-	void execute(Data& d, MainScreen& s);
+	void execute(Data& d, MainScreen& s) override;
 
 	void setP1(const Point& p) override;
 	void setP2(const Point& p) override;
