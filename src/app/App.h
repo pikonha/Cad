@@ -25,6 +25,8 @@ public:
 	int start(int argc, char** argv);
 
 	Manager& getManager() const { return *manager; }
+
+   MainScreen& getScreen() const { return *screen; }
 };
 
 #endif 

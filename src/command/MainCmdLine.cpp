@@ -17,13 +17,12 @@ void MainCmdLine::setP2(const Point& p)
 {
 	line->setP2(p);
 	draw();
-}	 
-
+}	
 
 QGraphicsItem* MainCmdLine::getQtGraphicGeo()
 {
    if (geoModel)
-      delete geoModel;
+      delete geoModel;     
 
    geoModel = new LineModel(line);
    

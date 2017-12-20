@@ -20,7 +20,7 @@ void MainCmdBezier::setP2(const Point& p)
 
 void MainCmdBezier::setP3(const Point& p)
 {
-	bezier->setZ(p);
+	bezier->setP3(p);
 	draw();
 }
 

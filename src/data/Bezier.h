@@ -15,7 +15,8 @@ public:
 	Bezier(const Point& _p1, const Point& _p2, const Point& _p3) : Geometry(_p1, _p2) { p3 = _p3; }
 	~Bezier() {}
 
-	void setZ(const Point& p) { p3 = p; }
+	void setP3(const Point& p) { p3 = p; }
+   Point getP3() const { return p3; }
 
 	std::vector<Point> getPoints() override;
 };

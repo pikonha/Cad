@@ -100,7 +100,7 @@ void Manager::saveFile()
 
 void Manager::openFile()
 {
-
+   runCmd(new CmdLoad());
 }
 
 

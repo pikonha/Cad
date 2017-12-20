@@ -4,6 +4,7 @@
 #include <QMenu>
 #include <QIcon>
 #include <QShortcut>
+#include <QFileDialog>
 
 MainScreen::~MainScreen()
 {
@@ -62,6 +63,9 @@ MainScreen::MainScreen(QMainWindow* parent) : manager(nullptr), QMainWindow(pare
 
 	QShortcut* undone = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this);
 	connect(undone, &QShortcut::activated, this, &MainScreen::clearLastItem);
+
+   QShortcut* saveSc = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S),this);
+   connect(saveSc,&QShortcut::activated,this,&MainScreen::saveFile);
 }
 
 void MainScreen::start()
@@ -95,7 +99,7 @@ void MainScreen::setZoom(double scale)
 
 void MainScreen::openFile()
 {
-
+   manager->openFile();
 }
 
 void MainScreen::saveFile()
@@ -118,4 +122,10 @@ void MainScreen::close()
 void MainScreen::clearLastItem()
 {
 	manager->clearLastItem();
+}
+
+std::string MainScreen::getFileName()
+{
+   return QFileDialog::getSaveFileName(view,QString("Save File"),"",QString("Dat files (*.dat)")).toStdString();
+
 }

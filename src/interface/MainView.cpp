@@ -29,9 +29,17 @@ void MainView::erase(Model* model)
 	for (int i = 0; i < items.size(); i++) {
 		Model* m = dynamic_cast<Model*>(items.at(i));
 		
-		if ( m->operator==(model) )
+		if ( m == model )
 			items.erase(items.begin() + i);
 	}
+}
+
+void MainView::repaint()
+{
+   scene->clear();
+
+   for (int i= 0; i < items.size(); i++)
+      draw(items.at(i));
 }
 
 void MainView::draw(QGraphicsItem* model)

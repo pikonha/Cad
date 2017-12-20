@@ -28,6 +28,7 @@ public:
 	std::vector<Point> getPoints() override;
 
 	void setP3(const Point& p) { p3 = p; }
+   Point getP3() const { return p3; }
 
 	void setRaio() { raio= Line(p1, p2); }
 

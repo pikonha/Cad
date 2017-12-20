@@ -31,6 +31,8 @@ public:
 	void close();
 	void clearLastItem();
 
+   std::string getFileName();
+
 	void setManager(Manager& m) {	manager= &m; view->setManager(*manager);	}
 };
 

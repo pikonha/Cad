@@ -14,8 +14,7 @@ public:
    virtual ~Geometry() {}
 
    Geometry() { }
-   Geometry(const Point& _p1, const Point& _p2) { p1 = _p1; p2 = _p2; }
-	
+   Geometry(const Point& _p1, const Point& _p2) { p1 = _p1; p2 = _p2; }	
 
 	Point& getP1() { return p1; }
 	Point& getP2() { return p2; }

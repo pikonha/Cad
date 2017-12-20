@@ -33,6 +33,8 @@ public:
 
 	void save(QGraphicsItem* model);
 	void erase(Model* model);
+
+   void repaint();
 	
 	Point qpointToPoint(QPoint p);
 
