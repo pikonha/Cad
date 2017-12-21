@@ -22,7 +22,7 @@ MainScreen::MainScreen(QMainWindow* parent) : manager(nullptr), QMainWindow(pare
 	navbar = menuBar();	
 
    status = statusBar();
-   status->showMessage("Ready");
+   status->showMessage("Ready", 3000);
    status->show();
 
 	QMenu* file = new QMenu("File");
