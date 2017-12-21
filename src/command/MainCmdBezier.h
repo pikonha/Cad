@@ -7,10 +7,10 @@
 class MainCmdBezier : public MainCmd
 {
 private:
-	Bezier* bezier;
+   Point p1,p2,p3;
 public:
-	MainCmdBezier(MainScreen& view) : MainCmd(view) { form = BEZIER; }
-	~MainCmdBezier() {}
+   ~MainCmdBezier() {}
+	MainCmdBezier(MainScreen& view) : MainCmd(view) { form = BEZIER; }	
 	
 	void execute(Data& d, MainScreen& s) override;
 
@@ -18,7 +18,7 @@ public:
 	void setP2(const Point& p) override;
 	void setP3(const Point& p) override;
 
-   Geometry& getGeometry() override { return *bezier; }
+   Geometry* getNewGeometry() override { return new Bezier(p1,p2,p3); }
 
 	QGraphicsItem* getQtGraphicGeo() override;
 

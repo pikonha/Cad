@@ -8,9 +8,8 @@ class Line : public Geometry
 {
 public:
    ~Line() {}
-	Line() : Geometry() {}
-	Line(const Point& _p1, const Point& _p2) : Geometry(_p1, _p2) {}
-	
+   Line(const Line& l) : Geometry(l.p1,l.p2) {}
+   Line(const Point& _p1, const Point& _p2) : Geometry(_p1, _p2) {}	
 
 	std::vector<Point> getPoints() override;
 };

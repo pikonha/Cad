@@ -38,7 +38,7 @@ public:
 
 	FormType getForm() { return form; }
 
-	virtual Geometry& getGeometry() = 0;
+	virtual Geometry* getNewGeometry() = 0;
 
 	void draw();
 

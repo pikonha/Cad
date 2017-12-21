@@ -5,9 +5,9 @@
 
 class BezierModel : public Model
 {
+   Bezier bz;
 public:
-	//BezierModel() : Model() {}
-	BezierModel(Geometry* i, QGraphicsItem* parent = 0) : Model(i, parent) {}
+	BezierModel(const Bezier& _bz, QGraphicsItem* parent = 0) : bz(_bz), Model(bz, parent) {}
 	~BezierModel() {}
 };
 

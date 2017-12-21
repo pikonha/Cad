@@ -1,14 +1,6 @@
 #include "Model.h"
 #include <QPainter>
 
-bool Model::operator==(Model* m)
-{
-	if (*geo == m->getGeo())
-		return true;
-
-	return false;
-}
-
 QRectF Model::boundingRect() const
 {
 	return QRectF(0, 0, 1920, 1080);
@@ -26,13 +18,12 @@ QPoint Model::pointConversor(const Point& p)
 
 QPainterPath Model::getPath()
 {
-	std::vector<Point> points= geo->getPoints();
-	
-   
-   QPainterPath path(pointConversor(points.front()));
+   QPainterPath path;
+   auto allPt= geo.getPoints();
 
-   for (int i = 1; i < points.size(); i++)
-      path.lineTo(pointConversor(points.at(i)));
+   path.moveTo(pointConversor(allPt.front()));
+   for (auto& p :allPt)
+      path.lineTo(pointConversor(p));
 
    return path;
 }

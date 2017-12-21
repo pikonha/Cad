@@ -4,10 +4,6 @@
 #include "Bezier.h"
 #include "Arch.h"
 
-//#include <QMessageBox>
-//#include <QFileDialog>
-//#include <QMap>
-
 void CmdSave::execute(Data& d, MainScreen& s)
 {
    
@@ -65,42 +61,13 @@ void CmdSave::execute(Data& d, MainScreen& s)
          }
       }
    }
-
-
-
-  /* const QString fileName = QFileDialog::getSaveFileName(s.getView(),QString("Save File"),"",QString("Dat files (*.dat)"));
-
-   QFile file(fileName);
-
-   QMap<qint64,int> mapX;
-   QMap<qint64,int> mapY;
-
-   
-      
-   if ( file.open(QIODevice::WriteOnly))
-   {  
-      if (s.getView()->getScene()->items().isEmpty())
-         return;
-
-      for ( int i= 0; i < itens.size(); i++)
-      {
-         std::vector<Point> points = itens.at(i)->getPoints();
-
-         for (int j = 0; j < points.size(); j++) {
-            mapX.insert(j,points.at(j).x);
-            mapY.insert(j,points.at(j).y);           
-         }
-      }
-
-      QDataStream out(&file);
-      out.setVersion(QDataStream::Qt_5_9);
-
-      out << mapX;
-      out << mapY;
-
-      file.flush();
-      file.close();
-   }
    else
-      QMessageBox::information(s.getView(),QString("Unable to open file"), file.errorString()); */
+   {
+      s.errorMessage();
+   }
+
+
+
+
+ 
 }

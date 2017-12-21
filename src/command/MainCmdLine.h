@@ -1,24 +1,25 @@
 #pragma once
 #ifndef INCLUDED_MAINCMDLINE_H
 #define INCLUDED_MAINCMDLINE_H
-#include "MainCmd.h"
 
-class Line;
+#include "MainCmd.h"
+#include "Line.h"
 
 class MainCmdLine :	public MainCmd
 {
 private:
-	Line* line;
+   Point p1,p2;
+
 public:
-	MainCmdLine(MainScreen& view) : MainCmd(view) { form = LINE; }
-	~MainCmdLine() {}
+   ~MainCmdLine() {}
+   MainCmdLine(MainScreen& view) : MainCmd(view) { form = LINE; }
 
 	void execute(Data& d, MainScreen& s) override;
 	
 	void setP1(const Point& p) override;
 	void setP2(const Point& p) override;
 
-   Geometry& getGeometry() override { return *line; }
+   Geometry* getNewGeometry() override { return new Line(p1,p2); }
 
 	QGraphicsItem* getQtGraphicGeo() override;
 

@@ -6,9 +6,10 @@
 
 class AuxLineModel : public Model
 {
+   Line tmpLine;
 public:
-	AuxLineModel(const Point& p, const Point& o, QGraphicsItem* parent = 0) : Model(new Line(p, o), parent) {}
-	~AuxLineModel() {}
+   ~AuxLineModel() {}
+   AuxLineModel(const Point& p, const Point& o, QGraphicsItem* parent = 0) : tmpLine(p,o),Model(tmpLine, parent) {}
 };
 
 #endif

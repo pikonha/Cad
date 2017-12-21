@@ -4,5 +4,4 @@
 void CmdClose::execute(Data& d, MainScreen& s)
 {
    CmdClearAllItems().execute(d,s);
-   exit(0);
 }

@@ -8,12 +8,10 @@ class AuxLineModel;
 
 class MainCmdArch :	public MainCmd
 {
-private:
-	Arch* arch;
-
+   Point p1,p2,p3;
 public:
-	MainCmdArch(MainScreen& view) : MainCmd(view) { form = ARCH; }
-	~MainCmdArch() {}
+   ~MainCmdArch() {}
+   MainCmdArch(MainScreen& view) : MainCmd(view) { form = ARCH; }
 	
 	void execute(Data& d, MainScreen& s) override;
 
@@ -21,7 +19,7 @@ public:
 	void setP2(const Point& p) override;
 	void setP3(const Point& p) override;
 
-	Geometry& getGeometry() override { return *arch; }
+	Geometry* getNewGeometry() override { return new Arch(p1,p2,p3); }
 
 	QGraphicsItem* getQtGraphicGeo() override;
 

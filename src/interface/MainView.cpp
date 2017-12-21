@@ -9,8 +9,8 @@
 
 MainView::MainView()
 {
-	setMinimumSize(1920, 1080);
-	showMaximized();
+	setMinimumSize(1920, 880);
+	//showMaximized();
 
 	scene = new QGraphicsScene(this);
 	setScene(scene);

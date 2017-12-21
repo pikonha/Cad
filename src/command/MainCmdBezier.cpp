@@ -5,22 +5,21 @@
 void MainCmdBezier::execute(Data& d, MainScreen& s)
 {
 	d.setForm(BEZIER);
-	bezier = new Bezier();
 }
 
 void MainCmdBezier::setP1(const Point& p)
 {
-	bezier->setP1(p);
+   p1= p;
 }
 
 void MainCmdBezier::setP2(const Point& p)
 {
-	bezier->setP2(p);
+   p2= p;
 }
 
 void MainCmdBezier::setP3(const Point& p)
 {
-	bezier->setP3(p);
+   p3= p;
 	draw();
 }
 
@@ -29,7 +28,7 @@ QGraphicsItem* MainCmdBezier::getQtGraphicGeo()
    if (geoModel)
       delete geoModel;
 
-   geoModel = new BezierModel(bezier);
+   geoModel = new BezierModel(Bezier(p1,p2,p3));
 
    return geoModel;
 }
@@ -57,7 +56,7 @@ void MainCmdBezier::mouseReleaseEvent(Point& p,Data& d)
    }
    else
    {
-      d.addGeometry(&getGeometry());
+      d.addGeometry(getNewGeometry());
       screen.getView()->save(geoModel);
    }
 }
@@ -67,7 +66,7 @@ void MainCmdBezier::mouseMoveEvent(Point& p)
    if (auxDraw)
    {
       setP2(p);
-      createAuxLine(bezier->getP1(),bezier->getP2());
+      createAuxLine(p1,p2);
 
       screen.getView()->draw(getAuxLine());
    }

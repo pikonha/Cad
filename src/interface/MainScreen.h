@@ -10,12 +10,15 @@ private:
 	MainView* view;
 	QMenuBar* navbar;
 
+   QStatusBar* status;
+
 	Manager* manager;
 public:	
 	MainScreen(QMainWindow* parent = 0);
 	~MainScreen();
 
 	void start();
+   void setManager(Manager& m) { manager= &m; view->setManager(*manager); }
 
 	void setZoom(double scale);
 
@@ -33,7 +36,10 @@ public:
 
    std::string getFileName();
 
-	void setManager(Manager& m) {	manager= &m; view->setManager(*manager);	}
+   void errorMessage();
+   void successMessage();	
+
+   void setStatusMessage(std::string text);
 };
 
 #endif

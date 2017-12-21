@@ -5,9 +5,10 @@
 
 class LineModel : public Model
 {
+   Line ln;
 public:
-	LineModel(Geometry* i, QGraphicsItem* parent = 0) : Model(i, parent) {}
    ~LineModel() {}
+   LineModel(const Line& _ln, QGraphicsItem* parent = 0) : ln(_ln),Model(ln, parent) {}
 };
 
 #endif

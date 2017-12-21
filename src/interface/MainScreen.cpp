@@ -5,6 +5,7 @@
 #include <QIcon>
 #include <QShortcut>
 #include <QFileDialog>
+#include <QStatusBar>
 
 MainScreen::~MainScreen()
 {
@@ -19,6 +20,10 @@ MainScreen::MainScreen(QMainWindow* parent) : manager(nullptr), QMainWindow(pare
 	view = new MainView();
 
 	navbar = menuBar();	
+
+   status = statusBar();
+   status->showMessage("Ready");
+   status->show();
 
 	QMenu* file = new QMenu("File");
 	QAction* line = new QAction("Line");
@@ -117,6 +122,7 @@ void MainScreen::clearAllItems()
 void MainScreen::close()
 {
    manager->closeFile();
+   QMainWindow::close();
 }
 
 void MainScreen::clearLastItem()
@@ -128,4 +134,12 @@ std::string MainScreen::getFileName()
 {
    return QFileDialog::getSaveFileName(view,QString("Save File"),"",QString("Dat files (*.dat)")).toStdString();
 
+}
+
+void MainScreen::errorMessage()
+{
+}
+
+void MainScreen::successMessage()
+{
 }

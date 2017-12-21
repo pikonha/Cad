@@ -6,25 +6,21 @@
 void MainCmdArch::execute(Data& d, MainScreen& s)
 {
 	d.setForm(ARCH);
-	arch = new Arch();
 }
 
 void MainCmdArch::setP1(const Point& p)
 {
-	arch->setP1(p);
-	arch->setCenter(p);
+   p1= p;
 }
 
 void MainCmdArch::setP2(const Point& p)
 {
-	arch->setP2(p);
-	arch->setRaio();	
+   p2= p;
 }
 
 void MainCmdArch::setP3(const Point& p)
 {
-	arch->setP3(p);
-	arch->setControl(p);
+   p3 = p;
 	draw();
 }
 
@@ -33,7 +29,7 @@ QGraphicsItem* MainCmdArch::getQtGraphicGeo()
    if (geoModel)
       delete geoModel;
 
-   geoModel = new ArchModel(arch);
+   geoModel = new ArchModel(Arch(p1,p2,p3));
 
    return geoModel;
 }
@@ -60,7 +56,7 @@ void MainCmdArch::mouseReleaseEvent(Point& p,Data& d)
       setDrawing(true);
    }
    else {
-      d.addGeometry(&getGeometry());
+      d.addGeometry(getNewGeometry());
       screen.getView()->save(geoModel);
    }
 }
@@ -70,7 +66,7 @@ void MainCmdArch::mouseMoveEvent(Point& p)
    if ( auxDraw )
    {
       setP2(p);
-      createAuxLine(arch->getP1(),arch->getP2());
+      createAuxLine(p1,p2);
 
       screen.getView()->draw(getAuxLine());
    }

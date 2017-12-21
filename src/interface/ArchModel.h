@@ -5,8 +5,9 @@
 
 class ArchModel :public Model
 {
+   Arch a;
 public:
-	ArchModel(Geometry* i, QGraphicsItem* parent = 0) : Model(i, parent) {}
+   ArchModel(const Arch& _a,QGraphicsItem* parent = 0) : a(_a), Model(a,parent) {}
 	~ArchModel() {}
 };
 

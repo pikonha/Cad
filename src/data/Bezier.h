@@ -7,15 +7,11 @@
 
 class Bezier : public Geometry
 {
-private:
 	Point p3;
-
 public:
-	Bezier() : Geometry() {}
-	Bezier(const Point& _p1, const Point& _p2, const Point& _p3) : Geometry(_p1, _p2) { p3 = _p3; }
-	~Bezier() {}
+   ~Bezier() {}
+	Bezier(const Point& _p1, const Point& _p2, const Point& _p3) : Geometry(_p1, _p2) { p3 = _p3; }	
 
-	void setP3(const Point& p) { p3 = p; }
    Point getP3() const { return p3; }
 
 	std::vector<Point> getPoints() override;

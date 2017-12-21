@@ -5,17 +5,16 @@
 void MainCmdLine::execute(Data& d, MainScreen& s)
 {
 	d.setForm(LINE);
-	line= new Line();
 }
 
 void MainCmdLine::setP1(const Point& p)
 {
-	line->setP1(p);
+	p1= p;
 }
 
 void MainCmdLine::setP2(const Point& p)
 {
-	line->setP2(p);
+	p2= p;
 	draw();
 }	
 
@@ -24,7 +23,7 @@ QGraphicsItem* MainCmdLine::getQtGraphicGeo()
    if (geoModel)
       delete geoModel;     
 
-   geoModel = new LineModel(line);
+   geoModel= new LineModel(Line(p1,p2));
    
    return geoModel;
 }
@@ -38,7 +37,7 @@ void MainCmdLine::mousePressEvent(Point& p)
 void MainCmdLine::mouseReleaseEvent(Point& p, Data& d)
 {
    screen.getView()->save(geoModel);
-   d.addGeometry(&getGeometry());
+   d.addGeometry(getNewGeometry());
 
    setDrawing(false);
 }
