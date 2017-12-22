@@ -1,11 +1,12 @@
 #include <QtGui>
+#include "Point.h"
 #include "Model.h"
+#include "File.h"
 #include "MainView.h"
-#include "MainScreen.h"
 #include "../manager/Manager.h"
-#include "../data/Point.h"
 
-MainView::MainView()
+
+MainView::MainView() : file(File("NewFile"))
 {
 	setMinimumSize(1920, 880);
 
@@ -31,7 +32,7 @@ void MainView::erase(Model* model)
 	}
 }
 
-void MainView::repaint()
+void MainView::reprint()
 {
    scene->clear();
 

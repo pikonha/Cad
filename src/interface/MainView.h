@@ -5,13 +5,13 @@
 #include <deque>
 #include <QGraphicsView>
 #include "Point.h"
-#include "../manager/Manager.h"
+#include "File.h"
 
+class Manager;
 class Model;
 
 class MainView : public QGraphicsView
 {
-private:
 	QGraphicsScene* scene;
 
 	Point mousePos;
@@ -19,6 +19,7 @@ private:
 	std::deque<QGraphicsItem*> items;
 
 	Manager* manager;
+   File& file;
 public:
 	MainView();
 	~MainView() {}
@@ -34,7 +35,7 @@ public:
 	void save(QGraphicsItem* model);
 	void erase(Model* model);
 
-   void repaint();
+   void reprint();
 	
 	Point qpointToPoint(QPoint p);
 

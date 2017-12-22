@@ -6,6 +6,7 @@
 #include <QShortcut>
 #include <QFileDialog>
 #include <QStatusBar>
+#include "../manager/Manager.h"
 
 MainScreen::~MainScreen()
 {
