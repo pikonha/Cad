@@ -1,15 +1,17 @@
 #include "MainCmdLine.h"
-#include "Geometry.h"
 #include "LineModel.h"
+#include "Instruction.h"
 
 void MainCmdLine::execute(Data& d, MainScreen& s)
 {
 	d.setForm(LINE);
+   setMessageToScreen(MOUSECLICK);
 }
 
 void MainCmdLine::setP1(const Point& p)
 {
 	p1= p;
+   setMessageToScreen(MOUSEMOVE);
 }
 
 void MainCmdLine::setP2(const Point& p)

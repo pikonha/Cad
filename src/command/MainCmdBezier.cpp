@@ -5,11 +5,13 @@
 void MainCmdBezier::execute(Data& d, MainScreen& s)
 {
 	d.setForm(BEZIER);
+   setMessageToScreen(MOUSECLICK);
 }
 
 void MainCmdBezier::setP1(const Point& p)
 {
    p1= p;
+   setMessageToScreen(MOUSEMOVE);
 }
 
 void MainCmdBezier::setP2(const Point& p)
@@ -53,6 +55,7 @@ void MainCmdBezier::mouseReleaseEvent(Point& p,Data& d)
    {
       setAuxDraw(false);
       setDrawing(true);
+      setMessageToScreen(SECONDCLICK);
    }
    else
    {

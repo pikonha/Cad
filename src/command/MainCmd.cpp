@@ -17,3 +17,9 @@ void MainCmd::draw()
 {
 	screen.getView()->draw(getQtGraphicGeo());
 }
+
+void MainCmd::setMessageToScreen(Instruction in)
+{ 
+   screen.setStatusMessage(in);
+}
+

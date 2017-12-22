@@ -19,6 +19,8 @@ protected:
    QGraphicsItem* geoModel;
 
 	AuxLineModel* auxLine;
+
+   void setMessageToScreen(Instruction in);
 public:
    virtual ~MainCmd() {}
 	MainCmd(MainScreen& v) : auxLine(nullptr), geoModel(nullptr), screen(v) {drawing = auxDraw = secondClick= false; }	
@@ -42,7 +44,7 @@ public:
 
 	void draw();
 
-	virtual QGraphicsItem* getQtGraphicGeo() = 0;
+	virtual QGraphicsItem* getQtGraphicGeo() = 0; 
 
 public:
    virtual void mousePressEvent(Point& p) = 0;

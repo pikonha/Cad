@@ -9,28 +9,25 @@
 
 void CmdLoad::execute(Data& d, MainScreen& s) 
 {
-   std::string fileName = s.getFileName();
+   std::string fileName = s.getLoadFileName();
 
    std::ifstream stream;
 
-   std::deque<Geometry*> itens = d.getGeometries();
+   std::deque<Geometry*> itens;
 
-   stream.open(fileName,std::ios::in | std::ios::binary); 
+   stream.open(fileName, std::ios::in | std::ios::binary);    
 
-   int form;
-   int p1x;
-   int p1y;
-   int p2x;
-   int p2y;
-   int p3x;
-   int p3y;
-
-   if (stream.fail())
-      s.errorMessage();
-
-   else
+   if (stream.is_open())
    {
       stream.seekg(0);
+
+      int form;
+      int p1x;
+      int p1y;
+      int p2x;
+      int p2y;
+      int p3x;
+      int p3y;
 
       while (!stream.eof())
       {
@@ -42,7 +39,7 @@ void CmdLoad::execute(Data& d, MainScreen& s)
          stream.read((char*)&p2x,sizeof(int));
          stream.read((char*)&p2y,sizeof(int));
 
-         if ( form > 0)
+         if (form > 0)
          {
             stream.read((char*)&p3x,sizeof(int));
             stream.read((char*)&p3y,sizeof(int));
@@ -54,27 +51,29 @@ void CmdLoad::execute(Data& d, MainScreen& s)
          Geometry* geo;
          QGraphicsItem* model;
 
-         switch ( form )
+         switch (form)
          {
          case 0:
-            geo= ln= new Line(Point(p1x,p2x),Point(p2x,p2y));  
-            model = new LineModel(*ln);            
+            geo= ln= new Line(Point(p1x,p1y),Point(p2x,p2y));
+            model = new LineModel(*ln);
             break;
 
-         case 1: 
-            geo= bz= new Bezier(Point(p1x,p2x),Point(p2x,p2y),Point(p3x,p3y));
+         case 1:
+            geo= bz= new Bezier(Point(p1x,p1y),Point(p2x,p2y),Point(p3x,p3y));
             model = new BezierModel(*bz);
             break;
 
-         case 2: 
-            geo= a= new Arch(Point(p1x,p2x),Point(p2x,p2y),Point(p3x,p3y));
+         case 2:
+            geo= a= new Arch(Point(p1x,p1y),Point(p2x,p2y),Point(p3x,p3y));
             model = new ArchModel(*a);
             break;
          }
 
          s.getView()->draw(model);
+         s.getView()->save(model);
          itens.push_back(geo);
-         
       }
    }
+   else
+      s.errorMessage();
 }

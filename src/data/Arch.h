@@ -16,7 +16,7 @@ public:
    ~Arch() {}
    Arch(const Point& _p1,const Point& _p2,const Point& _p3) : Geometry(_p1,_p2), p3(_p3) {}
 
-   Point getP3() const { return p3; }
+   Point& getP3() { return p3; }
 
 	std::vector<Point> getPoints() override;
 };

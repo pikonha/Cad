@@ -6,11 +6,13 @@
 void MainCmdArch::execute(Data& d, MainScreen& s)
 {
 	d.setForm(ARCH);
+   setMessageToScreen(MOUSECLICK);
 }
 
 void MainCmdArch::setP1(const Point& p)
 {
    p1= p;
+   setMessageToScreen(MOUSEMOVE);
 }
 
 void MainCmdArch::setP2(const Point& p)
@@ -54,6 +56,7 @@ void MainCmdArch::mouseReleaseEvent(Point& p,Data& d)
    {
       setAuxDraw(false);
       setDrawing(true);
+      setMessageToScreen(SECONDCLICK);
    }
    else {
       d.addGeometry(getNewGeometry());

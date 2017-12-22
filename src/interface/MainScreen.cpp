@@ -12,7 +12,7 @@ MainScreen::~MainScreen()
    delete view;
 }
 
-MainScreen::MainScreen(QMainWindow* parent) : manager(nullptr), QMainWindow(parent)
+MainScreen::MainScreen(QMainWindow* parent) : QMainWindow(parent), manager(nullptr)
 {
 	setFixedSize(1920, 1020);
 	showMaximized();
@@ -22,7 +22,6 @@ MainScreen::MainScreen(QMainWindow* parent) : manager(nullptr), QMainWindow(pare
 	navbar = menuBar();	
 
    status = statusBar();
-   status->showMessage("Ready", 3000);
    status->show();
 
 	QMenu* file = new QMenu("File");
@@ -130,10 +129,15 @@ void MainScreen::clearLastItem()
 	manager->clearLastItem();
 }
 
-std::string MainScreen::getFileName()
+std::string MainScreen::getSaveFileName()
 {
    return QFileDialog::getSaveFileName(view,QString("Save File"),"",QString("Dat files (*.dat)")).toStdString();
 
+}
+
+std::string MainScreen::getLoadFileName()
+{
+   return QFileDialog::getOpenFileName(view,QString("Open file"),"",QString("Dat files (*.dat)")).toStdString();
 }
 
 void MainScreen::errorMessage()
@@ -142,4 +146,14 @@ void MainScreen::errorMessage()
 
 void MainScreen::successMessage()
 {
+}
+
+void MainScreen::setStatusMessage(Instruction in)
+{
+   switch (in)
+   {
+   case 0: status->showMessage("Waiting for a click on the screen."); break;
+   case 1: status->showMessage("Keep pressed and move the cursor. (Release to finish)"); break;
+   case 2: status->showMessage("Click to set the draw's length."); break;
+   }
 }

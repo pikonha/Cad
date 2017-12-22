@@ -1,8 +1,6 @@
 #include <QtGui>
-#include <QWidget>
 #include "Model.h"
 #include "MainView.h"
-#include "Geometry.h"
 #include "MainScreen.h"
 #include "../manager/Manager.h"
 #include "../data/Point.h"
@@ -10,7 +8,6 @@
 MainView::MainView()
 {
 	setMinimumSize(1920, 880);
-	//showMaximized();
 
 	scene = new QGraphicsScene(this);
 	setScene(scene);

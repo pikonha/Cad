@@ -3,6 +3,7 @@
 #define INCLUDED_MAINSCREEN_H
 #include <QMainWindow>
 #include "MainView.h"
+#include "Instruction.h"
 
 class MainScreen : public QMainWindow
 {
@@ -34,12 +35,13 @@ public:
 	void close();
 	void clearLastItem();
 
-   std::string getFileName();
+   std::string getSaveFileName();
+   std::string getLoadFileName();
 
    void errorMessage();
    void successMessage();	
 
-   void setStatusMessage(std::string text);
+   void setStatusMessage(Instruction in);
 };
 
 #endif
