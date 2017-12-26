@@ -23,6 +23,10 @@ public:
 //   void addGeo(const Geometry& geo) { geometries.push_back(geo);  }
 
    bool getSaved() { return isSaved; }
+
+   void load();
+   void save();
+   void saveAs();   
 };
 
 #endif

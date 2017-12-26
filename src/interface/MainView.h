@@ -21,8 +21,8 @@ class MainView : public QGraphicsView
 	Manager* manager;
    File& file;
 public:
-	MainView();
-	~MainView() {}
+   ~MainView(){}
+	MainView();	
 
 	void setManager(Manager& m) { manager = &m; }
 
@@ -40,6 +40,8 @@ public:
 	Point qpointToPoint(QPoint p);
 
    std::deque<QGraphicsItem*>& getItems() { return items; }
+
+   File getFile() { return file; }
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;

@@ -6,6 +6,7 @@
 #include <QShortcut>
 #include <QFileDialog>
 #include <QStatusBar>
+#include <QMessageBox>
 #include "../manager/Manager.h"
 
 MainScreen::~MainScreen()
@@ -99,7 +100,7 @@ void MainScreen::startArchCommand() const
 
 void MainScreen::setZoom(double scale)
 {
-	
+  
 }
 
 void MainScreen::openFile()
@@ -143,10 +144,12 @@ std::string MainScreen::getLoadFileName()
 
 void MainScreen::errorMessage()
 {
+   QMessageBox::warning(this,tr("Fatal error"),tr("An error occurred while processing your request."),QMessageBox::Ok);
 }
 
 void MainScreen::successMessage()
 {
+   QMessageBox::information(this,tr("Good news"),tr("Successful request."),QMessageBox::Ok);
 }
 
 void MainScreen::setStatusMessage(Instruction in)
