@@ -4,19 +4,14 @@
 
 void CmdClearLastItem::execute(Data& d, MainScreen& s)
 {
-   std::deque<QGraphicsItem*>& models = s.getView()->getItems();
-   std::deque<Geometry*>& allGeos = d.getGeometries();
+   std::vector<Geometry*>* geos = &s.getCurrentView().getFile().getGeos();
 
-
-   if (models.size() > 0)
+   if (geos->size() > 0)
    {
-      s.getView()->getScene()->removeItem( models.back() );
+      delete geos->back();
 
-      allGeos.pop_back();
-
-      delete models.back();
-      models.pop_back();
-
-      s.getView()->getScene()->update();
+      geos->pop_back();
    }   
+
+   geos->clear();
 }

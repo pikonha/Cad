@@ -4,12 +4,10 @@
 
 class Data;
 class Manager;
-class MainView;
 class MainScreen;
 
 class App
 {
-private:
 	static App* app;
 
 	Data* data;
@@ -25,7 +23,6 @@ public:
 	int start(int argc, char** argv);
 
 	Manager& getManager() const { return *manager; }
-
    MainScreen& getScreen() const { return *screen; }
 };
 

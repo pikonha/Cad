@@ -3,6 +3,7 @@
 #define INCLUDED_FILE_H
 
 #include <vector>
+#include <string>
 #include "Geometry.h"
 
 class File
@@ -20,13 +21,12 @@ public:
    ~File() {}
    File(const std::string name) : name(name), isSaved(false) {}
 
-//   void addGeo(const Geometry& geo) { geometries.push_back(geo);  }
+   bool getSaved() const { return isSaved; }
+   void setSaver(const bool status) { isSaved= status; }
+   
+   std::string getName() const { return name; }
 
-   bool getSaved() { return isSaved; }
-
-   void load();
-   void save();
-   void saveAs();   
+   std::vector<Geometry*> getGeos() const { return geometries; }
 };
 
 #endif

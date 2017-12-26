@@ -6,7 +6,6 @@
 #include "MainScreen.h"
 
 App* App::app= nullptr;
-
 App::~App() 
 {
    if (screen)
@@ -43,10 +42,9 @@ int App::start(int argc, char** argv)
 	screen= new MainScreen();
 
 	data= new Data;
-	manager= new Manager(*data,*screen);
 
-	screen->setManager(*manager);
-	screen->start();
+	manager= new Manager(*data,*screen);
+   screen->setManager(*manager);
 
 	return app.exec();
 }

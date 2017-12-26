@@ -31,9 +31,9 @@ public:
 	virtual void setP2(const Point& p) = 0;
 	virtual void setP3(const Point& p) {}
 
-	void setDrawing(bool drwOk) { drawing = drwOk; screen.getView()->setMouseTracking(drwOk); }
+	void setDrawing(bool drwOk) { drawing = drwOk; screen.getCurrentView().setMouseTracking(drwOk); }
    bool getSecondClick() { return secondClick; }
-	void setAuxDraw(bool status) { auxDraw = status; screen.getView()->setMouseTracking(status); }
+	void setAuxDraw(bool status) { auxDraw = status; screen.getCurrentView().setMouseTracking(status); }
 
 	virtual void createAuxLine(const Point& p, const Point& o);
 	virtual AuxLineModel* getAuxLine();

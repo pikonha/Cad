@@ -60,7 +60,7 @@ void MainCmdBezier::mouseReleaseEvent(Point& p,Data& d)
    else
    {
       d.addGeometry(getNewGeometry());
-      screen.getView()->save(geoModel);
+      screen.getCurrentView().save(geoModel);
    }
 }
 
@@ -71,7 +71,7 @@ void MainCmdBezier::mouseMoveEvent(Point& p)
       setP2(p);
       createAuxLine(p1,p2);
 
-      screen.getView()->draw(getAuxLine());
+      screen.getCurrentView().draw(getAuxLine());
    }
    else if (drawing)
    {

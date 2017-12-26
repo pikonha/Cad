@@ -15,7 +15,7 @@ AuxLineModel* MainCmd::getAuxLine()
 
 void MainCmd::draw()
 {
-	screen.getView()->draw(getQtGraphicGeo());
+	screen.getCurrentView().draw(getQtGraphicGeo());
 }
 
 void MainCmd::setMessageToScreen(Instruction in)

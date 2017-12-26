@@ -69,8 +69,8 @@ void CmdLoad::execute(Data& d, MainScreen& s)
             break;
          }
 
-         s.getView()->draw(model);
-         s.getView()->save(model);
+         s.getCurrentView().draw(model);
+         s.getCurrentView().save(model);
          itens.push_back(geo);
       }
    }

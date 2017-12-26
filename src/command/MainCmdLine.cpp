@@ -38,7 +38,7 @@ void MainCmdLine::mousePressEvent(Point& p)
 
 void MainCmdLine::mouseReleaseEvent(Point& p, Data& d)
 {
-   screen.getView()->save(geoModel);
+   screen.getCurrentView().save(geoModel);
    d.addGeometry(getNewGeometry());
 
    setDrawing(false);

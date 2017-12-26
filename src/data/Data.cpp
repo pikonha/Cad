@@ -1,12 +1,12 @@
 #include "Data.h"
 
+
 void Data::clearGeometries()
 {
-	for (int i = 0; i < allGeos.size(); i++)
-		delete allGeos[i];
+   std::vector<Geometry*> geos = currentFile->getGeos();
 
-   allGeos.clear();
+   for ( int i= 0; i < geos.size(); i++ )
+      delete geos[i];
+
+   geos.clear();
 }
-
-
-

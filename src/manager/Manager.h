@@ -9,16 +9,14 @@ class Cmd;
 
 class Manager
 {
-private:	
 	Data& data;
 	MainScreen& screen;
 
 	Cmd* cmd;
 	MainCmd* cmdmain;
-
 public:
 	Manager(Data& d, MainScreen& s);
-	~Manager() {}
+   ~Manager();
 
 	/////MOUSE
 	void mousePressEvent();

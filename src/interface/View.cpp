@@ -2,11 +2,11 @@
 #include "Point.h"
 #include "Model.h"
 #include "File.h"
-#include "MainView.h"
+#include "View.h"
 #include "../manager/Manager.h"
 
 
-MainView::MainView() : file(File("NewFile"))
+View::View(QWidget* parent) : file(File("NewFile")), QGraphicsView(parent)
 {
 	setMinimumSize(1920, 880);
 
@@ -17,12 +17,12 @@ MainView::MainView() : file(File("NewFile"))
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-void MainView::save(QGraphicsItem* model) 
+void View::save(QGraphicsItem* model) 
 {
 	items.push_back(model);
 }
 
-void MainView::erase(Model* model) 
+void View::erase(Model* model) 
 {
 	for (int i = 0; i < items.size(); i++) {
 		Model* m = dynamic_cast<Model*>(items.at(i));
@@ -32,7 +32,7 @@ void MainView::erase(Model* model)
 	}
 }
 
-void MainView::reprint()
+void View::reprint()
 {
    scene->clear();
 
@@ -40,14 +40,14 @@ void MainView::reprint()
       draw(items.at(i));
 }
 
-void MainView::draw(QGraphicsItem* model)
+void View::draw(QGraphicsItem* model)
 {
 	scene->addItem(model);
 	scene->update();
 }
 
 
-void MainView::mousePressEvent(QMouseEvent* event)
+void View::mousePressEvent(QMouseEvent* event)
 {
 	mousePos = qpointToPoint(event->pos());
 	manager->mousePressEvent();
@@ -55,7 +55,7 @@ void MainView::mousePressEvent(QMouseEvent* event)
 	event->accept();
 }
 
-void MainView::mouseReleaseEvent(QMouseEvent* event)
+void View::mouseReleaseEvent(QMouseEvent* event)
 {
 	mousePos = qpointToPoint(event->pos());
 	manager->mouseReleaseEvent();
@@ -63,7 +63,7 @@ void MainView::mouseReleaseEvent(QMouseEvent* event)
 	event->accept();	
 }
 
-void MainView::mouseMoveEvent(QMouseEvent* event)
+void View::mouseMoveEvent(QMouseEvent* event)
 {
 	mousePos = qpointToPoint(event->pos());
 	manager->mouseMoveEvent();
@@ -71,7 +71,7 @@ void MainView::mouseMoveEvent(QMouseEvent* event)
 	event->accept();
 }
 
-void MainView::wheelEvent(QWheelEvent* event)
+void View::wheelEvent(QWheelEvent* event)
 {
 	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 	
@@ -80,7 +80,7 @@ void MainView::wheelEvent(QWheelEvent* event)
 	event->accept();
 }
 
-Point MainView::qpointToPoint(QPoint p)
+Point View::qpointToPoint(QPoint p)
 {
 	return Point(p.x(), p.y());
 }

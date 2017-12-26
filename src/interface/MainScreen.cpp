@@ -3,49 +3,65 @@
 #include <QMenuBar>
 #include <QMenu>
 #include <QIcon>
+#include <QTabWidget>
+#include <QLabel>
 #include <QShortcut>
 #include <QFileDialog>
 #include <QStatusBar>
 #include <QMessageBox>
+#include <QFormLayout>
+#include <QLineEdit>
+#include <QDialogButtonBox>
 #include "../manager/Manager.h"
 
 MainScreen::~MainScreen()
 {
-   delete view;
+   delete navbar;
+   delete status;
+   delete tabs;
 }
 
 MainScreen::MainScreen(QMainWindow* parent) : QMainWindow(parent), manager(nullptr)
 {
 	setFixedSize(1920, 1020);
+   setWindowTitle(QString("AudacesCAD"));
 	showMaximized();
-
-	view = new MainView();
 
 	navbar = menuBar();	
 
    status = statusBar();
    status->show();
 
+   tabs = new QTabWidget(this);
+   setCentralWidget(tabs);
+   tabs->setTabsClosable(true);
+
+   connect(tabs,&QTabWidget::tabCloseRequested,this,&MainScreen::closeTab);
+
 	QMenu* file = new QMenu("File");
 	QAction* line = new QAction("Line");
 	QAction* bezier = new QAction("Bezier");
 	QAction* arc = new QAction("Arc");	
 	
+   QAction* newFile = new QAction("New");
 	QAction* open = new QAction("Open");
 	QAction* save = new QAction("Save");
 	QAction* clear = new QAction("Clear");
 	QAction* close = new QAction("Close");
 
+   file->addAction(newFile);
 	file->addAction(open);
 	file->addAction(save);
 	file->addAction(clear);
 	file->addAction(close);
 
+   QIcon* iconNew = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/new.png");
 	QIcon* iconSave = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/save.png");
 	QIcon* iconClear = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/clean.png");
 	QIcon* iconClose = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/close.png");
 	QIcon* iconOpen = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/open.png");
 
+   newFile->setIcon(*iconNew);
 	open->setIcon(*iconOpen);
 	save->setIcon(*iconSave);
 	clear->setIcon(*iconClear);
@@ -55,13 +71,12 @@ MainScreen::MainScreen(QMainWindow* parent) : QMainWindow(parent), manager(nullp
 	navbar->addAction(line);
 	navbar->addAction(bezier);
 	navbar->addAction(arc);
-	
-	setCentralWidget(view);
 
 	connect(line, &QAction::triggered, this, &MainScreen::startLineCommand);
 	connect(bezier, &QAction::triggered, this, &MainScreen::startBezierCommand);
 	connect(arc, &QAction::triggered, this, &MainScreen::startArchCommand);	
 
+   connect(newFile,&QAction::triggered,this,&MainScreen::newFile);
 	connect(open, &QAction::triggered, this,  &MainScreen::openFile);
 	connect(save, &QAction::triggered, this,  &MainScreen::saveFile);
 	connect(clear, &QAction::triggered, this, &MainScreen::clearAllItems);
@@ -98,9 +113,9 @@ void MainScreen::startArchCommand() const
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void MainScreen::setZoom(double scale)
+void MainScreen::newFile()
 {
-  
+   manager->newFile();
 }
 
 void MainScreen::openFile()
@@ -133,13 +148,28 @@ void MainScreen::clearLastItem()
 
 std::string MainScreen::getSaveFileName()
 {
-   return QFileDialog::getSaveFileName(view,QString("Save File"),"",QString("Dat files (*.dat)")).toStdString();
+   return QFileDialog::getSaveFileName(currentView,QString("Save File"),"",QString("Dat files (*.dat)")).toStdString();
 
 }
 
 std::string MainScreen::getLoadFileName()
 {
-   return QFileDialog::getOpenFileName(view,QString("Open file"),"",QString("Dat files (*.dat)")).toStdString();
+   return QFileDialog::getOpenFileName(currentView,QString("Open file"),"",QString("Dat files (*.dat)")).toStdString();
+}
+
+void MainScreen::addTab(View* view, std::string name)
+{
+   tabs->addTab(view,QString::fromStdString(name));
+   tabs->show();
+}
+
+void MainScreen::closeTab(int tab)
+{
+   if ( !dynamic_cast<View*>(tabs->widget(tabs->tabPosition()))->getFile().getSaved())
+   {
+      QMessageBox::warning(this,tr("Warning"),tr("Changes made in this file isn't saved. Do you want to close?"),QMessageBox::Cancel,QMessageBox::Apply);
+   }
+      
 }
 
 void MainScreen::errorMessage()
@@ -150,6 +180,30 @@ void MainScreen::errorMessage()
 void MainScreen::successMessage()
 {
    QMessageBox::information(this,tr("Good news"),tr("Successful request."),QMessageBox::Ok);
+}
+
+void MainScreen::newFileDialog()
+{
+   QDialog dialog(this);
+   QFormLayout form(&dialog);
+
+   form.addRow(new QLabel("Set the file's size: "));
+
+   QString hLabel = QString("Height");
+   QLineEdit* hEdit = new QLineEdit(&dialog);
+   form.addRow(hLabel,hEdit);
+
+   QString wLabel = QString("Widht");
+   QLineEdit* wEdit = new QLineEdit(&dialog);
+   form.addRow(wLabel,wEdit);
+
+   QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
+   form.addRow(&buttonBox);
+
+   connect(&buttonBox,SIGNAL(accepted()),&dialog,SLOT(accept()));
+   connect(&buttonBox,SIGNAL(rejected()),&dialog,SLOT(reject()));
+
+   dialog.show();
 }
 
 void MainScreen::setStatusMessage(Instruction in)

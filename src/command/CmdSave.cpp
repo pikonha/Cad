@@ -69,16 +69,16 @@ void CmdSave::execute(Data& d, MainScreen& s)
 
    std::ofstream stream;
 
-   std::deque<Geometry*> itens = d.getGeometries();
+   std::vector<Geometry*>* itens = &s.getCurrentView().getFile().getGeos();
 
    stream.open(fileName, std::ios::out | std::ios::binary | std::ios::ate | std::ios::trunc);
 
    if ( stream.is_open())
    {
 
-      for ( int i= 0; i < itens.size(); i++)
+      for ( int i= 0; i < itens->size(); i++)
       {
-         Geometry* geo = itens.at(i);
+         Geometry* geo = itens->at(i);
 
          if (Line* line = dynamic_cast<Line*>(geo))
             saveLine(stream,*line);

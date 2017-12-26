@@ -1,5 +1,5 @@
 #include "Cmd.h"
-#include "CmdNew.h"
+#include "CmdNewFile.h"
 #include "Manager.h"
 #include "CmdIdle.h"
 #include "CmdSave.h"
@@ -16,6 +16,12 @@ Manager::Manager(Data& d,MainScreen& s) : data(d),screen(s),cmdmain(nullptr)
 {
    cmd= new CmdIdle();
    startLineCommand();
+}
+
+Manager::~Manager()
+{
+   delete cmd; 
+   delete cmdmain;
 }
 
 /////CMD
@@ -57,12 +63,12 @@ void Manager::runCmd(Cmd* command)
 /////MOUSE
 void Manager::mousePressEvent()
 {
-   cmdmain->mousePressEvent(screen.getView()->getMousePos());
+   cmdmain->mousePressEvent(screen.getCurrentView().getMousePos());
 }
 
 void Manager::mouseReleaseEvent()
 {
-   cmdmain->mouseReleaseEvent(screen.getView()->getMousePos(), data);
+   cmdmain->mouseReleaseEvent(screen.getCurrentView().getMousePos(), data);
 
    if (cmdmain->getForm() == LINE)
       startLineCommand();
@@ -79,7 +85,7 @@ void Manager::mouseReleaseEvent()
 
 void Manager::mouseMoveEvent()
 {
-   cmdmain->mouseMoveEvent(screen.getView()->getMousePos());
+   cmdmain->mouseMoveEvent(screen.getCurrentView().getMousePos());
 }
 
 void Manager::wheelEvent()
@@ -90,7 +96,7 @@ void Manager::wheelEvent()
 /////FILE
 void Manager::newFile()
 {
-
+   runCmd(new CmdNewFile());
 }
 
 void Manager::saveFile()

@@ -2,20 +2,20 @@
 #ifndef INCLUDED_DATA_H
 #define INCLUDED_DATA_H
 
-#include <deque>
+#include <vector>
+#include "File.h"
 #include "FormType.h"
 #include "Geometry.h"
 
-class Item;
-
 class Data
 {
-private:
 	FormType currentForm;
 
-	std::deque<Geometry*> allGeos;
+   std::vector<File*> files;
+
+   File* currentFile;
 public:
-	~Data() { clearGeometries(); }
+	~Data() {  }
 	Data() { currentForm= LINE; }
 
 	/////FORM
@@ -23,12 +23,16 @@ public:
 	void setForm(const FormType fType) { currentForm = fType; }
 
 	/////ITENS	
-	void addGeometry(Geometry* geo) { allGeos.push_back(geo); }
+	void addGeometry(Geometry* geo) { currentFile->getGeos().push_back(geo); }
 	void clearGeometries();
+	std::vector<Geometry*> getCurrentGeometries() { return currentFile->getGeos(); }
+	Geometry* getLastGeometry() { return currentFile->getGeos().back(); }
 
-	std::deque<Geometry*>& getGeometries() { return allGeos; }
+   /////FILE
+   void setCurrentFile(File* file) { currentFile = file; }
+   File* getCurrentFile() { return currentFile; }
 
-	Geometry* getLastGeometry() { return allGeos.back(); }
+   std::vector<File*> getFiles() { return files; }
 
 };
 

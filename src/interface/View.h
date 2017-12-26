@@ -1,6 +1,6 @@
 #pragma once
-#ifndef INCLUDED_MAINVIEW_H
-#define INCLUDED_MAINVIEW_H
+#ifndef INCLUDED_VIEW_H
+#define INCLUDED_VIEW_H
 
 #include <deque>
 #include <QGraphicsView>
@@ -10,7 +10,7 @@
 class Manager;
 class Model;
 
-class MainView : public QGraphicsView
+class View : public QGraphicsView
 {
 	QGraphicsScene* scene;
 
@@ -19,10 +19,10 @@ class MainView : public QGraphicsView
 	std::deque<QGraphicsItem*> items;
 
 	Manager* manager;
-   File& file;
+   File file;
 public:
-   ~MainView(){}
-	MainView();	
+   ~View() {}
+	View(QWidget* parent = 0);	
 
 	void setManager(Manager& m) { manager = &m; }
 
@@ -41,7 +41,7 @@ public:
 
    std::deque<QGraphicsItem*>& getItems() { return items; }
 
-   File getFile() { return file; }
+   File& getFile() { return file; }
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;
