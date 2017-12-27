@@ -167,7 +167,7 @@ void MainScreen::closeTab(int tab)
 {
    if ( !dynamic_cast<View*>(tabs->widget(tabs->tabPosition()))->getFile().getSaved())
    {
-      QMessageBox::warning(this,tr("Warning"),tr("Changes made in this file isn't saved. Do you want to close?"),QMessageBox::Cancel,QMessageBox::Apply);
+      QMessageBox::warning(this,tr("Warning"),tr("Changes made in this file isn't saved. Do you really want to close?"),QMessageBox::Cancel,QMessageBox::Apply);
    }
       
 }
