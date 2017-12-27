@@ -9,7 +9,7 @@
 
 void CmdLoad::execute(Data& d, MainScreen& s) 
 {
-   std::string fileName = s.getLoadFileName();
+   std::string fileName = s.getLoadPath();
 
    std::ifstream stream;
 

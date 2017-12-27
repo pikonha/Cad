@@ -6,13 +6,18 @@
 #include "../manager/Manager.h"
 
 
-View::View(QWidget* parent) : file(File("NewFile")), QGraphicsView(parent)
+View::~View()
+{
+   deleteAllItems();
+   delete scene;
+}
+
+View::View(QWidget* parent) : QGraphicsView(parent), file(new File("NewFile"))
 {
 	setMinimumSize(1920, 880);
 
 	scene = new QGraphicsScene(this);
 	setScene(scene);
-
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
@@ -30,6 +35,14 @@ void View::erase(Model* model)
 		if ( m == model )
 			items.erase(items.begin() + i);
 	}
+}
+
+void View::deleteAllItems()
+{
+   for (int i= 0; i < items.size(); i++)
+      delete items[i];
+
+   items.clear();
 }
 
 void View::reprint()

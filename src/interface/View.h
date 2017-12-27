@@ -19,9 +19,9 @@ class View : public QGraphicsView
 	std::deque<QGraphicsItem*> items;
 
 	Manager* manager;
-   File file;
+   File* file;
 public:
-   ~View() {}
+   ~View();
 	View(QWidget* parent = 0);	
 
 	void setManager(Manager& m) { manager = &m; }
@@ -35,13 +35,15 @@ public:
 	void save(QGraphicsItem* model);
 	void erase(Model* model);
 
+   void deleteAllItems();
+
    void reprint();
 	
 	Point qpointToPoint(QPoint p);
 
    std::deque<QGraphicsItem*>& getItems() { return items; }
 
-   File& getFile() { return file; }
+   File& getFile() { return *file; }
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;

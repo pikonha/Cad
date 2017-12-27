@@ -7,11 +7,7 @@
 
 class MainScreen : public QMainWindow
 {
-	QMenuBar* navbar;
-   QStatusBar* status;
-   QTabWidget* tabs;
-
-	Manager* manager;
+   Manager* manager;
 
    std::vector<View*> views;
    
@@ -30,28 +26,39 @@ public:
    void newFile();
 	void openFile();
 	void saveFile();
-	void clearAllItems();
-	void close();
-	void clearLastItem();
+   void close();
 
+   void newFileDialog();
+   void discardFile(int tabIndex);
+
+   void clearAllItems();
+	void clearLastItem();
 
    View& getCurrentView() const { return *currentView; }
    void setCurrentView(View* view) { currentView = view; }
 
    std::vector<View*>* getViews() { return &views; }
 
-   std::string getSaveFileName();
-   std::string getLoadFileName();
+   std::string getSavePath();
+   std::string getLoadPath();
+
+   std::string getSaveFileName(std::string path);
+   std::string getLoadFileName(std::string path);
 
    void addTab(View* view, std::string name);
-   void closeTab(int tab);
+   void closeTab();
 
    void errorMessage();
    void successMessage();	
-
-   void newFileDialog();
+   
+   void deleteView(View* view);
 
    void setStatusMessage(Instruction in);
+
+public:
+   QMenuBar* navbar;
+   QStatusBar* status;
+   QTabWidget* tabs;
 };
 
 #endif

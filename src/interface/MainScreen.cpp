@@ -13,6 +13,7 @@
 #include <QLineEdit>
 #include <QDialogButtonBox>
 #include "../manager/Manager.h"
+#include <boost/filesystem/path.hpp>
 
 MainScreen::~MainScreen()
 {
@@ -128,6 +129,11 @@ void MainScreen::saveFile()
    manager->saveFile();
 }
 
+void MainScreen::close()
+{
+   manager->closeFile();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 void MainScreen::clearAllItems()
@@ -135,26 +141,46 @@ void MainScreen::clearAllItems()
 	manager->clearAllItems();
 }
 
-void MainScreen::close()
-{
-   manager->closeFile();
-   QMainWindow::close();
-}
+
 
 void MainScreen::clearLastItem()
 {
 	manager->clearLastItem();
 }
 
-std::string MainScreen::getSaveFileName()
+std::string MainScreen::getSavePath()
 {
-   return QFileDialog::getSaveFileName(currentView,QString("Save File"),"",QString("Dat files (*.dat)")).toStdString();
+   std::string path = QFileDialog::getSaveFileName(currentView,QString("Save File"),"",QString("Dat files (*.dat)")).toStdString();
+
+   //connect(QFileDialog::getSaveFileName,&QFileDialog::fileSelected,this,getSaveFileName);
+   
+   return path;
+  
 
 }
 
-std::string MainScreen::getLoadFileName()
+std::string MainScreen::getLoadPath()
 {
    return QFileDialog::getOpenFileName(currentView,QString("Open file"),"",QString("Dat files (*.dat)")).toStdString();
+}
+
+std::string MainScreen::getSaveFileName(std::string pathFile)
+{
+   boost::filesystem::path path(pathFile);
+
+   std::string arq = path.stem().string();
+
+   if (arq == ".")
+      arq = "";
+
+   
+
+   return arq;
+}
+
+std::string MainScreen::getLoadFileName(std::string path)
+{
+   return "";
 }
 
 void MainScreen::addTab(View* view, std::string name)
@@ -163,13 +189,27 @@ void MainScreen::addTab(View* view, std::string name)
    tabs->show();
 }
 
-void MainScreen::closeTab(int tab)
+void MainScreen::closeTab()
 {
-   if ( !dynamic_cast<View*>(tabs->widget(tabs->tabPosition()))->getFile().getSaved())
-   {
-      QMessageBox::warning(this,tr("Warning"),tr("Changes made in this file isn't saved. Do you really want to close?"),QMessageBox::Cancel,QMessageBox::Apply);
-   }
-      
+   View view = dynamic_cast<View*>(tabs->widget(tabs->tabPosition()));
+
+   if ( !view.getFile().getSaved())
+   {      
+      QMessageBox warning;
+      warning.setText("The document has been modified.");
+      warning.setInformativeText("Do you want to save your changes?");
+      warning.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+      warning.setDefaultButton(QMessageBox::Save);
+      warning.setIcon(QMessageBox::Question);
+
+      const int option = warning.exec();
+
+      switch (option)
+      {
+      case QMessageBox::Save: saveFile(); break;
+      case QMessageBox::Discard: discardFile(tabs->tabPosition()); break;
+      }
+   }      
 }
 
 void MainScreen::errorMessage()
@@ -204,6 +244,17 @@ void MainScreen::newFileDialog()
    connect(&buttonBox,SIGNAL(rejected()),&dialog,SLOT(reject()));
 
    dialog.show();
+}
+
+void MainScreen::discardFile(int tabIndex)
+{
+   manager->discardFile(tabIndex);
+}
+
+void MainScreen::deleteView(View* view)
+{
+   delete view;
+   views.clear();
 }
 
 void MainScreen::setStatusMessage(Instruction in)

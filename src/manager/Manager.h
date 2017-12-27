@@ -29,6 +29,7 @@ public:
 	void saveFile();
 	void openFile();
 	void closeFile();
+   void discardFile(int tab);
 
 	/////DOMAIN
 	void startLineCommand();
@@ -44,6 +45,7 @@ public:
 	Cmd& getCmd() { return *cmd; }
 
 	void runCmd(Cmd* command);
+   
 };
 
 #endif

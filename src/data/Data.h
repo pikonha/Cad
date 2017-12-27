@@ -32,8 +32,9 @@ public:
    void setCurrentFile(File* file) { currentFile = file; }
    File* getCurrentFile() { return currentFile; }
 
-   std::vector<File*> getFiles() { return files; }
+   std::vector<File*> getFiles() const { return files; }
 
+   void deleteFile(File* file) { delete file; files.clear(); }
 };
 
 #endif

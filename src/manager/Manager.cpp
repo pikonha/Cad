@@ -5,6 +5,7 @@
 #include "CmdSave.h"
 #include "CmdLoad.h"
 #include "CmdClose.h"
+#include "CmdDiscard.h"
 #include "MainCmdLine.h"
 #include "MainCmdArch.h"
 #include "CmdWheelEvent.h"
@@ -113,6 +114,11 @@ void Manager::openFile()
 void Manager::closeFile()
 {
    runCmd(new CmdClose());
+}
+
+void Manager::discardFile(int tab)
+{
+   runCmd(new CmdDiscard(tab));
 }
 
 /////ITEMS

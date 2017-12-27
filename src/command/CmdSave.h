@@ -3,7 +3,6 @@
 #define INCLUDED_CMDSAVE_H
 
 #include "Cmd.h"
-#include <fstream>
 
 class Line;
 class Arch;
@@ -18,7 +17,7 @@ public:
 	CmdSave(){}
 	~CmdSave() {}
 
-	void execute(Data& d, MainScreen& s);
+	void execute(Data& d, MainScreen& s) override;
 };
 
 #endif
