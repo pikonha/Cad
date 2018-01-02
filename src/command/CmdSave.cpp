@@ -79,7 +79,7 @@ void CmdSave::execute(Data& d, MainScreen& s)
 
    if ( stream.is_open())
    {
-      view.getFile().setName(s.getSaveFileName(path));
+      view.getFile().setName(s.getFileName(path));
 
       for ( int i= 0; i < itens->size(); i++)
       {

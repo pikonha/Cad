@@ -42,8 +42,7 @@ public:
    std::string getSavePath();
    std::string getLoadPath();
 
-   std::string getSaveFileName(std::string path);
-   std::string getLoadFileName(std::string path);
+   std::string getFileName(std::string path);
 
    void addTab(View* view, std::string name);
    void closeTab();

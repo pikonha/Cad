@@ -151,8 +151,6 @@ void MainScreen::clearLastItem()
 std::string MainScreen::getSavePath()
 {
    std::string path = QFileDialog::getSaveFileName(currentView,QString("Save File"),"",QString("Dat files (*.dat)")).toStdString();
-
-   //connect(QFileDialog::getSaveFileName,&QFileDialog::fileSelected,this,getSaveFileName);
    
    return path;
   
@@ -164,7 +162,7 @@ std::string MainScreen::getLoadPath()
    return QFileDialog::getOpenFileName(currentView,QString("Open file"),"",QString("Dat files (*.dat)")).toStdString();
 }
 
-std::string MainScreen::getSaveFileName(std::string pathFile)
+std::string MainScreen::getFileName(std::string pathFile)
 {
    boost::filesystem::path path(pathFile);
 
@@ -172,16 +170,10 @@ std::string MainScreen::getSaveFileName(std::string pathFile)
 
    if (arq == ".")
       arq = "";
-
-   
-
+  
    return arq;
 }
 
-std::string MainScreen::getLoadFileName(std::string path)
-{
-   return "";
-}
 
 void MainScreen::addTab(View* view, std::string name)
 {
