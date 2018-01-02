@@ -1,17 +1,10 @@
 #include "MainCmdBezier.h"
 #include "Bezier.h"
-#include "BezierModel.h"
-
-void MainCmdBezier::execute(Data& d, MainScreen& s)
-{
-	d.setForm(BEZIER);
-   setMessageToScreen(MOUSECLICK);
-}
 
 void MainCmdBezier::setP1(const Point& p)
 {
    p1= p;
-   setMessageToScreen(MOUSEMOVE);
+  // setMessageToScreen(MOUSEMOVE);
 }
 
 void MainCmdBezier::setP2(const Point& p)
@@ -22,17 +15,17 @@ void MainCmdBezier::setP2(const Point& p)
 void MainCmdBezier::setP3(const Point& p)
 {
    p3= p;
-	draw();
+	draw(getNewGeometry());
 }
 
-QGraphicsItem* MainCmdBezier::getQtGraphicGeo()
+Geometry* MainCmdBezier::getNewGeometry()
 {
-   if (geoModel)
-      delete geoModel;
+   if (bezier)
+      delete bezier;
 
-   geoModel = new BezierModel(Bezier(p1,p2,p3));
+   bezier = new Bezier(p1,p2,p3);
 
-   return geoModel;
+   return bezier;
 }
 
 void MainCmdBezier::mousePressEvent(Point& p)
@@ -55,12 +48,11 @@ void MainCmdBezier::mouseReleaseEvent(Point& p,Data& d)
    {
       setAuxDraw(false);
       setDrawing(true);
-      setMessageToScreen(SECONDCLICK);
+      //setMessageToScreen(SECONDCLICK);
    }
    else
    {
-      d.addGeometry(getNewGeometry());
-      screen.getCurrentView().save(geoModel);
+     save(getNewGeometry());
    }
 }
 
@@ -69,17 +61,8 @@ void MainCmdBezier::mouseMoveEvent(Point& p)
    if (auxDraw)
    {
       setP2(p);
-      createAuxLine(p1,p2);
-
-      screen.getCurrentView().draw(getAuxLine());
+      view.drawAuxLine(p1,p2);
    }
    else if (drawing)
-   {
-      if (auxLine) {
-         delete auxLine;
-         auxLine = nullptr;
-      }
-
       setP3(p);
-   }
 }

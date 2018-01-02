@@ -31,8 +31,7 @@ void Manager::startLineCommand()
    if (cmdmain)
       delete cmdmain;
 
-   cmdmain= new MainCmdLine(screen);
-   cmdmain->execute(data,screen);
+   cmdmain= new MainCmdLine(View(screen.getPainter(),&screen), File("NewFile"));
 }
 
 void Manager::startBezierCommand()
@@ -40,8 +39,7 @@ void Manager::startBezierCommand()
    if (cmdmain)
       delete cmdmain;
 
-   cmdmain= new MainCmdBezier(screen);
-   cmdmain->execute(data,screen);
+   cmdmain= new MainCmdBezier(View(screen.getPainter(),&screen),File("NewFile"));
 }
 
 void Manager::startArchCommand()
@@ -49,8 +47,7 @@ void Manager::startArchCommand()
    if (cmdmain)
       delete cmdmain;
 
-   cmdmain= new MainCmdArch(screen);
-   cmdmain->execute(data,screen);
+   cmdmain= new MainCmdArch(View(screen.getPainter(),&screen),File("NewFile"));
 }
 
 void Manager::runCmd(Cmd* command)

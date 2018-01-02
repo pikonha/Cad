@@ -21,16 +21,21 @@ public:
    ~File() { deleteAllGeos(); }
    File(const std::string name) : name(name), isSaved(false) {}
 
+   /////SAVED
    bool getSaved() const { return isSaved; }
-   void setSaver(const bool status) { isSaved= status; }
+   void setSaved(const bool status) { isSaved= status; }
    
+   /////NAME
    std::string getName() const { return name; }
    void setName(const std::string n) { name = n; }
-
+   
+   /////PATH
    void setPath(std::string p) { path = p; }
    std::string getPath() { return path; }
 
+   /////GEOMETRIES
    void deleteAllGeos();
+   void addGeo(Geometry* geo) { geometries.push_back(geo); }
    std::vector<Geometry*> getGeos() const { return geometries; }
 };
 

@@ -1,5 +1,4 @@
 #include "MainScreen.h"
-#include <QAction>
 #include <QMenuBar>
 #include <QMenu>
 #include <QIcon>
@@ -22,7 +21,7 @@ MainScreen::~MainScreen()
    delete tabs;
 }
 
-MainScreen::MainScreen(QMainWindow* parent) : QMainWindow(parent), manager(nullptr)
+MainScreen::MainScreen(QMainWindow* parent) : painter(QPainter(this)),QMainWindow(parent), manager(nullptr)
 {
 	setFixedSize(1920, 1020);
    setWindowTitle(QString("AudacesCAD"));
@@ -141,20 +140,14 @@ void MainScreen::clearAllItems()
 	manager->clearAllItems();
 }
 
-
-
 void MainScreen::clearLastItem()
 {
 	manager->clearLastItem();
 }
 
 std::string MainScreen::getSavePath()
-{
-   std::string path = QFileDialog::getSaveFileName(currentView,QString("Save File"),"",QString("Dat files (*.dat)")).toStdString();
-   
-   return path;
-  
-
+{   
+   return QFileDialog::getSaveFileName(currentView,QString("Save File"),"",QString("Dat files (*.dat)")).toStdString();
 }
 
 std::string MainScreen::getLoadPath()
@@ -183,9 +176,9 @@ void MainScreen::addTab(View* view, std::string name)
 
 void MainScreen::closeTab()
 {
-   View view = dynamic_cast<View*>(tabs->widget(tabs->tabPosition()));
+   View* view = dynamic_cast<View*>(tabs->widget(tabs->tabPosition()));
 
-   if ( !view.getFile().getSaved())
+   if ( !view->getFile().getSaved())
    {      
       QMessageBox warning;
       warning.setText("The document has been modified.");
@@ -214,7 +207,7 @@ void MainScreen::successMessage()
    QMessageBox::information(this,tr("Good news"),tr("Successful request."),QMessageBox::Ok);
 }
 
-void MainScreen::newFileDialog()
+int MainScreen::newFileDialog()
 {
    QDialog dialog(this);
    QFormLayout form(&dialog);
@@ -234,8 +227,8 @@ void MainScreen::newFileDialog()
 
    connect(&buttonBox,SIGNAL(accepted()),&dialog,SLOT(accept()));
    connect(&buttonBox,SIGNAL(rejected()),&dialog,SLOT(reject()));
-
-   dialog.show();
+   
+   return dialog.exec();
 }
 
 void MainScreen::discardFile(int tabIndex)

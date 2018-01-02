@@ -1,64 +1,37 @@
 #include <QtGui>
 #include "Point.h"
-#include "Model.h"
 #include "File.h"
 #include "View.h"
 #include "../manager/Manager.h"
 
-
-View::~View()
-{
-   deleteAllItems();
-   delete scene;
-}
-
-View::View(QWidget* parent) : QGraphicsView(parent), file(new File("NewFile"))
+View::View(QPainter& paint, QWidget* parent) : painter(paint), QGraphicsView(parent), file(new File("NewFile"))
 {
 	setMinimumSize(1920, 880);
 
-	scene = new QGraphicsScene(this);
-	setScene(scene);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-void View::save(QGraphicsItem* model) 
-{
-	items.push_back(model);
-}
-
-void View::erase(Model* model) 
-{
-	for (int i = 0; i < items.size(); i++) {
-		Model* m = dynamic_cast<Model*>(items.at(i));
-		
-		if ( m == model )
-			items.erase(items.begin() + i);
-	}
-}
-
-void View::deleteAllItems()
-{
-   for (int i= 0; i < items.size(); i++)
-      delete items[i];
-
-   items.clear();
-}
-
 void View::reprint()
 {
-   scene->clear();
+   std::vector<Geometry*> geos = file->getGeos();
 
-   for (int i= 0; i < items.size(); i++)
-      draw(items.at(i));
+   for (int i= 0; i < geos.size(); i++)
+      draw(geos[i]);
 }
 
-void View::draw(QGraphicsItem* model)
+void View::draw(Geometry* geo)
 {
-	scene->addItem(model);
-	scene->update();
+   std::vector<Point> points = geo->getPoints();
+
+   for (int i= 0; i < points.size(); i++)
+      painter.drawPoint(points.at(i).x, points.at(i).y);      
 }
 
+void View::drawAuxLine(Point p1, Point p2)
+{
+   painter.drawLine(pointToQPoint(p1),pointToQPoint(p2));
+}
 
 void View::mousePressEvent(QMouseEvent* event)
 {
@@ -96,4 +69,9 @@ void View::wheelEvent(QWheelEvent* event)
 Point View::qpointToPoint(QPoint p)
 {
 	return Point(p.x(), p.y());
+}
+
+QPoint View::pointToQPoint(Point p1)
+{
+   return QPoint(p1.x,p1.y);
 }

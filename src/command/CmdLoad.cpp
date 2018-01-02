@@ -3,9 +3,7 @@
 #include "Line.h"
 #include "Arch.h"
 #include "Bezier.h"
-#include "LineModel.h"
-#include "BezierModel.h"
-#include "ArchModel.h"
+#include <deque>
 
 void CmdLoad::execute(Data& d, MainScreen& s) 
 {
@@ -49,30 +47,25 @@ void CmdLoad::execute(Data& d, MainScreen& s)
          Arch *a;
          Bezier *bz;
          Geometry* geo;
-         QGraphicsItem* model;
 
          switch (form)
          {
          case 0:
-            geo= ln= new Line(Point(p1x,p1y),Point(p2x,p2y));
-            model = new LineModel(*ln);
+            geo= ln= new Line(Point(p1x,p1y),Point(p2x,p2y));            
             break;
 
          case 1:
             geo= bz= new Bezier(Point(p1x,p1y),Point(p2x,p2y),Point(p3x,p3y));
-            model = new BezierModel(*bz);
             break;
 
          case 2:
             geo= a= new Arch(Point(p1x,p1y),Point(p2x,p2y),Point(p3x,p3y));
-            model = new ArchModel(*a);
             break;
          }
 
-         s.getCurrentView().draw(model);
-         s.getCurrentView().save(model);
-         itens.push_back(geo);
+         itens.push_back(geo);         
       }
+      s.getCurrentView().reprint();
    }
    else
       s.errorMessage();

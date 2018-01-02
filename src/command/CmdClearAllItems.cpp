@@ -11,5 +11,5 @@ void CmdClearAllItems::execute(Data& d, MainScreen& s)
 
    geos->clear();
 
-   s.getCurrentView().getScene()->update();   
+   s.getCurrentView().reprint();
 }

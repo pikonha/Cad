@@ -1,25 +1,29 @@
 #include "MainCmd.h"
 
-void MainCmd::createAuxLine(const Point& p, const Point& o)
-{
-	if (auxLine)
-		delete auxLine;
+//void MainCmd::setMessageToScreen(Instruction in)
+//{ 
+//   screen.setStatusMessage(in);
+//}
 
-	auxLine = new AuxLineModel(p, o);
+void MainCmd::setDrawing(bool drwOk)
+{
+   drawing = drwOk;
+   view.setMouseTracking(drwOk);
 }
 
-AuxLineModel* MainCmd::getAuxLine()
+void MainCmd::setAuxDraw(bool status)
 {
-	return auxLine;
+   auxDraw = status;
+   view.setMouseTracking(status);
 }
 
-void MainCmd::draw()
+void MainCmd::save(Geometry* geo)
 {
-	screen.getCurrentView().draw(getQtGraphicGeo());
+   file.addGeo(geo);
 }
 
-void MainCmd::setMessageToScreen(Instruction in)
-{ 
-   screen.setStatusMessage(in);
+void MainCmd::draw(Geometry* geo)
+{
+   view.draw(geo);
 }
 

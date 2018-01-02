@@ -69,17 +69,17 @@ void CmdSave::execute(Data& d, MainScreen& s)
 
    std::ofstream stream;
 
-   View view = dynamic_cast<View*>(s.tabs->widget(s.tabs->tabPosition()));
+   View* view = dynamic_cast<View*>(s.tabs->widget(s.tabs->tabPosition()));
 
-   view.getFile().setPath(path);
+   view->getFile().setPath(path);
 
-   std::vector<Geometry*>* itens = &view.getFile().getGeos();
+   std::vector<Geometry*>* itens = &view->getFile().getGeos();
 
    stream.open(path, std::ios::out | std::ios::binary | std::ios::ate | std::ios::trunc);
 
    if ( stream.is_open())
    {
-      view.getFile().setName(s.getFileName(path));
+      view->getFile().setName(s.getFileName(path));
 
       for ( int i= 0; i < itens->size(); i++)
       {
@@ -95,7 +95,7 @@ void CmdSave::execute(Data& d, MainScreen& s)
             saveArch(stream,*arch);
       }
 
-      s.tabs->setTabText(s.tabs->tabPosition(),view.getFile().getName().c_str());
+      s.tabs->setTabText(s.tabs->tabPosition(),view->getFile().getName().c_str());
    }
    else
    {

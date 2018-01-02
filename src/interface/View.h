@@ -2,48 +2,36 @@
 #ifndef INCLUDED_VIEW_H
 #define INCLUDED_VIEW_H
 
-#include <deque>
 #include <QGraphicsView>
 #include "Point.h"
 #include "File.h"
 
 class Manager;
-class Model;
 
 class View : public QGraphicsView
 {
-	QGraphicsScene* scene;
-
 	Point mousePos;
 
-	std::deque<QGraphicsItem*> items;
+   QPainter& painter;
 
 	Manager* manager;
    File* file;
 public:
-   ~View();
-	View(QWidget* parent = 0);	
+   ~View() { delete file; }
+	View(QPainter& painter, QWidget* parent);	
 
 	void setManager(Manager& m) { manager = &m; }
 
-	Point getMousePos() { return mousePos; }
-
-	QGraphicsScene* getScene() { return scene; }
-
-	void draw(QGraphicsItem* model);	
-
-	void save(QGraphicsItem* model);
-	void erase(Model* model);
-
-   void deleteAllItems();
+	Point getMousePos() const { return mousePos; }
 
    void reprint();
-	
-	Point qpointToPoint(QPoint p);
+	void draw(Geometry* geo);
+   void drawAuxLine(Point p1,Point p2);
 
-   std::deque<QGraphicsItem*>& getItems() { return items; }
+   static Point qpointToPoint(QPoint p);
+   static QPoint pointToQPoint(Point p1);
 
-   File& getFile() { return *file; }
+   File& getFile() const { return *file; }
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;

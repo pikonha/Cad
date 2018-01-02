@@ -7,23 +7,19 @@
 
 class MainCmdLine :	public MainCmd
 {
-private:
    Point p1,p2;
 
+   Line* line;
 public:
    ~MainCmdLine() {}
-   MainCmdLine(MainScreen& view) : MainCmd(view) { form = LINE; }
-
-	void execute(Data& d, MainScreen& s) override;
+   MainCmdLine(View& view, File& f) : MainCmd(view,f), line(nullptr) { form = LINE; }
 	
 	void setP1(const Point& p) override;
 	void setP2(const Point& p) override;
 
-   Geometry* getNewGeometry() override { return new Line(p1,p2); }
+   Geometry* getNewGeometry() override;
 
-	QGraphicsItem* getQtGraphicGeo() override;
-
-public :
+   /////MOUSE EVENTS
    void mousePressEvent(Point& p) override;
    void mouseReleaseEvent(Point& p,Data& d) override;
    void mouseMoveEvent(Point& p) override;

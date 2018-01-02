@@ -1,34 +1,30 @@
 #include "MainCmdLine.h"
-#include "LineModel.h"
-#include "Instruction.h"
-
-void MainCmdLine::execute(Data& d, MainScreen& s)
-{
-	d.setForm(LINE);
-   setMessageToScreen(MOUSECLICK);
-}
+//#include "Instruction.h"
 
 void MainCmdLine::setP1(const Point& p)
 {
 	p1= p;
-   setMessageToScreen(MOUSEMOVE);
+  /* setMessageToScreen(MOUSEMOVE);*/
 }
 
 void MainCmdLine::setP2(const Point& p)
 {
-	p2= p;
-	draw();
-}	
-
-QGraphicsItem* MainCmdLine::getQtGraphicGeo()
-{
-   if (geoModel)
-      delete geoModel;     
-
-   geoModel= new LineModel(Line(p1,p2));
-   
-   return geoModel;
+   if (drawing) {
+      p2= p;
+      draw(getNewGeometry());
+   }
 }
+
+Geometry* MainCmdLine::getNewGeometry()
+{
+   if (line)
+      delete line;
+
+   line = new Line(p1,p2);
+
+   return line;
+}
+
 
 void MainCmdLine::mousePressEvent(Point& p)
 {
@@ -38,8 +34,7 @@ void MainCmdLine::mousePressEvent(Point& p)
 
 void MainCmdLine::mouseReleaseEvent(Point& p, Data& d)
 {
-   screen.getCurrentView().save(geoModel);
-   d.addGeometry(getNewGeometry());
+   save(getNewGeometry());
 
    setDrawing(false);
 }

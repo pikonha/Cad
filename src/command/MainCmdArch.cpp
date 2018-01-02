@@ -1,18 +1,10 @@
 #include "MainCmdArch.h"
-#include "ArchModel.h"
 #include "Arch.h"
-#include "AuxLineModel.h"
-
-void MainCmdArch::execute(Data& d, MainScreen& s)
-{
-	d.setForm(ARCH);
-   setMessageToScreen(MOUSECLICK);
-}
 
 void MainCmdArch::setP1(const Point& p)
 {
    p1= p;
-   setMessageToScreen(MOUSEMOVE);
+   //setMessageToScreen(MOUSEMOVE);
 }
 
 void MainCmdArch::setP2(const Point& p)
@@ -23,18 +15,19 @@ void MainCmdArch::setP2(const Point& p)
 void MainCmdArch::setP3(const Point& p)
 {
    p3 = p;
-	draw();
+	draw(getNewGeometry());
 }
 
-QGraphicsItem* MainCmdArch::getQtGraphicGeo()
+Geometry* MainCmdArch::getNewGeometry()
 {
-   if (geoModel)
-      delete geoModel;
+   if (arch)
+      delete arch;
 
-   geoModel = new ArchModel(Arch(p1,p2,p3));
+   arch = new Arch(p1,p2,p3);
 
-   return geoModel;
+   return arch;
 }
+
 
 void MainCmdArch::mousePressEvent(Point& p)
 {
@@ -56,12 +49,11 @@ void MainCmdArch::mouseReleaseEvent(Point& p,Data& d)
    {
       setAuxDraw(false);
       setDrawing(true);
-      setMessageToScreen(SECONDCLICK);
+      //setMessageToScreen(SECONDCLICK);
    }
-   else {
-      d.addGeometry(getNewGeometry());
-      screen.getCurrentView().save(geoModel);
-   }
+   else
+      save(getNewGeometry());
+    
 }
 
 void MainCmdArch::mouseMoveEvent(Point& p)
@@ -69,18 +61,9 @@ void MainCmdArch::mouseMoveEvent(Point& p)
    if ( auxDraw )
    {
       setP2(p);
-      createAuxLine(p1,p2);
-
-      screen.getCurrentView().draw(getAuxLine());
+      view.drawAuxLine(p1,p2);
    }
    else if( drawing )
-   {
-      if (auxLine) {
-         delete auxLine;
-         auxLine = nullptr;
-      }
-
       setP3(p);
-   }
 }
 

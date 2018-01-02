@@ -8,6 +8,7 @@
 class MainScreen : public QMainWindow
 {
    Manager* manager;
+   QPainter& painter;
 
    std::vector<View*> views;
    
@@ -28,7 +29,7 @@ public:
 	void saveFile();
    void close();
 
-   void newFileDialog();
+   int newFileDialog();
    void discardFile(int tabIndex);
 
    void clearAllItems();
@@ -53,6 +54,8 @@ public:
    void deleteView(View* view);
 
    void setStatusMessage(Instruction in);
+
+   QPainter& getPainter() const { return painter; }
 
 public:
    QMenuBar* navbar;
