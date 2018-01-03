@@ -1,10 +1,10 @@
 #include "Cmd.h"
-#include "CmdNewFile.h"
 #include "Manager.h"
 #include "CmdIdle.h"
 #include "CmdSave.h"
 #include "CmdLoad.h"
 #include "CmdClose.h"
+#include "CmdNewFile.h"
 #include "CmdDiscard.h"
 #include "MainCmdLine.h"
 #include "MainCmdArch.h"
@@ -25,13 +25,14 @@ Manager::~Manager()
    delete cmdmain;
 }
 
-/////CMD
+////////////////////////////////////////////////////////////////////////////////
+
 void Manager::startLineCommand()
 {
    if (cmdmain)
       delete cmdmain;
 
-   cmdmain= new MainCmdLine(View(screen.getPainter(),&screen), File("NewFile"));
+   cmdmain= new MainCmdLine(data);
 }
 
 void Manager::startBezierCommand()
@@ -39,7 +40,7 @@ void Manager::startBezierCommand()
    if (cmdmain)
       delete cmdmain;
 
-   cmdmain= new MainCmdBezier(View(screen.getPainter(),&screen),File("NewFile"));
+   cmdmain= new MainCmdBezier(data);
 }
 
 void Manager::startArchCommand()
@@ -47,7 +48,7 @@ void Manager::startArchCommand()
    if (cmdmain)
       delete cmdmain;
 
-   cmdmain= new MainCmdArch(View(screen.getPainter(),&screen),File("NewFile"));
+   cmdmain= new MainCmdArch(data);
 }
 
 void Manager::runCmd(Cmd* command)
@@ -58,15 +59,16 @@ void Manager::runCmd(Cmd* command)
    cmd= new CmdIdle();
 }
 
-/////MOUSE
+////////////////////////////////////////////////////////////////////////////////
+
 void Manager::mousePressEvent()
 {
-   cmdmain->mousePressEvent(screen.getCurrentView().getMousePos());
+   cmdmain->mousePressEvent(data.getCurrentFile()->getView().getMousePos());
 }
 
 void Manager::mouseReleaseEvent()
 {
-   cmdmain->mouseReleaseEvent(screen.getCurrentView().getMousePos(), data);
+   cmdmain->mouseReleaseEvent(data.getCurrentFile()->getView().getMousePos());
 
    if (cmdmain->getForm() == LINE)
       startLineCommand();
@@ -83,7 +85,7 @@ void Manager::mouseReleaseEvent()
 
 void Manager::mouseMoveEvent()
 {
-   cmdmain->mouseMoveEvent(screen.getCurrentView().getMousePos());
+   cmdmain->mouseMoveEvent(data.getCurrentFile()->getView().getMousePos());
 }
 
 void Manager::wheelEvent()
@@ -91,7 +93,8 @@ void Manager::wheelEvent()
    runCmd(new CmdWheelEvent());
 }
 
-/////FILE
+////////////////////////////////////////////////////////////////////////////////
+
 void Manager::newFile()
 {
    runCmd(new CmdNewFile());
@@ -107,7 +110,6 @@ void Manager::openFile()
    runCmd(new CmdLoad());
 }
 
-
 void Manager::closeFile()
 {
    runCmd(new CmdClose());
@@ -118,7 +120,8 @@ void Manager::discardFile(int tab)
    runCmd(new CmdDiscard(tab));
 }
 
-/////ITEMS
+////////////////////////////////////////////////////////////////////////////////
+
 void Manager::clearLastItem()
 {
    runCmd(new CmdClearLastItem());

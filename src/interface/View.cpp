@@ -1,37 +1,35 @@
 #include <QtGui>
 #include "Point.h"
-#include "File.h"
 #include "View.h"
+#include <QShortcut>
+#include "MainScreen.h"
 #include "../manager/Manager.h"
+#include <QFileDialog>
 
-View::View(QPainter& paint, QWidget* parent) : painter(paint), QGraphicsView(parent), file(new File("NewFile"))
+View::View(/*double widht, double heigth,*/ QWidget* parent) : QGraphicsView(parent), painter(QPainter(this))
 {
-	setMinimumSize(1920, 880);
+   MainScreen* s = qobject_cast<MainScreen*>(this->parent());
+
+   if (s)
+      manager = s->getManager();
+
+	//setMinimumSize(widht, heigth);
+   setMinimumSize(1920,1080);
 
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+   setShortcuts();
 }
 
-void View::reprint()
-{
-   std::vector<Geometry*> geos = file->getGeos();
-
-   for (int i= 0; i < geos.size(); i++)
-      draw(geos[i]);
-}
-
-void View::draw(Geometry* geo)
-{
-   std::vector<Point> points = geo->getPoints();
-
-   for (int i= 0; i < points.size(); i++)
-      painter.drawPoint(points.at(i).x, points.at(i).y);      
-}
+////////////////////////////////////////////////////////////////////////////////
 
 void View::drawAuxLine(Point p1, Point p2)
 {
    painter.drawLine(pointToQPoint(p1),pointToQPoint(p2));
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 void View::mousePressEvent(QMouseEvent* event)
 {
@@ -66,12 +64,69 @@ void View::wheelEvent(QWheelEvent* event)
 	event->accept();
 }
 
+void View::setShortcuts()
+{
+   QShortcut* undone = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z),this);
+   connect(undone,&QShortcut::activated,this,&View::clearLastItem);
+
+   QShortcut* saveSc = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S),this);
+   connect(saveSc,&QShortcut::activated,this,&View::saveFile);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 Point View::qpointToPoint(QPoint p)
 {
 	return Point(p.x(), p.y());
 }
 
 QPoint View::pointToQPoint(Point p1)
-{
+{   
    return QPoint(p1.x,p1.y);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::string View::getSavePath()
+{
+   return QFileDialog::getSaveFileName(this,QString("Save File"),"",QString("Dat files (*.dat)")).toStdString();
+}
+
+std::string View::getLoadPath()
+{
+   return QFileDialog::getOpenFileName(this,QString("Open file"),"",QString("Dat files (*.dat)")).toStdString();
+}
+
+void View::saveFile()
+{
+   manager->saveFile();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void View::clearAllItems()
+{
+   manager->clearAllItems();
+}
+
+void View::clearLastItem()
+{
+   manager->clearLastItem();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void View::startLineCommand() const
+{
+   manager->startArchCommand();
+}
+
+void View::startBezierCommand() const
+{
+   manager->startBezierCommand();
+}
+
+void View::startArchCommand() const
+{
+   manager->startArchCommand();
 }

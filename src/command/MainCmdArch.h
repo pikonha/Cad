@@ -3,7 +3,8 @@
 #define INCLUDED_MAINCMDARCH_H
 
 #include "MainCmd.h"
-#include "Arch.h"
+#include "Point.h"
+class Arch;
 
 class MainCmdArch :	public MainCmd
 {
@@ -12,7 +13,7 @@ class MainCmdArch :	public MainCmd
    Arch* arch;
 public:
    ~MainCmdArch() {}
-   MainCmdArch(View& view, File& f) : MainCmd(view, f) { form = ARCH; }
+   MainCmdArch(Data& d) : MainCmd(d) { form = ARCH; }
 
 	void setP1(const Point& p) override;
 	void setP2(const Point& p) override;
@@ -22,7 +23,7 @@ public:
 
    /////MOUSE EVENTS
    void mousePressEvent(Point& p) override;
-   void mouseReleaseEvent(Point& p,Data& d) override;
+   void mouseReleaseEvent(Point& p) override;
    void mouseMoveEvent(Point& p) override;
 };
 

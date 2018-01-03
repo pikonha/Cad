@@ -1,5 +1,6 @@
 #include "MainCmdArch.h"
 #include "Arch.h"
+#include "Data.h"
 
 void MainCmdArch::setP1(const Point& p)
 {
@@ -15,7 +16,7 @@ void MainCmdArch::setP2(const Point& p)
 void MainCmdArch::setP3(const Point& p)
 {
    p3 = p;
-	draw(getNewGeometry());
+	data.getCurrentFile()->draw(getNewGeometry());
 }
 
 Geometry* MainCmdArch::getNewGeometry()
@@ -43,7 +44,7 @@ void MainCmdArch::mousePressEvent(Point& p)
    }
 }
 
-void MainCmdArch::mouseReleaseEvent(Point& p,Data& d)
+void MainCmdArch::mouseReleaseEvent(Point& p)
 {
    if (!secondClick)
    {
@@ -52,7 +53,7 @@ void MainCmdArch::mouseReleaseEvent(Point& p,Data& d)
       //setMessageToScreen(SECONDCLICK);
    }
    else
-      save(getNewGeometry());
+      data.getCurrentFile()->addGeo(getNewGeometry());
     
 }
 
@@ -61,7 +62,7 @@ void MainCmdArch::mouseMoveEvent(Point& p)
    if ( auxDraw )
    {
       setP2(p);
-      view.drawAuxLine(p1,p2);
+      data.getCurrentFile()->getView().drawAuxLine(p1,p2);
    }
    else if( drawing )
       setP3(p);

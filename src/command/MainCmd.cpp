@@ -1,4 +1,5 @@
 #include "MainCmd.h"
+#include "Data.h"
 
 //void MainCmd::setMessageToScreen(Instruction in)
 //{ 
@@ -8,22 +9,13 @@
 void MainCmd::setDrawing(bool drwOk)
 {
    drawing = drwOk;
-   view.setMouseTracking(drwOk);
+   data.getCurrentFile()->getView().setMouseTracking(drwOk);
 }
 
 void MainCmd::setAuxDraw(bool status)
 {
    auxDraw = status;
-   view.setMouseTracking(status);
+   data.getCurrentFile()->getView().setMouseTracking(status);
 }
 
-void MainCmd::save(Geometry* geo)
-{
-   file.addGeo(geo);
-}
-
-void MainCmd::draw(Geometry* geo)
-{
-   view.draw(geo);
-}
 

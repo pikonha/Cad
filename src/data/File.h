@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include "../interface/View.h"
 #include "Geometry.h"
 
 class File
@@ -13,30 +14,38 @@ class File
    
    std::vector<Geometry*> geometries;
 
-   bool isSaved;
+   View& view;
 
-   double width;
-   double height;
+   bool saved;
 public:
    ~File() { deleteAllGeos(); }
-   File(const std::string name) : name(name), isSaved(false) {}
+   File(View& v/* double w, double h*/) : name("NewFile"), view(v), saved(false) {}
 
-   /////SAVED
-   bool getSaved() const { return isSaved; }
-   void setSaved(const bool status) { isSaved= status; }
-   
-   /////NAME
+   /////GETTERS AND SETTERS
+   bool getSaved() const { return saved; }
+   void setSaved(const bool status) { saved= status; }
+
    std::string getName() const { return name; }
    void setName(const std::string n) { name = n; }
-   
-   /////PATH
+
    void setPath(std::string p) { path = p; }
    std::string getPath() { return path; }
 
+   std::vector<Geometry*> getGeos() const { return geometries; }
+   Geometry* getLastGeometry() { return geometries.back(); }
+
+   View& getView() { return view; }
+
    /////GEOMETRIES
    void deleteAllGeos();
-   void addGeo(Geometry* geo) { geometries.push_back(geo); }
-   std::vector<Geometry*> getGeos() const { return geometries; }
+   void addGeo(Geometry* geo) { geometries.push_back(geo); }   
+   void deleteLastGeo();
+
+   /////DRAW
+   void reprint();
+   void draw(Geometry* geo);
+   void drawAuxLine(const Point p1,const Point p2);
+
 };
 
 #endif

@@ -1,6 +1,7 @@
 #pragma once
 #ifndef INCLUDED_MAINSCREEN_H
 #define INCLUDED_MAINSCREEN_H
+
 #include <QMainWindow>
 #include "View.h"
 #include "Instruction.h"
@@ -8,59 +9,44 @@
 class MainScreen : public QMainWindow
 {
    Manager* manager;
-   QPainter& painter;
 
-   std::vector<View*> views;
-   
-   View* currentView;
-public:	
+public:
+   /////////////////////////////////////////////////
+   QMenuBar* navbar;
+   QStatusBar* status;
+   QTabWidget* tabs;
+
+   /////////////////////////////////////////////////
    ~MainScreen();
 	MainScreen(QMainWindow* parent = 0);
 
 	void start();
    void setManager(Manager& m) { manager= &m; }
+   Manager* getManager() const { return manager; }
 
-	void startLineCommand() const;
-	void startBezierCommand() const;
-	void startArchCommand() const;
-	
+   /////FILE
    void newFile();
-	void openFile();
+	void loadFile();
 	void saveFile();
-   void close();
-
-   int newFileDialog();
+   void closeFile();
+   std::string getFileName(std::string path);
    void discardFile(int tabIndex);
 
-   void clearAllItems();
-	void clearLastItem();
-
-   View& getCurrentView() const { return *currentView; }
-   void setCurrentView(View* view) { currentView = view; }
-
-   std::vector<View*>* getViews() { return &views; }
-
-   std::string getSavePath();
-   std::string getLoadPath();
-
-   std::string getFileName(std::string path);
-
+   /////TABS
    void addTab(View* view, std::string name);
    void closeTab();
 
+   /////DIALOGS
    void errorMessage();
    void successMessage();	
-   
-   void deleteView(View* view);
-
+   int newFileDialog();
    void setStatusMessage(Instruction in);
 
-   QPainter& getPainter() const { return painter; }
-
-public:
-   QMenuBar* navbar;
-   QStatusBar* status;
-   QTabWidget* tabs;
+   /////COMANDS
+   void lineCommandSignal();
+   void bezierCommandSignal();
+   void archCommandSignal();
+  
 };
 
 #endif

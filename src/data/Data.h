@@ -4,7 +4,6 @@
 
 #include <vector>
 #include "File.h"
-#include "Geometry.h"
 
 class Data
 {
@@ -13,18 +12,20 @@ class Data
    File* currentFile;
 public:
 	~Data() {}
-	Data() {  }
-
-	/////ITENS	
-	void clearGeometries();
-	std::vector<Geometry*> getCurrentGeometries() { return currentFile->getGeos(); }
-	Geometry* getLastGeometry() { return currentFile->getGeos().back(); }
+	Data() {}
 
    /////FILE
-   void setCurrentFile(File* file) { currentFile = file; }
+   void setCurrentFile(File* file);
+
    File* getCurrentFile() const { return currentFile; }
+
+   void addFIle(File* file) { files.push_back(file); }
+
    void deleteFile(File* file) { delete file; files.clear(); }
+
    std::vector<File*> getFiles() const { return files; }   
+
+   void deleteAllFiles();
 };
 
 #endif

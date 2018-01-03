@@ -12,7 +12,7 @@ class MainCmdLine :	public MainCmd
    Line* line;
 public:
    ~MainCmdLine() {}
-   MainCmdLine(View& view, File& f) : MainCmd(view,f), line(nullptr) { form = LINE; }
+   MainCmdLine(Data& d) : MainCmd(d), line(nullptr) { form = LINE; }
 	
 	void setP1(const Point& p) override;
 	void setP2(const Point& p) override;
@@ -21,7 +21,7 @@ public:
 
    /////MOUSE EVENTS
    void mousePressEvent(Point& p) override;
-   void mouseReleaseEvent(Point& p,Data& d) override;
+   void mouseReleaseEvent(Point& p) override;
    void mouseMoveEvent(Point& p) override;
 };
 

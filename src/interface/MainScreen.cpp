@@ -21,7 +21,7 @@ MainScreen::~MainScreen()
    delete tabs;
 }
 
-MainScreen::MainScreen(QMainWindow* parent) : painter(QPainter(this)),QMainWindow(parent), manager(nullptr)
+MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullptr)
 {
 	setFixedSize(1920, 1020);
    setWindowTitle(QString("AudacesCAD"));
@@ -58,7 +58,7 @@ MainScreen::MainScreen(QMainWindow* parent) : painter(QPainter(this)),QMainWindo
    QIcon* iconNew = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/new.png");
 	QIcon* iconSave = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/save.png");
 	QIcon* iconClear = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/clean.png");
-	QIcon* iconClose = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/close.png");
+	QIcon* iconClose = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/closeFile.png");
 	QIcon* iconOpen = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/open.png");
 
    newFile->setIcon(*iconNew);
@@ -72,43 +72,24 @@ MainScreen::MainScreen(QMainWindow* parent) : painter(QPainter(this)),QMainWindo
 	navbar->addAction(bezier);
 	navbar->addAction(arc);
 
-	connect(line, &QAction::triggered, this, &MainScreen::startLineCommand);
-	connect(bezier, &QAction::triggered, this, &MainScreen::startBezierCommand);
-	connect(arc, &QAction::triggered, this, &MainScreen::startArchCommand);	
+	connect(line, &QAction::triggered, this, &MainScreen::lineCommandSignal);
+	connect(bezier, &QAction::triggered, this, &MainScreen::bezierCommandSignal);
+	connect(arc, &QAction::triggered, this, &MainScreen::archCommandSignal);
 
    connect(newFile,&QAction::triggered,this,&MainScreen::newFile);
-	connect(open, &QAction::triggered, this,  &MainScreen::openFile);
+	connect(open, &QAction::triggered, this,  &MainScreen::loadFile);
 	connect(save, &QAction::triggered, this,  &MainScreen::saveFile);
-	connect(clear, &QAction::triggered, this, &MainScreen::clearAllItems);
-	connect(close, &QAction::triggered, this, &MainScreen::close);
+	//connect(clear, &QAction::triggered, this, &MainScreen::clearAllItems);
+	connect(close, &QAction::triggered, this, &MainScreen::closeFile);
 
-	QShortcut* undone = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this);
-	connect(undone, &QShortcut::activated, this, &MainScreen::clearLastItem);
-
-   QShortcut* saveSc = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S),this);
-   connect(saveSc,&QShortcut::activated,this,&MainScreen::saveFile);
-}
-
-void MainScreen::start()
-{
-	show();
+	
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void MainScreen::startLineCommand() const
+void MainScreen::start()
 {
-   manager->startLineCommand();
-}
-
-void MainScreen::startBezierCommand() const
-{
-   manager->startBezierCommand();
-}
-
-void MainScreen::startArchCommand() const
-{
-   manager->startArchCommand();
+	show();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -118,7 +99,7 @@ void MainScreen::newFile()
    manager->newFile();
 }
 
-void MainScreen::openFile()
+void MainScreen::loadFile()
 {
    manager->openFile();
 }
@@ -128,32 +109,18 @@ void MainScreen::saveFile()
    manager->saveFile();
 }
 
-void MainScreen::close()
+void MainScreen::discardFile(int tabIndex)
+{
+   manager->discardFile(tabIndex);
+}
+
+void MainScreen::closeFile()
 {
    manager->closeFile();
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////
-
-void MainScreen::clearAllItems()
-{
-	manager->clearAllItems();
-}
-
-void MainScreen::clearLastItem()
-{
-	manager->clearLastItem();
-}
-
-std::string MainScreen::getSavePath()
-{   
-   return QFileDialog::getSaveFileName(currentView,QString("Save File"),"",QString("Dat files (*.dat)")).toStdString();
-}
-
-std::string MainScreen::getLoadPath()
-{
-   return QFileDialog::getOpenFileName(currentView,QString("Open file"),"",QString("Dat files (*.dat)")).toStdString();
-}
 
 std::string MainScreen::getFileName(std::string pathFile)
 {
@@ -167,7 +134,6 @@ std::string MainScreen::getFileName(std::string pathFile)
    return arq;
 }
 
-
 void MainScreen::addTab(View* view, std::string name)
 {
    tabs->addTab(view,QString::fromStdString(name));
@@ -178,8 +144,8 @@ void MainScreen::closeTab()
 {
    View* view = dynamic_cast<View*>(tabs->widget(tabs->tabPosition()));
 
-   if ( !view->getFile().getSaved())
-   {      
+//   if ( !view->getFile().getSaved())
+  // {      
       QMessageBox warning;
       warning.setText("The document has been modified.");
       warning.setInformativeText("Do you want to save your changes?");
@@ -194,8 +160,10 @@ void MainScreen::closeTab()
       case QMessageBox::Save: saveFile(); break;
       case QMessageBox::Discard: discardFile(tabs->tabPosition()); break;
       }
-   }      
+   //}     
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 void MainScreen::errorMessage()
 {
@@ -231,16 +199,7 @@ int MainScreen::newFileDialog()
    return dialog.exec();
 }
 
-void MainScreen::discardFile(int tabIndex)
-{
-   manager->discardFile(tabIndex);
-}
-
-void MainScreen::deleteView(View* view)
-{
-   delete view;
-   views.clear();
-}
+////////////////////////////////////////////////////////////////////////////////
 
 void MainScreen::setStatusMessage(Instruction in)
 {
@@ -250,4 +209,19 @@ void MainScreen::setStatusMessage(Instruction in)
    case 1: status->showMessage("Keep pressed and move the cursor. (Release to finish)"); break;
    case 2: status->showMessage("Click to set the draw's length."); break;
    }
+}
+
+void MainScreen::lineCommandSignal()
+{
+   manager->startLineCommand();
+}
+
+void MainScreen::bezierCommandSignal()
+{
+   manager->startBezierCommand();
+}
+
+void MainScreen::archCommandSignal()
+{
+   manager->startArchCommand();
 }

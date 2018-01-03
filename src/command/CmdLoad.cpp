@@ -7,7 +7,7 @@
 
 void CmdLoad::execute(Data& d, MainScreen& s) 
 {
-   std::string fileName = s.getLoadPath();
+   std::string fileName = d.getCurrentFile()->getView().getLoadPath();
 
    std::ifstream stream;
 
@@ -65,7 +65,7 @@ void CmdLoad::execute(Data& d, MainScreen& s)
 
          itens.push_back(geo);         
       }
-      s.getCurrentView().reprint();
+      d.getCurrentFile()->reprint();
    }
    else
       s.errorMessage();

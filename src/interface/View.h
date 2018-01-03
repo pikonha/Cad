@@ -4,40 +4,52 @@
 
 #include <QGraphicsView>
 #include "Point.h"
-#include "File.h"
 
 class Manager;
 
 class View : public QGraphicsView
 {
 	Point mousePos;
-
    QPainter& painter;
-
 	Manager* manager;
-   File* file;
+
 public:
-   ~View() { delete file; }
-	View(QPainter& painter, QWidget* parent);	
+   ~View() {}
+	View(/*double widht, double heigth,*/ QWidget* parent);	
 
-	void setManager(Manager& m) { manager = &m; }
-
+   QPainter& getPainter() { return painter; }
+   
+   //////GETTERS
 	Point getMousePos() const { return mousePos; }
 
-   void reprint();
-	void draw(Geometry* geo);
+   /////DRAW
    void drawAuxLine(Point p1,Point p2);
 
+   /////CAST
    static Point qpointToPoint(QPoint p);
    static QPoint pointToQPoint(Point p1);
 
-   File& getFile() const { return *file; }
+   /////SAVE
+   std::string getSavePath();
+   std::string getLoadPath();
+   void saveFile();
+
+   /////DELETE GEOS
+   void clearAllItems();
+   void clearLastItem();
+
+   /////START CMD MAIN
+   void startLineCommand() const;
+   void startBezierCommand() const;
+   void startArchCommand() const;
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void wheelEvent(QWheelEvent* event) override;
+
+   void setShortcuts();
 };
 
 #endif

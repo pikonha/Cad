@@ -1,4 +1,5 @@
 #include "MainCmdLine.h"
+#include "Data.h"
 //#include "Instruction.h"
 
 void MainCmdLine::setP1(const Point& p)
@@ -11,7 +12,7 @@ void MainCmdLine::setP2(const Point& p)
 {
    if (drawing) {
       p2= p;
-      draw(getNewGeometry());
+      data.getCurrentFile()->draw(getNewGeometry());
    }
 }
 
@@ -32,10 +33,8 @@ void MainCmdLine::mousePressEvent(Point& p)
    setDrawing(true);
 }
 
-void MainCmdLine::mouseReleaseEvent(Point& p, Data& d)
+void MainCmdLine::mouseReleaseEvent(Point& p)
 {
-   save(getNewGeometry());
-
    setDrawing(false);
 }
 

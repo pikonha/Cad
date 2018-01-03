@@ -1,5 +1,6 @@
 #include "MainCmdBezier.h"
 #include "Bezier.h"
+#include "Data.h"
 
 void MainCmdBezier::setP1(const Point& p)
 {
@@ -15,7 +16,7 @@ void MainCmdBezier::setP2(const Point& p)
 void MainCmdBezier::setP3(const Point& p)
 {
    p3= p;
-	draw(getNewGeometry());
+	data.getCurrentFile()->draw(getNewGeometry());
 }
 
 Geometry* MainCmdBezier::getNewGeometry()
@@ -42,7 +43,7 @@ void MainCmdBezier::mousePressEvent(Point& p)
    }
 }
 
-void MainCmdBezier::mouseReleaseEvent(Point& p,Data& d)
+void MainCmdBezier::mouseReleaseEvent(Point& p)
 {
    if (!secondClick)
    {
@@ -52,7 +53,7 @@ void MainCmdBezier::mouseReleaseEvent(Point& p,Data& d)
    }
    else
    {
-     save(getNewGeometry());
+     data.getCurrentFile()->addGeo(getNewGeometry());
    }
 }
 
@@ -61,7 +62,7 @@ void MainCmdBezier::mouseMoveEvent(Point& p)
    if (auxDraw)
    {
       setP2(p);
-      view.drawAuxLine(p1,p2);
+      data.getCurrentFile()->drawAuxLine(p1,p2);
    }
    else if (drawing)
       setP3(p);

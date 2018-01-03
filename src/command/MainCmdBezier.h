@@ -3,6 +3,7 @@
 #define INCLUDED_MAINCMDBEZIER_H
 
 #include "MainCmd.h"
+#include "Point.h"
 class Bezier;
 
 class MainCmdBezier : public MainCmd
@@ -12,7 +13,7 @@ class MainCmdBezier : public MainCmd
    Bezier* bezier;
 public:
    ~MainCmdBezier() {}
-	MainCmdBezier(View& view, File& f) : MainCmd(view, f) { form = BEZIER; }	
+	MainCmdBezier(Data& d) : MainCmd(d) { form = BEZIER; }	
 
    void setP1(const Point& p) override;
 	void setP2(const Point& p) override;
@@ -22,7 +23,7 @@ public:
 
    /////MOUSE EVENTS
    void mousePressEvent(Point& p) override;
-   void mouseReleaseEvent(Point& p,Data& d) override;
+   void mouseReleaseEvent(Point& p) override;
    void mouseMoveEvent(Point& p) override;
 };
 
