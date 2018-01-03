@@ -14,12 +14,12 @@ class File
    
    std::vector<Geometry*> geometries;
 
-   View& view;
+   View* view;
 
    bool saved;
 public:
    ~File() { deleteAllGeos(); }
-   File(View& v/* double w, double h*/) : name("NewFile"), view(v), saved(false) {}
+   File(View* v/* double w, double h*/) : name("NewFile"),saved(false) { view = v; }
 
    /////GETTERS AND SETTERS
    bool getSaved() const { return saved; }
@@ -34,7 +34,7 @@ public:
    std::vector<Geometry*> getGeos() const { return geometries; }
    Geometry* getLastGeometry() { return geometries.back(); }
 
-   View& getView() { return view; }
+   View* getView() { return view; }
 
    /////GEOMETRIES
    void deleteAllGeos();

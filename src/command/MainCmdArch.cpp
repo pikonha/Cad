@@ -62,7 +62,7 @@ void MainCmdArch::mouseMoveEvent(Point& p)
    if ( auxDraw )
    {
       setP2(p);
-      data.getCurrentFile()->getView().drawAuxLine(p1,p2);
+      data.getCurrentFile()->getView()->drawAuxLine(p1,p2);
    }
    else if( drawing )
       setP3(p);

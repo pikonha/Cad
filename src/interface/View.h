@@ -15,7 +15,7 @@ class View : public QGraphicsView
 
 public:
    ~View() {}
-	View(/*double widht, double heigth,*/ QWidget* parent);	
+	View(Manager* m, /*double widht, double heigth,*/ QWidget* parent);	
 
    QPainter& getPainter() { return painter; }
    

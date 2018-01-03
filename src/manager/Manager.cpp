@@ -63,12 +63,12 @@ void Manager::runCmd(Cmd* command)
 
 void Manager::mousePressEvent()
 {
-   cmdmain->mousePressEvent(data.getCurrentFile()->getView().getMousePos());
+   cmdmain->mousePressEvent(data.getCurrentFile()->getView()->getMousePos());
 }
 
 void Manager::mouseReleaseEvent()
 {
-   cmdmain->mouseReleaseEvent(data.getCurrentFile()->getView().getMousePos());
+   cmdmain->mouseReleaseEvent(data.getCurrentFile()->getView()->getMousePos());
 
    if (cmdmain->getForm() == LINE)
       startLineCommand();
@@ -85,7 +85,7 @@ void Manager::mouseReleaseEvent()
 
 void Manager::mouseMoveEvent()
 {
-   cmdmain->mouseMoveEvent(data.getCurrentFile()->getView().getMousePos());
+   cmdmain->mouseMoveEvent(data.getCurrentFile()->getView()->getMousePos());
 }
 
 void Manager::wheelEvent()

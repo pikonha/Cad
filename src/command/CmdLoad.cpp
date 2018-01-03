@@ -7,7 +7,7 @@
 
 void CmdLoad::execute(Data& d, MainScreen& s) 
 {
-   std::string fileName = d.getCurrentFile()->getView().getLoadPath();
+   std::string fileName = d.getCurrentFile()->getView()->getLoadPath();
 
    std::ifstream stream;
 

@@ -65,7 +65,7 @@ void CmdSave::saveArch(std::ofstream& stream, Arch& arch)
 
 void CmdSave::execute(Data& d, MainScreen& s)
 {   
-   std::string path= d.getCurrentFile()->getView().getSavePath();
+   std::string path= d.getCurrentFile()->getView()->getSavePath();
 
    std::ofstream stream;
 

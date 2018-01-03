@@ -2,17 +2,12 @@
 #include "Point.h"
 #include "View.h"
 #include <QShortcut>
-#include "MainScreen.h"
 #include "../manager/Manager.h"
 #include <QFileDialog>
 
-View::View(/*double widht, double heigth,*/ QWidget* parent) : QGraphicsView(parent), painter(QPainter(this))
+View::View(Manager* m, /*double widht, double heigth,*/ QWidget* parent) : QGraphicsView(parent), painter(QPainter(this))
 {
-   MainScreen* s = qobject_cast<MainScreen*>(this->parent());
-
-   if (s)
-      manager = s->getManager();
-
+   manager= m;
 	//setMinimumSize(widht, heigth);
    setMinimumSize(1920,1080);
 

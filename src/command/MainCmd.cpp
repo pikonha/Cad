@@ -9,13 +9,13 @@
 void MainCmd::setDrawing(bool drwOk)
 {
    drawing = drwOk;
-   data.getCurrentFile()->getView().setMouseTracking(drwOk);
+   data.getCurrentFile()->getView()->setMouseTracking(drwOk);
 }
 
 void MainCmd::setAuxDraw(bool status)
 {
    auxDraw = status;
-   data.getCurrentFile()->getView().setMouseTracking(status);
+   data.getCurrentFile()->getView()->setMouseTracking(status);
 }
 
 
