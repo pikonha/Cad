@@ -1,6 +1,6 @@
 #include "App.h"
 #include "Manager.h"
-#include <qapplication.h>
+#include <QtWidgets/QApplication>
 #include <QtCore>
 #include "Data.h"
 #include "MainScreen.h"

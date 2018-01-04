@@ -12,3 +12,14 @@ void Data::deleteAllFiles()
 
    files.clear();
 }
+
+File* Data::getFileByView(View* view)
+{
+   for (File* f : files)
+   {
+      if (f->getView() == view)
+         return f;
+   }
+
+   return nullptr;
+}

@@ -4,7 +4,7 @@
 
 #include <vector>
 #include <string>
-#include "../interface/View.h"
+#include "View.h"
 #include "Geometry.h"
 
 class File

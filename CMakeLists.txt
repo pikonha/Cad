@@ -9,7 +9,7 @@ find_package(Qt5Widgets CONFIG
         NO_DEFAULT_PATH)
 		
 SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/Users/lucas.picollo/Documents/Projects/QT-Cad/boost_1_66_0")
-SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/Users/lucas.picollo/Documents/Projects/QT-Cad/boost_1_66_0/libs")
+SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/Users/lucas.picollo/Documents/Projects/QT-Cad/boost_1_66_0/libs/filesystem")
 
 find_package(Boost)
 		

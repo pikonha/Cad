@@ -3,7 +3,7 @@
 #define INCLUDED_VIEW_H
 
 #include <QGraphicsView>
-#include "Point.h"
+#include "../data/Point.h"
 
 class Manager;
 
@@ -17,7 +17,7 @@ public:
    ~View() {}
 	View(Manager* m, /*double widht, double heigth,*/ QWidget* parent);	
 
-   QPainter& getPainter() { return painter; }
+   QPainter& getPainter() const{ return painter; }
    
    //////GETTERS
 	Point getMousePos() const { return mousePos; }

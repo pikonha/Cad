@@ -6,6 +6,7 @@ class MainCmd;
 class MainScreen;
 class Data;
 class Cmd;
+class View;
 
 class Manager
 {
@@ -30,6 +31,7 @@ public:
 	void openFile();
 	void closeFile();
    void discardFile(int tab);
+   void setCurrentFileByTab(View* v);
 
 	/////DOMAIN
 	void startLineCommand();
@@ -44,8 +46,7 @@ public:
 	MainCmd& getCmdMain() { return *cmdmain; }
 	Cmd& getCmd() { return *cmd; }
 
-	void runCmd(Cmd* command);
-   
+	void runCmd(Cmd* command);  
 };
 
 #endif

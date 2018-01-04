@@ -1,5 +1,4 @@
 #include <QtGui>
-#include "Point.h"
 #include "View.h"
 #include <QShortcut>
 #include "../manager/Manager.h"

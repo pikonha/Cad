@@ -12,6 +12,7 @@
 #include "MainCmdBezier.h"
 #include "CmdClearAllItems.h"
 #include "CmdClearLastItem.h"
+#include "CmdSetCurrentFile.h"
 
 Manager::Manager(Data& d,MainScreen& s) : data(d),screen(s),cmdmain(nullptr)
 {
@@ -119,6 +120,12 @@ void Manager::discardFile(int tab)
 {
    runCmd(new CmdDiscard(tab));
 }
+
+void Manager::setCurrentFileByTab(View* v)
+{   
+   runCmd(new CmdSetCurrentFile(data.getFileByView(v)));
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 

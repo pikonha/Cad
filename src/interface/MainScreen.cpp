@@ -35,8 +35,10 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
    tabs = new QTabWidget(this);
    setCentralWidget(tabs);
    tabs->setTabsClosable(true);
+   tabs->setMovable(true);
 
    connect(tabs,&QTabWidget::tabCloseRequested,this,&MainScreen::closeTab);
+   connect(tabs,&QTabWidget::tabBarClicked,this,&MainScreen::tabChangedSignal);
 
 	QMenu* file = new QMenu("File");
 	QAction* line = new QAction("Line");
@@ -81,8 +83,6 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
 	connect(save, &QAction::triggered, this,  &MainScreen::saveFile);
 	//connect(clear, &QAction::triggered, this, &MainScreen::clearAllItems);
 	connect(close, &QAction::triggered, this, &MainScreen::closeFile);
-
-	
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -161,6 +161,11 @@ void MainScreen::closeTab()
       case QMessageBox::Discard: discardFile(tabs->tabPosition()); break;
       }
    //}     
+}
+
+void MainScreen::tabChangedSignal()
+{
+   manager->setCurrentFileByTab(dynamic_cast<View*>(tabs->currentWidget()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

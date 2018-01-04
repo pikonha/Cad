@@ -4,7 +4,7 @@
 
 #include <QMainWindow>
 #include "View.h"
-#include "Instruction.h"
+#include "../data/Instruction.h"
 
 class MainScreen : public QMainWindow
 {
@@ -35,6 +35,7 @@ public:
    /////TABS
    void addTab(View* view, std::string name);
    void closeTab();
+   void tabChangedSignal();
 
    /////DIALOGS
    void errorMessage();

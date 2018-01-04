@@ -26,6 +26,8 @@ public:
    std::vector<File*> getFiles() const { return files; }   
 
    void deleteAllFiles();
+
+   File* getFileByView(View* view);
 };
 
 #endif
