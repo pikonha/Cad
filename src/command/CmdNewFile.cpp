@@ -15,6 +15,7 @@ void CmdNewFile::execute(Data& d, MainScreen& s)
       
       s.addTab(file->getView(),file->getName());
 
+      s.tabs->setVisible(true);
       view->show();
    }
 }

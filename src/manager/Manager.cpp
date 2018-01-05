@@ -62,14 +62,14 @@ void Manager::runCmd(Cmd* command)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void Manager::mousePressEvent()
+void Manager::mousePressEvent(Point mousePosition)
 {
-   cmdmain->mousePressEvent(data.getCurrentFile()->getView()->getMousePos());
+   cmdmain->mousePressEvent(mousePosition);
 }
 
-void Manager::mouseReleaseEvent()
+void Manager::mouseReleaseEvent(Point mousePosition)
 {
-   cmdmain->mouseReleaseEvent(data.getCurrentFile()->getView()->getMousePos());
+   cmdmain->mouseReleaseEvent(mousePosition);
 
    if (cmdmain->getForm() == LINE)
       startLineCommand();
@@ -84,9 +84,9 @@ void Manager::mouseReleaseEvent()
    }
 }
 
-void Manager::mouseMoveEvent()
+void Manager::mouseMoveEvent(Point mousePosition)
 {
-   cmdmain->mouseMoveEvent(data.getCurrentFile()->getView()->getMousePos());
+   cmdmain->mouseMoveEvent(mousePosition);
 }
 
 void Manager::wheelEvent()
@@ -125,7 +125,6 @@ void Manager::setCurrentFileByTab(View* v)
 {   
    runCmd(new CmdSetCurrentFile(data.getFileByView(v)));
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 

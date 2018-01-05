@@ -13,7 +13,7 @@ class MainCmdBezier : public MainCmd
    Bezier* bezier;
 public:
    ~MainCmdBezier() {}
-	MainCmdBezier(Data& d) : MainCmd(d) { form = BEZIER; }	
+	MainCmdBezier(Data& d) : MainCmd(d), bezier(nullptr) { form = BEZIER; }	
 
    void setP1(const Point& p) override;
 	void setP2(const Point& p) override;

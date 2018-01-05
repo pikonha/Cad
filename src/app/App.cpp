@@ -1,11 +1,10 @@
+#include <QtCore>
+#include <qapplication.h>
 #include "App.h"
 #include "Manager.h"
-#include <QtWidgets/QApplication>
-#include <QtCore>
 #include "Data.h"
 #include "MainScreen.h"
 
-App* App::app= nullptr;
 App::~App() 
 {
    if (screen)
@@ -26,7 +25,7 @@ App::App()
 	manager= nullptr;
 }
 
-
+App* App::app= nullptr;
 App& App::getInstance()
 {
 	if (!app)
@@ -39,12 +38,12 @@ int App::start(int argc, char** argv)
 {
 	QApplication app(argc, argv);		
 
-	screen= new MainScreen();
+	screen= new MainScreen;
 
 	data= new Data;
 
 	manager= new Manager(*data,*screen);
    screen->setManager(*manager);
 
-	return app.exec();
+   return app.exec();
 }

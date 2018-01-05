@@ -2,6 +2,18 @@
 #include "Arch.h"
 #include "Data.h"
 
+Geometry* MainCmdArch::getNewGeometry()
+{
+   if (arch)
+      delete arch;
+
+   arch = new Arch(p1,p2,p3);
+
+   return arch;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void MainCmdArch::setP1(const Point& p)
 {
    p1= p;
@@ -19,16 +31,7 @@ void MainCmdArch::setP3(const Point& p)
 	data.getCurrentFile()->draw(getNewGeometry());
 }
 
-Geometry* MainCmdArch::getNewGeometry()
-{
-   if (arch)
-      delete arch;
-
-   arch = new Arch(p1,p2,p3);
-
-   return arch;
-}
-
+////////////////////////////////////////////////////////////////////////////////
 
 void MainCmdArch::mousePressEvent(Point& p)
 {

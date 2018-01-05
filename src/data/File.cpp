@@ -22,15 +22,12 @@ void File::reprint()
       draw(geometries[i]);
 }
 
-void File::draw(Geometry* geo)
+void File::draw(Geometry* geo) const
 {
-   std::vector<Point> points = geo->getPoints();
-
-   for (int i= 0; i < points.size(); i++)
-      view->getPainter().drawPoint(points.at(i).x,points.at(i).y);
+   view->draw(geo);
 }
 
-void File::drawAuxLine(const Point p1, const Point p2)
+void File::drawAuxLine(const Point p1, const Point p2) const
 {
-   view->getPainter().drawLine(View::pointToQPoint(p1),View::pointToQPoint(p2));
+   view->drawAuxLine(p1,p2);
 }

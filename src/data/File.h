@@ -19,7 +19,7 @@ class File
    bool saved;
 public:
    ~File() { deleteAllGeos(); }
-   File(View* v/* double w, double h*/) : name("NewFile"),saved(false) { view = v; }
+   File(View* v) : name("NewFile"),saved(false) { view = v; }
 
    /////GETTERS AND SETTERS
    bool getSaved() const { return saved; }
@@ -43,8 +43,8 @@ public:
 
    /////DRAW
    void reprint();
-   void draw(Geometry* geo);
-   void drawAuxLine(const Point p1,const Point p2);
+   void draw(Geometry* geo) const;
+   void drawAuxLine(const Point p1,const Point p2) const;
 
 };
 

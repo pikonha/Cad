@@ -10,10 +10,8 @@ class Data
    std::vector<File*> files;
 
    File* currentFile;
-public:
-	~Data() {}
-	Data() {}
 
+public:
    /////FILE
    void setCurrentFile(File* file);
 

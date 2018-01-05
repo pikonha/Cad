@@ -1,12 +1,17 @@
 #include <QtGui>
 #include "View.h"
+#include "../data/Geometry.h"
 #include <QShortcut>
 #include "../manager/Manager.h"
 #include <QFileDialog>
 
-View::View(Manager* m, /*double widht, double heigth,*/ QWidget* parent) : QGraphicsView(parent), painter(QPainter(this))
+View::View(Manager* m, /*double widht, double heigth,*/ QWidget* parent) : QGraphicsView(parent)
 {
    manager= m;
+
+   painter = new QPainter(this);
+   scene = new QGraphicsScene();
+
 	//setMinimumSize(widht, heigth);
    setMinimumSize(1920,1080);
 
@@ -18,33 +23,44 @@ View::View(Manager* m, /*double widht, double heigth,*/ QWidget* parent) : QGrap
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void View::drawAuxLine(Point p1, Point p2)
+void View::draw(Geometry* geo)
 {
-   painter.drawLine(pointToQPoint(p1),pointToQPoint(p2));
+   std::vector<Point> points = geo->getPoints();
+
+
+   for (int i= 0; i < points.size(); i++)
+   {
+      int j = ++i;
+      scene->addLine(points[i].x,points[i].y,points[j].x,points[j].y);
+   }
+
+   scene->update();
+}
+
+void View::drawAuxLine(Point p1, Point p2) const
+{
+      scene->addLine(p1.x,p1.y,p2.x,p2.y);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void View::mousePressEvent(QMouseEvent* event)
 {
-	mousePos = qpointToPoint(event->pos());
-	manager->mousePressEvent();
+	manager->mousePressEvent(qpointToPoint(event->pos()));
 
 	event->accept();
 }
 
 void View::mouseReleaseEvent(QMouseEvent* event)
 {
-	mousePos = qpointToPoint(event->pos());
-	manager->mouseReleaseEvent();
+	manager->mouseReleaseEvent(qpointToPoint(event->pos()));
 
 	event->accept();	
 }
 
 void View::mouseMoveEvent(QMouseEvent* event)
 {
-	mousePos = qpointToPoint(event->pos());
-	manager->mouseMoveEvent();
+	manager->mouseMoveEvent(qpointToPoint(event->pos()));
 	
 	event->accept();
 }

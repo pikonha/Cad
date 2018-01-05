@@ -12,4 +12,5 @@ target_link_libraries(app manager
 						data
 						interface
 						Qt5::Core
+						Qt5::Widgets
 						)

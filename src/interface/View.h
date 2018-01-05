@@ -5,25 +5,24 @@
 #include <QGraphicsView>
 #include "../data/Point.h"
 
+class Geometry;
 class Manager;
 
 class View : public QGraphicsView
 {
-	Point mousePos;
-   QPainter& painter;
+   QPainter* painter;
 	Manager* manager;
 
+   QGraphicsScene* scene;
 public:
    ~View() {}
 	View(Manager* m, /*double widht, double heigth,*/ QWidget* parent);	
 
-   QPainter& getPainter() const{ return painter; }
-   
-   //////GETTERS
-	Point getMousePos() const { return mousePos; }
+   QGraphicsScene* getScene() const { return scene; }
 
    /////DRAW
-   void drawAuxLine(Point p1,Point p2);
+   void draw(Geometry* geo);
+   void drawAuxLine(Point p1,Point p2) const;
 
    /////CAST
    static Point qpointToPoint(QPoint p);

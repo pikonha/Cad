@@ -2,6 +2,18 @@
 #include "Data.h"
 //#include "Instruction.h"
 
+Geometry* MainCmdLine::getNewGeometry()
+{
+   if (line)
+      delete line;
+
+   line = new Line(p1,p2);
+
+   return line;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void MainCmdLine::setP1(const Point& p)
 {
 	p1= p;
@@ -16,16 +28,7 @@ void MainCmdLine::setP2(const Point& p)
    }
 }
 
-Geometry* MainCmdLine::getNewGeometry()
-{
-   if (line)
-      delete line;
-
-   line = new Line(p1,p2);
-
-   return line;
-}
-
+////////////////////////////////////////////////////////////////////////////////
 
 void MainCmdLine::mousePressEvent(Point& p)
 {
@@ -35,6 +38,7 @@ void MainCmdLine::mousePressEvent(Point& p)
 
 void MainCmdLine::mouseReleaseEvent(Point& p)
 {
+   data.getCurrentFile()->addGeo(line);
    setDrawing(false);
 }
 

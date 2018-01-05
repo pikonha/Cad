@@ -7,6 +7,7 @@ class MainScreen;
 class Data;
 class Cmd;
 class View;
+class Point;
 
 class Manager
 {
@@ -20,9 +21,9 @@ public:
    ~Manager();
 
 	/////MOUSE
-	void mousePressEvent();
-	void mouseReleaseEvent();
-	void mouseMoveEvent();
+	void mousePressEvent(Point mousePosition);
+	void mouseReleaseEvent(Point mousePosition);
+	void mouseMoveEvent(Point mousePosition);
 	void wheelEvent();
 
 	/////FILE

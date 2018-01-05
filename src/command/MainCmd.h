@@ -32,7 +32,7 @@ public:
    /////AUXS
    void setDrawing(bool drwOk);
    void setAuxDraw(bool status);
-   bool getSecondClick() { return secondClick; }
+   bool getSecondClick() const { return secondClick; }
    
 	FormType getForm() { return form; }
 

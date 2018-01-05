@@ -36,6 +36,7 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
    setCentralWidget(tabs);
    tabs->setTabsClosable(true);
    tabs->setMovable(true);
+   tabs->setVisible(false);
 
    connect(tabs,&QTabWidget::tabCloseRequested,this,&MainScreen::closeTab);
    connect(tabs,&QTabWidget::tabBarClicked,this,&MainScreen::tabChangedSignal);
@@ -161,6 +162,9 @@ void MainScreen::closeTab()
       case QMessageBox::Discard: discardFile(tabs->tabPosition()); break;
       }
    //}     
+
+      if (tabs->count() == 0)
+         tabs->setVisible(false);
 }
 
 void MainScreen::tabChangedSignal()
@@ -183,16 +187,20 @@ void MainScreen::successMessage()
 int MainScreen::newFileDialog()
 {
    QDialog dialog(this);
+   dialog.setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint & ~Qt::WindowMaximizeButtonHint & ~Qt::WindowMinimizeButtonHint);
+   dialog.setWindowTitle(QString("Create new file"));
    QFormLayout form(&dialog);
 
-   form.addRow(new QLabel("Set the file's size: "));
+   form.addRow(new QLabel("File name:"),new QLineEdit(&dialog));
 
    QString hLabel = QString("Height");
    QLineEdit* hEdit = new QLineEdit(&dialog);
+   hEdit->setText(QString("800"));
    form.addRow(hLabel,hEdit);
 
    QString wLabel = QString("Widht");
    QLineEdit* wEdit = new QLineEdit(&dialog);
+   wEdit->setText(QString("600"));
    form.addRow(wLabel,wEdit);
 
    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
