@@ -32,18 +32,18 @@ public:
    std::string getPath() { return path; }
 
    std::vector<Geometry*> getGeos() const { return geometries; }
-   Geometry* getLastGeometry() { return geometries.back(); }
+   Geometry* getLastGeometry(){ return geometries.back(); }
 
    View* getView() { return view; }
 
    /////GEOMETRIES
    void deleteAllGeos();
-   void addGeo(Geometry* geo) { geometries.push_back(geo); }   
+   void deleteGeo(Geometry* geo);
+   void addGeo(Geometry* geo) { geometries.push_back(geo); reprint(); }
    void deleteLastGeo();
 
    /////DRAW
    void reprint();
-   void draw(Geometry* geo) const;
    void drawAuxLine(const Point p1,const Point p2) const;
 
 };

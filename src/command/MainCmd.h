@@ -3,6 +3,7 @@
 #define INCLUDED_MAINCMD_H
 
 #include "FormType.h"
+#include "Line.h"
 
 class Point;
 class Geometry;

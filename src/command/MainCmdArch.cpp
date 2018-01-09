@@ -5,7 +5,7 @@
 Geometry* MainCmdArch::getNewGeometry()
 {
    if (arch)
-      delete arch;
+      data.getCurrentFile()->deleteGeo(arch);
 
    arch = new Arch(p1,p2,p3);
 
@@ -23,12 +23,18 @@ void MainCmdArch::setP1(const Point& p)
 void MainCmdArch::setP2(const Point& p)
 {
    p2= p;
+
+   if (auxLine)
+      data.getCurrentFile()->deleteGeo(auxLine);
+
+   auxLine = new Line(p1,p2);
+   data.getCurrentFile()->getView()->drawAuxLine(auxLine->getP1(),auxLine->getP2());
 }
 
 void MainCmdArch::setP3(const Point& p)
 {
    p3 = p;
-	data.getCurrentFile()->draw(getNewGeometry());
+	data.getCurrentFile()->addGeo(getNewGeometry());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

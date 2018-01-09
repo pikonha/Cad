@@ -8,6 +8,18 @@ void File::deleteAllGeos()
    geometries.clear();
 }
 
+void File::deleteGeo(Geometry* geo)
+{
+   for (Geometry* g : geometries)
+      if (g == geo) {
+         view->eraseGeo(g);
+         delete g;
+         geometries.clear();
+      }
+
+   view->update();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 void File::deleteLastGeo()
@@ -18,13 +30,8 @@ void File::deleteLastGeo()
 
 void File::reprint()
 {
-   for (int i= 0; i < geometries.size(); i++)
-      draw(geometries[i]);
-}
-
-void File::draw(Geometry* geo) const
-{
-   view->draw(geo);
+   for ( Geometry* geo : geometries)
+      view->draw(geo);
 }
 
 void File::drawAuxLine(const Point p1, const Point p2) const

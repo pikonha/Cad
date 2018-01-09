@@ -2,27 +2,29 @@
 #ifndef INCLUDED_VIEW_H
 #define INCLUDED_VIEW_H
 
-#include <QGraphicsView>
+#include <QWidget>
 #include "../data/Point.h"
 
 class Geometry;
 class Manager;
 
-class View : public QGraphicsView
+class View : public QWidget
 {
    QPainter* painter;
 	Manager* manager;
+   QImage* image;
 
-   QGraphicsScene* scene;
+   void setShortcuts();
 public:
    ~View() {}
 	View(Manager* m, /*double widht, double heigth,*/ QWidget* parent);	
 
-   QGraphicsScene* getScene() const { return scene; }
 
    /////DRAW
    void draw(Geometry* geo);
    void drawAuxLine(Point p1,Point p2) const;
+   void reprint();
+   void eraseGeo(Geometry* geo);
 
    /////CAST
    static Point qpointToPoint(QPoint p);
@@ -48,7 +50,7 @@ protected:
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void wheelEvent(QWheelEvent* event) override;
 
-   void setShortcuts();
+   void paintEvent(QPaintEvent* event) override;
 };
 
 #endif

@@ -4,19 +4,21 @@
 #include <QShortcut>
 #include "../manager/Manager.h"
 #include <QFileDialog>
+#include <QApplication>
+#include <QDesktopWidget>
 
-View::View(Manager* m, /*double widht, double heigth,*/ QWidget* parent) : QGraphicsView(parent)
+View::View(Manager* m, /*double widht, double heigth,*/ QWidget* parent) : QWidget(parent)
 {
+   setAutoFillBackground(true);
+   setBackgroundRole(QPalette::Base);   
+
    manager= m;
 
-   painter = new QPainter(this);
-   scene = new QGraphicsScene();
+   image = new QImage(QApplication::desktop()->size(),QImage::Format_ARGB32_Premultiplied);
+   painter = new QPainter(image);
 
 	//setMinimumSize(widht, heigth);
    setMinimumSize(1920,1080);
-
-	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
    setShortcuts();
 }
@@ -27,19 +29,25 @@ void View::draw(Geometry* geo)
 {
    std::vector<Point> points = geo->getPoints();
 
-
-   for (int i= 0; i < points.size(); i++)
+   for (int i= 1; i < points.size(); i++)
    {
-      int j = ++i;
-      scene->addLine(points[i].x,points[i].y,points[j].x,points[j].y);
+      int j = i - 1;
+      painter->drawLine(points[i].x,points[i].y,points[j].x,points[j].y);
    }
 
-   scene->update();
+   update();
 }
 
 void View::drawAuxLine(Point p1, Point p2) const
+{   
+   painter->drawLine(p1.x,p1.y,p2.x,p2.y);
+}
+
+void View::eraseGeo(Geometry* geo)
 {
-      scene->addLine(p1.x,p1.y,p2.x,p2.y);
+   painter->setPen(Qt::white);
+   draw(geo);
+   painter->setPen(Qt::black);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -67,11 +75,18 @@ void View::mouseMoveEvent(QMouseEvent* event)
 
 void View::wheelEvent(QWheelEvent* event)
 {
-	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+	//setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 	
 	manager->wheelEvent();
 
 	event->accept();
+}
+
+void View::paintEvent(QPaintEvent* event)
+{
+   QPainter p(this);
+   p.drawImage(0,0,*image);
+   event->accept();
 }
 
 void View::setShortcuts()

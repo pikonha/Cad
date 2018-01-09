@@ -11,9 +11,10 @@ class MainCmdArch :	public MainCmd
    Point p1,p2,p3;
 
    Arch* arch;
+   Line* auxLine;
 public:
    ~MainCmdArch() {}
-   MainCmdArch(Data& d) : MainCmd(d), arch(nullptr) { form = ARCH; }
+   MainCmdArch(Data& d) : MainCmd(d), arch(nullptr), auxLine(nullptr) { form = ARCH; }
 
 	void setP1(const Point& p) override;
 	void setP2(const Point& p) override;

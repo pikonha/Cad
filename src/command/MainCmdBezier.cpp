@@ -11,18 +11,24 @@ void MainCmdBezier::setP1(const Point& p)
 void MainCmdBezier::setP2(const Point& p)
 {
    p2= p;
+
+   if (auxLine)
+      data.getCurrentFile()->deleteGeo(auxLine);
+
+   auxLine = new Line(p1,p2);
+   data.getCurrentFile()->getView()->drawAuxLine(auxLine->getP1(),auxLine->getP2());
 }
 
 void MainCmdBezier::setP3(const Point& p)
 {
    p3= p;
-	data.getCurrentFile()->draw(getNewGeometry());
+	data.getCurrentFile()->addGeo(getNewGeometry());
 }
 
 Geometry* MainCmdBezier::getNewGeometry()
 {
    if (bezier)
-      delete bezier;
+      data.getCurrentFile()->deleteGeo(bezier);
 
    bezier = new Bezier(p1,p2,p3);
 
