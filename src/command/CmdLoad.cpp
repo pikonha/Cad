@@ -7,11 +7,11 @@
 
 void CmdLoad::execute(Data& d, MainScreen& s) 
 {
-   std::string fileName = d.getCurrentFile()->getView()->getLoadPath();
-
+   View* view = new View(s.getManager(),s.width(),s.height());
+   std::string fileName = view->getLoadPath();
+   
+   File* file = new File(s.getFileName(fileName),view);
    std::ifstream stream;
-
-   std::deque<Geometry*> itens;
 
    stream.open(fileName, std::ios::in | std::ios::binary);    
 
@@ -46,7 +46,7 @@ void CmdLoad::execute(Data& d, MainScreen& s)
          Line *ln;
          Arch *a;
          Bezier *bz;
-         Geometry* geo;
+         Geometry* geo = nullptr;
 
          switch (form)
          {
@@ -63,9 +63,13 @@ void CmdLoad::execute(Data& d, MainScreen& s)
             break;
          }
 
-         itens.push_back(geo);         
+         if ( geo)
+            file->addGeo(geo);         
       }
+      s.addTab(view,file->getName());
+      d.addFIle(file);
       d.getCurrentFile()->reprint();
+      s.tabs->setVisible(true);
    }
    else
       s.errorMessage();

@@ -17,7 +17,7 @@ class View : public QWidget
    void setShortcuts();
 public:
    ~View() {}
-	View(Manager* m, int w, int h, QWidget* parent);	
+	View(Manager* m, int w, int h, QWidget* parent = 0);	
 
 
    /////DRAW

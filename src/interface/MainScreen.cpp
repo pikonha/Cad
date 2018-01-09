@@ -23,15 +23,16 @@ MainScreen::~MainScreen()
 
 MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullptr)
 {
-	//setFixedSize(1920, 1020);
    setMinimumSize(800,600);
    setWindowTitle(QString("AudacesCAD"));
 	showMaximized();
 
 	navbar = menuBar();	
+   navbar->setFixedWidth(1920);
 
    status = statusBar();
-   status->show();
+   status->setFixedWidth(1920);
+   //status->show();
 
    tabs = new QTabWidget(this);
    setCentralWidget(tabs);
@@ -41,6 +42,12 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
 
    connect(tabs,&QTabWidget::tabCloseRequested,this,&MainScreen::closeTabDialog);
    connect(tabs,&QTabWidget::tabBarClicked,this,&MainScreen::tabChangedSignal);
+
+   slider= new QSlider(Qt::Horizontal,status);
+   slider->setValue(100);
+   slider->setMaximum(200);
+   slider->setMinimum(0);
+   //slider->setTickPosition(QSlider::NoTicks);
 
 	QMenu* file = new QMenu("File");
 	QAction* line = new QAction("Line");
@@ -85,6 +92,9 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
 	connect(save, &QAction::triggered, this,  &MainScreen::saveFile);
 	connect(clear, &QAction::triggered, this, &MainScreen::clearTab);
 	connect(close, &QAction::triggered, this, &MainScreen::closeFile);
+
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_N),this),&QShortcut::activated,this,&MainScreen::newFile);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_W),this),&QShortcut::activated,this,&MainScreen::closeTab);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -146,8 +156,7 @@ void MainScreen::closeTabDialog()
 {
    View* view = dynamic_cast<View*>(tabs->widget(tabs->tabPosition()));
 
-//   if ( !view->getFile().getSaved())
-  // {      
+   if (view) {  
       QMessageBox warning;
       warning.setText("The document has been modified.");
       warning.setInformativeText("Do you want to save your changes?");
@@ -161,11 +170,11 @@ void MainScreen::closeTabDialog()
       {
       case QMessageBox::Save: saveFile(); break;
       case QMessageBox::Discard: discardFile(tabs->tabPosition()); break;
-      }
-   //}     
+      }    
 
       if (tabs->count() == 0)
          tabs->setVisible(false);
+   }
 }
 
 void MainScreen::tabChangedSignal()
@@ -176,6 +185,11 @@ void MainScreen::tabChangedSignal()
 void MainScreen::clearTab()
 {
    manager->clearAllItems();
+}
+
+void MainScreen::closeTab()
+{
+   manager->closeTab(tabs->widget(tabs->currentIndex()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

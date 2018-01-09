@@ -6,6 +6,7 @@
 #include "View.h"
 #include "STRUCTNEWFILE.h"
 #include "../data/Instruction.h"
+#include <QSlider>
 
 
 class MainScreen : public QMainWindow
@@ -17,6 +18,7 @@ public:
    QMenuBar* navbar;
    QStatusBar* status;
    QTabWidget* tabs;
+   QSlider* slider;
 
    /////////////////////////////////////////////////
    ~MainScreen();
@@ -40,6 +42,7 @@ public:
    void closeTabDialog();
    void tabChangedSignal();
    void clearTab();
+   void closeTab();
 
    /////DIALOGS
    void errorMessage();

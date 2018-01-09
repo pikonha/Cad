@@ -47,7 +47,8 @@ public:
 	MainCmd& getCmdMain() { return *cmdmain; }
 	Cmd& getCmd() { return *cmd; }
 
-	void runCmd(Cmd* command);  
+	void runCmd(Cmd* command);
+   void closeTab(QWidget* widget);
 };
 
 #endif

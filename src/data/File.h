@@ -21,7 +21,7 @@ class File
    bool saved;
 public:
    ~File() { deleteAllGeos(); }
-   File(std::string n, View* v) : name(n),saved(false) { view = v; }
+   File(std::string n, View* v) : name(n),saved(true) { view = v; }
 
    /////GETTERS AND SETTERS
    bool getSaved() const { return saved; }

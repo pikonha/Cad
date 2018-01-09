@@ -6,6 +6,7 @@
 #include "CmdClose.h"
 #include "CmdNewFile.h"
 #include "CmdDiscard.h"
+#include "CmdCloseTab.h"
 #include "MainCmdLine.h"
 #include "MainCmdArch.h"
 #include "CmdWheelEvent.h"
@@ -60,10 +61,16 @@ void Manager::runCmd(Cmd* command)
    cmd= new CmdIdle();
 }
 
+void Manager::closeTab(QWidget* widget)
+{
+   runCmd(new CmdCloseTab(widget));
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 void Manager::mousePressEvent(Point mousePosition)
 {
+   data.getCurrentFile()->setSaved(false);
    cmdmain->mousePressEvent(mousePosition);
 }
 
@@ -103,7 +110,7 @@ void Manager::newFile()
 
 void Manager::saveFile()
 {
-   runCmd(new CmdSave());
+   runCmd(new CmdSave());   
 }
 
 void Manager::openFile()

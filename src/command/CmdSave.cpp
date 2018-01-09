@@ -96,6 +96,7 @@ void CmdSave::execute(Data& d, MainScreen& s)
       }
 
       s.tabs->setTabText(s.tabs->tabPosition(),d.getCurrentFile()->getName().c_str());
+      d.getCurrentFile()->setSaved(true);
    }
    else
    {
