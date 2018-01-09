@@ -4,8 +4,10 @@
 
 Geometry* MainCmdLine::getNewGeometry()
 {
-   if (line)
-      data.getCurrentFile()->deleteGeo(line);    
+   if (line) {
+      data.getCurrentFile()->deleteGeo(line);
+      data.getCurrentFile()->getView()->eraseGeo(line);
+   }
 
    line = new Line(p1,p2);
 
@@ -24,7 +26,7 @@ void MainCmdLine::setP2(const Point& p)
 {
    if (drawing) {
       p2= p;
-      data.getCurrentFile()->addGeo(getNewGeometry());
+      data.getCurrentFile()->getView()->draw(getNewGeometry());
    }
 }
 

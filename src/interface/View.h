@@ -17,12 +17,11 @@ class View : public QWidget
    void setShortcuts();
 public:
    ~View() {}
-	View(Manager* m, /*double widht, double heigth,*/ QWidget* parent);	
+	View(Manager* m, int w, int h, QWidget* parent);	
 
 
    /////DRAW
    void draw(Geometry* geo);
-   void drawAuxLine(Point p1,Point p2) const;
    void reprint();
    void eraseGeo(Geometry* geo);
 
@@ -51,6 +50,8 @@ protected:
 	void wheelEvent(QWheelEvent* event) override;
 
    void paintEvent(QPaintEvent* event) override;
+
+   void resizeEvent(QResizeEvent* event) override;
 };
 
 #endif

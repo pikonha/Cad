@@ -23,7 +23,8 @@ MainScreen::~MainScreen()
 
 MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullptr)
 {
-	setFixedSize(1920, 1020);
+	//setFixedSize(1920, 1020);
+   setMinimumSize(800,600);
    setWindowTitle(QString("AudacesCAD"));
 	showMaximized();
 
@@ -38,7 +39,7 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
    tabs->setMovable(true);
    tabs->setVisible(false);
 
-   connect(tabs,&QTabWidget::tabCloseRequested,this,&MainScreen::closeTab);
+   connect(tabs,&QTabWidget::tabCloseRequested,this,&MainScreen::closeTabDialog);
    connect(tabs,&QTabWidget::tabBarClicked,this,&MainScreen::tabChangedSignal);
 
 	QMenu* file = new QMenu("File");
@@ -61,7 +62,7 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
    QIcon* iconNew = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/new.png");
 	QIcon* iconSave = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/save.png");
 	QIcon* iconClear = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/clean.png");
-	QIcon* iconClose = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/closeFile.png");
+	QIcon* iconClose = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/close.png");
 	QIcon* iconOpen = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/open.png");
 
    newFile->setIcon(*iconNew);
@@ -82,7 +83,7 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
    connect(newFile,&QAction::triggered,this,&MainScreen::newFile);
 	connect(open, &QAction::triggered, this,  &MainScreen::loadFile);
 	connect(save, &QAction::triggered, this,  &MainScreen::saveFile);
-	//connect(clear, &QAction::triggered, this, &MainScreen::clearAllItems);
+	connect(clear, &QAction::triggered, this, &MainScreen::clearTab);
 	connect(close, &QAction::triggered, this, &MainScreen::closeFile);
 }
 
@@ -141,7 +142,7 @@ void MainScreen::addTab(View* view, std::string name)
    tabs->show();
 }
 
-void MainScreen::closeTab()
+void MainScreen::closeTabDialog()
 {
    View* view = dynamic_cast<View*>(tabs->widget(tabs->tabPosition()));
 
@@ -172,6 +173,11 @@ void MainScreen::tabChangedSignal()
    manager->setCurrentFileByTab(dynamic_cast<View*>(tabs->currentWidget()));
 }
 
+void MainScreen::clearTab()
+{
+   manager->clearAllItems();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 void MainScreen::errorMessage()
@@ -184,24 +190,23 @@ void MainScreen::successMessage()
    QMessageBox::information(this,tr("Good news"),tr("Successful request."),QMessageBox::Ok);
 }
 
-int MainScreen::newFileDialog()
+STRUCTNEWFILE MainScreen::newFileDialog()
 {
    QDialog dialog(this);
    dialog.setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint & ~Qt::WindowMaximizeButtonHint & ~Qt::WindowMinimizeButtonHint);
    dialog.setWindowTitle(QString("Create new file"));
    QFormLayout form(&dialog);
 
-   form.addRow(new QLabel("File name:"),new QLineEdit(&dialog));
+   QLineEdit* lName = new QLineEdit(&dialog);
+   form.addRow(new QLabel("File name:"),lName);
 
-   QString hLabel = QString("Height");
-   QLineEdit* hEdit = new QLineEdit(&dialog);
-   hEdit->setText(QString("800"));
-   form.addRow(hLabel,hEdit);
-
-   QString wLabel = QString("Widht");
    QLineEdit* wEdit = new QLineEdit(&dialog);
-   wEdit->setText(QString("600"));
-   form.addRow(wLabel,wEdit);
+   wEdit->setText(QString("800"));
+   form.addRow(new QLabel("Width"),wEdit);
+
+   QLineEdit* hEdit = new QLineEdit(&dialog);
+   hEdit->setText(QString("600"));
+   form.addRow(new QLabel("Height"),hEdit);   
 
    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,Qt::Horizontal,&dialog);
    form.addRow(&buttonBox);
@@ -209,7 +214,13 @@ int MainScreen::newFileDialog()
    connect(&buttonBox,SIGNAL(accepted()),&dialog,SLOT(accept()));
    connect(&buttonBox,SIGNAL(rejected()),&dialog,SLOT(reject()));
    
-   return dialog.exec();
+   int exec = dialog.exec();
+
+   std::string name = lName->text().toStdString();
+   int height = hEdit->text().toInt();
+   int width = wEdit->text().toInt();
+
+   return STRUCTNEWFILE(exec,name,width,height);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

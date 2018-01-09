@@ -4,8 +4,10 @@
 
 Geometry* MainCmdArch::getNewGeometry()
 {
-   if (arch)
+   if (arch) {
       data.getCurrentFile()->deleteGeo(arch);
+      data.getCurrentFile()->getView()->eraseGeo(arch);
+   }
 
    arch = new Arch(p1,p2,p3);
 
@@ -25,16 +27,20 @@ void MainCmdArch::setP2(const Point& p)
    p2= p;
 
    if (auxLine)
-      data.getCurrentFile()->deleteGeo(auxLine);
+      data.getCurrentFile()->getView()->eraseGeo(auxLine);
 
    auxLine = new Line(p1,p2);
-   data.getCurrentFile()->getView()->drawAuxLine(auxLine->getP1(),auxLine->getP2());
+   data.getCurrentFile()->getView()->draw(auxLine);
 }
 
 void MainCmdArch::setP3(const Point& p)
 {
    p3 = p;
-	data.getCurrentFile()->addGeo(getNewGeometry());
+   data.getCurrentFile()->getView()->eraseGeo(auxLine);
+   data.getCurrentFile()->getView()->draw(getNewGeometry());
+
+   delete auxLine;
+   auxLine = nullptr;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -62,17 +68,15 @@ void MainCmdArch::mouseReleaseEvent(Point& p)
       //setMessageToScreen(SECONDCLICK);
    }
    else
-      data.getCurrentFile()->addGeo(getNewGeometry());
+      data.getCurrentFile()->addGeo(arch);
     
 }
 
 void MainCmdArch::mouseMoveEvent(Point& p)
 {
-   if ( auxDraw )
-   {
+   if ( auxDraw )   
       setP2(p);
-      data.getCurrentFile()->getView()->drawAuxLine(p1,p2);
-   }
+   
    else if( drawing )
       setP3(p);
 }

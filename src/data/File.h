@@ -7,6 +7,8 @@
 #include "View.h"
 #include "Geometry.h"
 
+class Line;
+
 class File
 {
    std::string name;
@@ -19,7 +21,7 @@ class File
    bool saved;
 public:
    ~File() { deleteAllGeos(); }
-   File(View* v) : name("NewFile"),saved(false) { view = v; }
+   File(std::string n, View* v) : name(n),saved(false) { view = v; }
 
    /////GETTERS AND SETTERS
    bool getSaved() const { return saved; }
@@ -29,22 +31,21 @@ public:
    void setName(const std::string n) { name = n; }
 
    void setPath(std::string p) { path = p; }
-   std::string getPath() { return path; }
+   std::string getPath() const { return path; }
 
    std::vector<Geometry*> getGeos() const { return geometries; }
    Geometry* getLastGeometry(){ return geometries.back(); }
 
-   View* getView() { return view; }
+   View* getView() const { return view; }
 
    /////GEOMETRIES
    void deleteAllGeos();
    void deleteGeo(Geometry* geo);
-   void addGeo(Geometry* geo) { geometries.push_back(geo); reprint(); }
+   void addGeo(Geometry* geo) { geometries.push_back(geo); } //reprint(); }
    void deleteLastGeo();
 
    /////DRAW
    void reprint();
-   void drawAuxLine(const Point p1,const Point p2) const;
 
 };
 

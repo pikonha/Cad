@@ -2,7 +2,6 @@
 #ifndef INCLUDED_DATA_H
 #define INCLUDED_DATA_H
 
-#include <vector>
 #include "File.h"
 
 class Data
@@ -15,7 +14,7 @@ public:
    /////FILE
    void setCurrentFile(File* file);
 
-   File* getCurrentFile() const { return currentFile; }
+   File* getCurrentFile(){ return currentFile; }
 
    void addFIle(File* file) { files.push_back(file); }
 

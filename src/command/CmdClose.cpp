@@ -3,5 +3,5 @@
 
 void CmdClose::execute(Data& d, MainScreen& s)
 {
-   
+   d.deleteAllFiles();
 }

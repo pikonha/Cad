@@ -13,22 +13,28 @@ void MainCmdBezier::setP2(const Point& p)
    p2= p;
 
    if (auxLine)
-      data.getCurrentFile()->deleteGeo(auxLine);
+      data.getCurrentFile()->getView()->eraseGeo(auxLine);
 
    auxLine = new Line(p1,p2);
-   data.getCurrentFile()->getView()->drawAuxLine(auxLine->getP1(),auxLine->getP2());
+   data.getCurrentFile()->getView()->draw(auxLine);
 }
 
 void MainCmdBezier::setP3(const Point& p)
 {
    p3= p;
-	data.getCurrentFile()->addGeo(getNewGeometry());
+   data.getCurrentFile()->getView()->eraseGeo(auxLine);
+   data.getCurrentFile()->getView()->draw(getNewGeometry());	
+
+   delete auxLine;
+   auxLine = nullptr;
 }
 
 Geometry* MainCmdBezier::getNewGeometry()
 {
-   if (bezier)
+   if (bezier) {
       data.getCurrentFile()->deleteGeo(bezier);
+      data.getCurrentFile()->getView()->eraseGeo(bezier);
+   }
 
    bezier = new Bezier(p1,p2,p3);
 
@@ -55,21 +61,18 @@ void MainCmdBezier::mouseReleaseEvent(Point& p)
    {
       setAuxDraw(false);
       setDrawing(true);
-      //setMessageToScreen(SECONDCLICK);
    }
    else
    {
-     data.getCurrentFile()->addGeo(getNewGeometry());
+     data.getCurrentFile()->addGeo(bezier);
    }
 }
 
 void MainCmdBezier::mouseMoveEvent(Point& p)
 {  
-   if (auxDraw)
-   {
+   if (auxDraw)   
       setP2(p);
-      data.getCurrentFile()->drawAuxLine(p1,p2);
-   }
+   
    else if (drawing)
       setP3(p);
 }

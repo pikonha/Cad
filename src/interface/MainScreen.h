@@ -4,7 +4,9 @@
 
 #include <QMainWindow>
 #include "View.h"
+#include "STRUCTNEWFILE.h"
 #include "../data/Instruction.h"
+
 
 class MainScreen : public QMainWindow
 {
@@ -31,16 +33,18 @@ public:
    void closeFile();
    std::string getFileName(std::string path);
    void discardFile(int tabIndex);
+   
 
    /////TABS
    void addTab(View* view, std::string name);
-   void closeTab();
+   void closeTabDialog();
    void tabChangedSignal();
+   void clearTab();
 
    /////DIALOGS
    void errorMessage();
    void successMessage();	
-   int newFileDialog();
+   STRUCTNEWFILE newFileDialog();
    void setStatusMessage(Instruction in);
 
    /////COMANDS

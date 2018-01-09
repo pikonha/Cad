@@ -7,7 +7,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-View::View(Manager* m, /*double widht, double heigth,*/ QWidget* parent) : QWidget(parent)
+View::View(Manager* m, int w, int h, QWidget* parent) : QWidget(parent)
 {
    setAutoFillBackground(true);
    setBackgroundRole(QPalette::Base);   
@@ -17,8 +17,10 @@ View::View(Manager* m, /*double widht, double heigth,*/ QWidget* parent) : QWidg
    image = new QImage(QApplication::desktop()->size(),QImage::Format_ARGB32_Premultiplied);
    painter = new QPainter(image);
 
-	//setMinimumSize(widht, heigth);
-   setMinimumSize(1920,1080);
+
+   setFixedSize(w,h);
+   setMinimumSize(w, h);
+   setMaximumSize(1920,1080);
 
    setShortcuts();
 }
@@ -38,16 +40,14 @@ void View::draw(Geometry* geo)
    update();
 }
 
-void View::drawAuxLine(Point p1, Point p2) const
-{   
-   painter->drawLine(p1.x,p1.y,p2.x,p2.y);
-}
 
 void View::eraseGeo(Geometry* geo)
 {
-   painter->setPen(Qt::white);
-   draw(geo);
-   painter->setPen(Qt::black);
+   if (geo) {
+      painter->setPen(Qt::white);
+      draw(geo);
+      painter->setPen(Qt::black);
+   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -87,6 +87,11 @@ void View::paintEvent(QPaintEvent* event)
    QPainter p(this);
    p.drawImage(0,0,*image);
    event->accept();
+}
+
+void View::resizeEvent(QResizeEvent* event)
+{
+  
 }
 
 void View::setShortcuts()
