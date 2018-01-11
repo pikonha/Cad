@@ -18,7 +18,6 @@
 Manager::Manager(Data& d,MainScreen& s) : data(d),screen(s),cmdmain(nullptr)
 {
    cmd= new CmdIdle();
-   startLineCommand();
 }
 
 Manager::~Manager()
@@ -35,6 +34,8 @@ void Manager::startLineCommand()
       delete cmdmain;
 
    cmdmain= new MainCmdLine(data);
+
+   screen.setStatusMessage(Instruction::MOUSECLICK);
 }
 
 void Manager::startBezierCommand()
@@ -43,6 +44,8 @@ void Manager::startBezierCommand()
       delete cmdmain;
 
    cmdmain= new MainCmdBezier(data);
+
+   screen.setStatusMessage(Instruction::MOUSECLICK);
 }
 
 void Manager::startArchCommand()
@@ -51,6 +54,8 @@ void Manager::startArchCommand()
       delete cmdmain;
 
    cmdmain= new MainCmdArch(data);
+
+   screen.setStatusMessage(Instruction::MOUSECLICK);
 }
 
 void Manager::runCmd(Cmd* command)

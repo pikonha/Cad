@@ -5,7 +5,7 @@
 void MainCmdBezier::setP1(const Point& p)
 {
    p1= p;
-  // setMessageToScreen(MOUSEMOVE);
+   setMessageToScreen(MOUSEMOVE);
 }
 
 void MainCmdBezier::setP2(const Point& p)
@@ -17,6 +17,8 @@ void MainCmdBezier::setP2(const Point& p)
 
    auxLine = new Line(p1,p2);
    data.getCurrentFile()->getView()->draw(auxLine);
+
+   setMessageToScreen(MOUSEDRAG);
 }
 
 void MainCmdBezier::setP3(const Point& p)

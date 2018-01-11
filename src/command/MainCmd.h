@@ -4,6 +4,7 @@
 
 #include "FormType.h"
 #include "Line.h"
+#include "Instruction.h"
 
 class Point;
 class Geometry;
@@ -20,11 +21,11 @@ protected:
 	bool auxDraw;
 	bool secondClick;
    
-   /*void setMessageToScreen(Instruction in);*/
+   void setMessageToScreen(Instruction in);
    
 public:
    virtual ~MainCmd() {}
-	MainCmd(Data& d) : data(d) { drawing = auxDraw = secondClick= false; /*setMessageToScreen(MOUSECLICK);*/ }
+   MainCmd(Data& d) : data(d) { drawing = auxDraw = secondClick= false; }
 
 	virtual void setP1(const Point& p) = 0;
 	virtual void setP2(const Point& p) = 0;

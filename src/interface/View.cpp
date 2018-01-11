@@ -16,13 +16,13 @@ View::View(Manager* m, int w, int h, QWidget* parent) : QWidget(parent)
 
    image = new QImage(QApplication::desktop()->size(),QImage::Format_ARGB32_Premultiplied);
    painter = new QPainter(image);
-
-
+   
    setFixedSize(w,h);
    setMinimumSize(w, h);
    setMaximumSize(1920,1080);
 
    setShortcuts();
+   startLineCommand();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -39,7 +39,6 @@ void View::draw(Geometry* geo)
 
    update();
 }
-
 
 void View::eraseGeo(Geometry* geo)
 {
@@ -148,7 +147,7 @@ void View::clearLastItem()
 
 void View::startLineCommand() const
 {
-   manager->startArchCommand();
+   manager->startLineCommand();
 }
 
 void View::startBezierCommand() const

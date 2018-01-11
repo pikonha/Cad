@@ -19,7 +19,7 @@ Geometry* MainCmdArch::getNewGeometry()
 void MainCmdArch::setP1(const Point& p)
 {
    p1= p;
-   //setMessageToScreen(MOUSEMOVE);
+   setMessageToScreen(MOUSEMOVE);
 }
 
 void MainCmdArch::setP2(const Point& p)
@@ -65,7 +65,7 @@ void MainCmdArch::mouseReleaseEvent(Point& p)
    {
       setAuxDraw(false);
       setDrawing(true);
-      //setMessageToScreen(SECONDCLICK);
+      setMessageToScreen(SECONDCLICK);
    }
    else
       data.getCurrentFile()->addGeo(arch);

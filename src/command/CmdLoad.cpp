@@ -63,11 +63,12 @@ void CmdLoad::execute(Data& d, MainScreen& s)
             break;
          }
 
-         if ( geo)
+         if (geo)
             file->addGeo(geo);         
       }
       s.addTab(view,file->getName());
       d.addFIle(file);
+      d.setCurrentFile(file);
       d.getCurrentFile()->reprint();
       s.tabs->setVisible(true);
    }

@@ -1,10 +1,12 @@
 #include "MainCmd.h"
 #include "Data.h"
+#include "../app/App.h"
+#include "MainScreen.h"
 
-//void MainCmd::setMessageToScreen(Instruction in)
-//{ 
-//   screen.setStatusMessage(in);
-//}
+void MainCmd::setMessageToScreen(Instruction in)
+{ 
+   App::getInstance().getScreen().setStatusMessage(in);
+}
 
 void MainCmd::setDrawing(bool drwOk)
 {

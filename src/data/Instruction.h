@@ -6,6 +6,7 @@ enum Instruction
 {
    MOUSECLICK,
    MOUSEMOVE,
+   MOUSEDRAG,
    SECONDCLICK
 };
 

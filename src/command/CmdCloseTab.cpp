@@ -10,8 +10,7 @@ void CmdCloseTab::execute(Data& d, MainScreen& s)
       if (!f->getSaved())
          s.closeTabDialog();
 
-      else
-         s.tabs->removeTab(s.tabs->tabPosition());
+      s.tabs->removeTab(s.tabs->tabPosition());
    
       if (s.tabs->count() <= 0)
          s.tabs->setVisible(false);

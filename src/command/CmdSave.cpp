@@ -3,10 +3,11 @@
 #include "Line.h"
 #include "Bezier.h"
 #include "Arch.h"
+#include "FormType.h"
 
 void CmdSave::saveLine(std::ofstream& stream, Line& line)
 {
-   int form = 0;
+   FormType form = LINE;
    stream.write((char*)&form,sizeof(int));
 
    int x = line.getP1().x;
@@ -22,7 +23,7 @@ void CmdSave::saveLine(std::ofstream& stream, Line& line)
 
 void CmdSave::saveBezier(std::ofstream& stream, Bezier& bezier)
 {
-   int form = 1;
+   FormType form = BEZIER;
    stream.write((char*)&form,sizeof(int));
 
    int x = bezier.getP1().x;
@@ -43,7 +44,7 @@ void CmdSave::saveBezier(std::ofstream& stream, Bezier& bezier)
 
 void CmdSave::saveArch(std::ofstream& stream, Arch& arch)
 {
-   int form = 2;
+   FormType form = ARCH;
    stream.write((char*)&form,sizeof(int));
 
    int x = arch.getP1().x;
@@ -69,11 +70,9 @@ void CmdSave::execute(Data& d, MainScreen& s)
 
    std::ofstream stream;
 
-   View* view = dynamic_cast<View*>(s.tabs->widget(s.tabs->tabPosition()));
-
    d.getCurrentFile()->setPath(path);
 
-   std::vector<Geometry*>* itens = &d.getCurrentFile()->getGeos();
+   std::vector<Geometry*> itens = d.getCurrentFile()->getGeos();
 
    stream.open(path, std::ios::out | std::ios::binary | std::ios::ate | std::ios::trunc);
 
@@ -81,9 +80,9 @@ void CmdSave::execute(Data& d, MainScreen& s)
    {
       d.getCurrentFile()->setName(s.getFileName(path));
 
-      for ( int i= 0; i < itens->size(); i++)
+      for ( int i= 0; i < itens.size(); i++)
       {
-         Geometry* geo = itens->at(i);
+         Geometry* geo = itens[i];
 
          if (Line* line = dynamic_cast<Line*>(geo))
             saveLine(stream,*line);
@@ -97,6 +96,7 @@ void CmdSave::execute(Data& d, MainScreen& s)
 
       s.tabs->setTabText(s.tabs->tabPosition(),d.getCurrentFile()->getName().c_str());
       d.getCurrentFile()->setSaved(true);
+      d.getCurrentFile()->setPath(path);
    }
    else
    {

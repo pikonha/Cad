@@ -32,7 +32,6 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
 
    status = statusBar();
    status->setFixedWidth(1920);
-   //status->show();
 
    tabs = new QTabWidget(this);
    setCentralWidget(tabs);
@@ -40,14 +39,17 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
    tabs->setMovable(true);
    tabs->setVisible(false);
 
-   connect(tabs,&QTabWidget::tabCloseRequested,this,&MainScreen::closeTabDialog);
+   connect(tabs,&QTabWidget::tabCloseRequested,this,&MainScreen::closeTab);
    connect(tabs,&QTabWidget::tabBarClicked,this,&MainScreen::tabChangedSignal);
 
-   slider= new QSlider(Qt::Horizontal,status);
+   slider= new QSlider(Qt::Horizontal);
    slider->setValue(100);
    slider->setMaximum(200);
    slider->setMinimum(0);
-   //slider->setTickPosition(QSlider::NoTicks);
+   slider->setFixedSize(200,20);
+   status->addPermanentWidget(slider);
+
+   connect(slider,&QSlider::valueChanged,this,&MainScreen::sliderChange);
 
 	QMenu* file = new QMenu("File");
 	QAction* line = new QAction("Line");
@@ -130,7 +132,6 @@ void MainScreen::closeFile()
 {
    manager->closeFile();
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -245,7 +246,8 @@ void MainScreen::setStatusMessage(Instruction in)
    {
    case 0: status->showMessage("Waiting for a click on the screen."); break;
    case 1: status->showMessage("Keep pressed and move the cursor. (Release to finish)"); break;
-   case 2: status->showMessage("Click to set the draw's length."); break;
+   case 2: status->showMessage("Move the cursor to set the final draw."); break;
+   case 3: status->showMessage("Click to set the draw's length."); break;
    }
 }
 
@@ -262,4 +264,9 @@ void MainScreen::bezierCommandSignal()
 void MainScreen::archCommandSignal()
 {
    manager->startArchCommand();
+}
+
+void MainScreen::sliderChange()
+{
+   
 }

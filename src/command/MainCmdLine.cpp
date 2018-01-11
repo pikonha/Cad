@@ -1,6 +1,5 @@
 #include "MainCmdLine.h"
 #include "Data.h"
-//#include "Instruction.h"
 
 Geometry* MainCmdLine::getNewGeometry()
 {
@@ -19,7 +18,7 @@ Geometry* MainCmdLine::getNewGeometry()
 void MainCmdLine::setP1(const Point& p)
 {
 	p1= p;
-  /* setMessageToScreen(MOUSEMOVE);*/
+   setMessageToScreen(MOUSEMOVE);
 }
 
 void MainCmdLine::setP2(const Point& p)

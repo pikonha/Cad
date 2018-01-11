@@ -34,8 +34,7 @@ public:
 	void saveFile();
    void closeFile();
    std::string getFileName(std::string path);
-   void discardFile(int tabIndex);
-   
+   void discardFile(int tabIndex);   
 
    /////TABS
    void addTab(View* view, std::string name);
@@ -54,7 +53,8 @@ public:
    void lineCommandSignal();
    void bezierCommandSignal();
    void archCommandSignal();
-  
+   void sliderChange();
+
 };
 
 #endif

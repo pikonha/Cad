@@ -8,6 +8,7 @@ class Line;
 class Arch;
 class Bezier;
 
+
 class CmdSave : public Cmd
 {
    void saveLine(std::ofstream& stream,Line& line);
