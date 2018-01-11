@@ -14,6 +14,8 @@
 #include "../manager/Manager.h"
 #include <boost/filesystem/path.hpp>
 
+#include <iostream>
+
 MainScreen::~MainScreen()
 {
    delete navbar;
@@ -43,8 +45,8 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
    connect(tabs,&QTabWidget::tabBarClicked,this,&MainScreen::tabChangedSignal);
 
    slider= new QSlider(Qt::Horizontal);
-   slider->setValue(100);
-   slider->setMaximum(200);
+   slider->setValue(5);
+   slider->setMaximum(9);
    slider->setMinimum(0);
    slider->setFixedSize(200,20);
    status->addPermanentWidget(slider);
@@ -268,5 +270,5 @@ void MainScreen::archCommandSignal()
 
 void MainScreen::sliderChange()
 {
-   
+   std::cout << slider->value() << std::endl;
 }
