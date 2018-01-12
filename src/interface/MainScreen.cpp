@@ -46,8 +46,8 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
 
    slider = new QSlider(Qt::Horizontal);
    slider->setValue(10);
-   slider->setMaximum(30);
-   slider->setMinimum(0);
+   slider->setMaximum(31);
+   slider->setMinimum(1);
    slider->setFixedSize(200,20);
    status->addPermanentWidget(slider);
    connect(slider,&QSlider::sliderMoved,this,&MainScreen::sliderChange);
@@ -276,3 +276,4 @@ void MainScreen::sliderChange()
       manager->setZoom(percent);
    }
 }
+

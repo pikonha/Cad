@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QScrollBar>
 
 View::View(Manager* m, int w, int h, QWidget* parent) : QWidget(parent)
 {
@@ -20,7 +21,15 @@ View::View(Manager* m, int w, int h, QWidget* parent) : QWidget(parent)
    
    setFixedSize(w,h);
    setMinimumSize(w, h);
-   setMaximumSize(1920,1080);
+   setMaximumSize(1910,1070);
+
+   QScrollBar* scroll = new QScrollBar(Qt::Horizontal,this);
+   scroll->setVisible(true);
+   scroll->setFixedWidth(1910);
+   scroll->setFixedHeight(10);
+   stackUnder(scroll);
+   
+   
 
    setShortcuts();
    startLineCommand();
