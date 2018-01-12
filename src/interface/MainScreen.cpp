@@ -44,14 +44,13 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
    connect(tabs,&QTabWidget::tabCloseRequested,this,&MainScreen::closeTab);
    connect(tabs,&QTabWidget::tabBarClicked,this,&MainScreen::tabChangedSignal);
 
-   slider= new QSlider(Qt::Horizontal);
-   slider->setValue(5);
-   slider->setMaximum(9);
+   slider = new QSlider(Qt::Horizontal);
+   slider->setValue(10);
+   slider->setMaximum(30);
    slider->setMinimum(0);
    slider->setFixedSize(200,20);
    status->addPermanentWidget(slider);
-
-   connect(slider,&QSlider::valueChanged,this,&MainScreen::sliderChange);
+   connect(slider,&QSlider::sliderMoved,this,&MainScreen::sliderChange);
 
 	QMenu* file = new QMenu("File");
 	QAction* line = new QAction("Line");
@@ -99,6 +98,7 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent), manager(nullpt
 
    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_N),this),&QShortcut::activated,this,&MainScreen::newFile);
    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_W),this),&QShortcut::activated,this,&MainScreen::closeTab);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O),this),&QShortcut::activated,this,&MainScreen::loadFile);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -270,5 +270,9 @@ void MainScreen::archCommandSignal()
 
 void MainScreen::sliderChange()
 {
-   std::cout << slider->value() << std::endl;
+   if (tabs->count() > 0)
+   {
+      int percent = slider->value() * 10;
+      manager->setZoom(percent);
+   }
 }

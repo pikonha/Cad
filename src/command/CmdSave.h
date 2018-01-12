@@ -14,6 +14,8 @@ class CmdSave : public Cmd
    void saveLine(std::ofstream& stream,Line& line);
    void saveBezier(std::ofstream& stream,Bezier& bezier);
    void saveArch(std::ofstream& stream,Arch& arch);
+
+   void saveScale(std::ofstream& stream,int scale);
 public:
 	CmdSave(){}
 	~CmdSave() {}

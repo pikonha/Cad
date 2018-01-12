@@ -16,6 +16,8 @@ void CmdNewFile::execute(Data& d, MainScreen& s)
       
       s.addTab(file->getView(),file->getName());
 
+      s.slider->setValue(view->getScale() / 10);
+
       s.tabs->setVisible(true);
       view->show();
    }

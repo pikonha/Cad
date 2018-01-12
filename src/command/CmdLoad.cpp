@@ -19,13 +19,11 @@ void CmdLoad::execute(Data& d, MainScreen& s)
    {
       stream.seekg(0);
 
-      int form;
-      int p1x;
-      int p1y;
-      int p2x;
-      int p2y;
-      int p3x;
-      int p3y;
+      int form,p1x,p1y,p2x,p2y,p3x,p3y,scale;
+
+      stream.read((char*)&scale,sizeof(int));
+      view->setScale(scale);
+      s.slider->setValue(scale / 10);
 
       while (!stream.eof())
       {

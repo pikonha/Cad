@@ -9,11 +9,11 @@
 #include "CmdCloseTab.h"
 #include "MainCmdLine.h"
 #include "MainCmdArch.h"
-#include "CmdWheelEvent.h"
 #include "MainCmdBezier.h"
 #include "CmdClearAllItems.h"
 #include "CmdClearLastItem.h"
 #include "CmdSetCurrentFile.h"
+#include "CmdSetZoom.h"
 
 Manager::Manager(Data& d,MainScreen& s) : data(d),screen(s),cmdmain(nullptr)
 {
@@ -103,7 +103,7 @@ void Manager::mouseMoveEvent(Point mousePosition)
 
 void Manager::wheelEvent()
 {
-   runCmd(new CmdWheelEvent());
+   
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -148,5 +148,10 @@ void Manager::clearLastItem()
 void Manager::clearAllItems()
 {
    runCmd(new CmdClearAllItems());
+}
+
+void Manager::setZoom(int scale)
+{
+   runCmd(new CmdSetZoom(scale));
 }
 

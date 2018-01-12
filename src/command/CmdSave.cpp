@@ -63,6 +63,11 @@ void CmdSave::saveArch(std::ofstream& stream, Arch& arch)
    stream.write((char*)&y,sizeof(int));
 }
 
+void CmdSave::saveScale(std::ofstream& stream, int scale)
+{
+   stream.write((char*)&scale,sizeof(int));
+}
+
 
 void CmdSave::execute(Data& d, MainScreen& s)
 {   
@@ -79,6 +84,8 @@ void CmdSave::execute(Data& d, MainScreen& s)
    if ( stream.is_open())
    {
       d.getCurrentFile()->setName(s.getFileName(path));
+
+      saveScale(stream,d.getCurrentFile()->getView()->getScale());
 
       for ( int i= 0; i < itens.size(); i++)
       {

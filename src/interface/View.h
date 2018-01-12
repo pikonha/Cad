@@ -14,15 +14,20 @@ class View : public QWidget
 	Manager* manager;
    QImage* image;
 
+   int scale;
+
    void setShortcuts();
 public:
    ~View() {}
 	View(Manager* m, int w, int h, QWidget* parent = 0);	
 
+   /////SCALE
+   int getScale() const { return scale; }
+   void setScale(int s) { scale = s; }
 
    /////DRAW
    void draw(Geometry* geo);
-   void reprint();
+   //void reprint();
    void eraseGeo(Geometry* geo);
 
    /////CAST

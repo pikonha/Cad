@@ -13,6 +13,7 @@ View::View(Manager* m, int w, int h, QWidget* parent) : QWidget(parent)
    setBackgroundRole(QPalette::Base);   
 
    manager= m;
+   scale = 100;
 
    image = new QImage(QApplication::desktop()->size(),QImage::Format_ARGB32_Premultiplied);
    painter = new QPainter(image);

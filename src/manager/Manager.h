@@ -42,6 +42,7 @@ public:
 	/////ITEMS
 	void clearLastItem();
 	void clearAllItems();
+   void setZoom(int scale);
 
 	/////CMD
 	MainCmd& getCmdMain() { return *cmdmain; }
