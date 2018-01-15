@@ -101,10 +101,6 @@ void Manager::mouseMoveEvent(Point mousePosition)
    cmdmain->mouseMoveEvent(mousePosition);
 }
 
-void Manager::wheelEvent()
-{
-   
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 

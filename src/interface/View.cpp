@@ -23,11 +23,11 @@ View::View(Manager* m, int w, int h, QWidget* parent) : QWidget(parent)
    setMinimumSize(w, h);
    setMaximumSize(1910,1070);
 
-   QScrollBar* scroll = new QScrollBar(Qt::Horizontal,this);
+  /* QScrollBar* scroll = new QScrollBar(Qt::Horizontal,this);
    scroll->setVisible(true);
    scroll->setFixedWidth(1910);
    scroll->setFixedHeight(10);
-   stackUnder(scroll);
+   stackUnder(scroll);*/
    
    
 
@@ -79,15 +79,6 @@ void View::mouseMoveEvent(QMouseEvent* event)
 {
 	manager->mouseMoveEvent(qpointToPoint(event->pos()));
 	
-	event->accept();
-}
-
-void View::wheelEvent(QWheelEvent* event)
-{
-	//setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-	
-	manager->wheelEvent();
-
 	event->accept();
 }
 

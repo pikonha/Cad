@@ -152,6 +152,8 @@ std::string MainScreen::getFileName(std::string pathFile)
 void MainScreen::addTab(View* view, std::string name)
 {
    tabs->addTab(view,QString::fromStdString(name));
+   tabs->setCurrentIndex(tabs->count());
+ 
    tabs->show();
 }
 
@@ -180,9 +182,9 @@ void MainScreen::closeTabDialog()
    }
 }
 
-void MainScreen::tabChangedSignal()
+void MainScreen::tabChangedSignal(int index)
 {
-   manager->setCurrentFileByTab(dynamic_cast<View*>(tabs->currentWidget()));
+   manager->setCurrentFileByTab(dynamic_cast<View*>(tabs->widget(index)));
 }
 
 void MainScreen::clearTab()

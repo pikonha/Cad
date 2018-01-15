@@ -24,7 +24,6 @@ public:
 	void mousePressEvent(Point mousePosition);
 	void mouseReleaseEvent(Point mousePosition);
 	void mouseMoveEvent(Point mousePosition);
-	void wheelEvent();
 
 	/////FILE
 	void newFile();
@@ -45,8 +44,8 @@ public:
    void setZoom(int scale);
 
 	/////CMD
-	MainCmd& getCmdMain() { return *cmdmain; }
-	Cmd& getCmd() { return *cmd; }
+	MainCmd& getCmdMain() const { return *cmdmain; }
+	Cmd& getCmd() const { return *cmd; }
 
 	void runCmd(Cmd* command);
    void closeTab(QWidget* widget);

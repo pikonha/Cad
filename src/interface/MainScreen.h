@@ -39,7 +39,7 @@ public:
    /////TABS
    void addTab(View* view, std::string name);
    void closeTabDialog();
-   void tabChangedSignal();
+   void tabChangedSignal(int index);
    void clearTab();
    void closeTab();
 
