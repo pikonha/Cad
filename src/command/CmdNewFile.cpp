@@ -18,6 +18,5 @@ void CmdNewFile::execute(Data& d, MainScreen& s)
 
       s.slider->setValue(view->getScale() / 10);
       s.tabs->setVisible(true);
-      /*view->show();*/
    }
 }

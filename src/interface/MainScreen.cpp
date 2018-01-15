@@ -151,8 +151,8 @@ std::string MainScreen::getFileName(std::string pathFile)
 
 void MainScreen::addTab(View* view, std::string name)
 {
-   tabs->addTab(view,QString::fromStdString(name));
-   tabs->setCurrentIndex(tabs->count());
+   tabs->insertTab(0,view,QString::fromStdString(name));
+   tabs->setCurrentIndex(0);
  
    tabs->show();
 }
