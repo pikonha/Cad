@@ -14,6 +14,8 @@ class Arch : public Geometry
 	Point findArchPoint(double auxAngle);
 public:
    ~Arch() {}
+   Arch() {}
+   Arch(const Arch& a) : Geometry(a.p1,a.p2),p3(a.p3) {}
    Arch(const Point& _p1,const Point& _p2,const Point& _p3) : Geometry(_p1,_p2), p3(_p3) {}
 
    Point& getP3() { return p3; }

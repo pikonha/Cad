@@ -20,25 +20,19 @@ protected:
 	bool drawing;
 	bool auxDraw;
 	bool secondClick;
-   
-   void setMessageToScreen(Instruction in);
+
+   static void setMessageToScreen(Instruction in);
    
 public:
    virtual ~MainCmd() {}
    MainCmd(Data& d) : data(d) { drawing = auxDraw = secondClick= false; }
-
-	virtual void setP1(const Point& p) = 0;
-	virtual void setP2(const Point& p) = 0;
-	virtual void setP3(const Point& p) {}
   
    /////AUXS
    void setDrawing(bool drwOk);
    void setAuxDraw(bool status);
    bool getSecondClick() const { return secondClick; }
    
-	FormType getForm() { return form; }
-
-	virtual Geometry* getNewGeometry() = 0;
+	FormType getForm() const { return form; }
 
    /////MOUSE EVENTS
    virtual void mousePressEvent(Point& p) = 0;
