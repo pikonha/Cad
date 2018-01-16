@@ -22,9 +22,9 @@ void MainCmdLine::mouseReleaseEvent(Point& p)
 void MainCmdLine::mouseMoveEvent(Point& p)
 {
    if (drawing) {
-      data.getCurrentFile()->getView()->eraseGeo(&line);
+      data.getCurrentFile()->getView()->eraseGeo(line);
 
       line.setP2(p);
-      data.getCurrentFile()->getView()->draw(&line);
+      data.getCurrentFile()->getView()->draw(line);
    }
 }

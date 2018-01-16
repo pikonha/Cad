@@ -26,9 +26,8 @@ public:
    void setScale(int s) { scale = s; }
 
    /////DRAW
-   void draw(Geometry* geo);
-   //void reprint();
-   void eraseGeo(Geometry* geo);
+   void draw(Geometry& geo);
+   void eraseGeo(Geometry& geo);
 
    /////CAST
    static Point qpointToPoint(QPoint p);
@@ -54,8 +53,6 @@ protected:
 	void mouseMoveEvent(QMouseEvent* event) override;
 
    void paintEvent(QPaintEvent* event) override;
-
-   void resizeEvent(QResizeEvent* event) override;
 };
 
 #endif

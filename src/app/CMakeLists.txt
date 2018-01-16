@@ -1,8 +1,17 @@
 project(app CXX)
 
-file (GLOB APP *.h *.cpp)
+set (
+	APP_SOURCES
+	App.cpp
+	Master.cpp
+	)
+	
+set (
+	APP_HEADERS
+	App.h
+	)
 
-add_executable(app ${APP})
+add_executable(app ${APP_HEADERS} ${APP_SOURCES})
 
 set_target_properties(app PROPERTIES ENABLE_EXPORTS 1)
 

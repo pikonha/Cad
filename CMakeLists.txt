@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.9)
-
 project(CAD CXX)
 
+set(CMAKE_INCLUDE_CURRENT_DIR)
 set(CMAKE_AUTOMOC ON)
 
 find_package(Qt5Widgets CONFIG
@@ -10,6 +10,8 @@ find_package(Qt5Widgets CONFIG
 		
 SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/Users/lucas.picollo/Documents/Projects/QT-Cad/boost_1_66_0")
 SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/Users/lucas.picollo/Documents/Projects/QT-Cad/boost_1_66_0/libs/filesystem")
+
+SET(CAD_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 find_package(Boost)
 		

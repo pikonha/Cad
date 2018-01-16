@@ -1,10 +1,21 @@
 project(interface CXX)
 
-file(GLOB INTERFACE *.h *.cpp)
+set (
+	INTERFACE_SOURCES
+	MainScreen.cpp
+	View.cpp
+	)
+	
+set (
+	INTERFACE_HEADERS
+	MainScreen.h
+	View.h
+	STRUCTNEWFILE.h
+	)	
 
 include_directories("${PROJECT_SOURCE_DIR}/src/manager")
 
-add_library(interface STATIC ${INTERFACE})
+add_library(interface STATIC ${INTERFACE_HEADERS} ${INTERFACE_SOURCES})
 
 target_include_directories(interface PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 

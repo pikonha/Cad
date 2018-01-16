@@ -6,7 +6,6 @@
 #include <QFileDialog>
 #include <QApplication>
 #include <QDesktopWidget>
-#include <QScrollBar>
 
 View::View(Manager* m, int w, int h, QWidget* parent) : QWidget(parent)
 {
@@ -23,23 +22,15 @@ View::View(Manager* m, int w, int h, QWidget* parent) : QWidget(parent)
    setMinimumSize(w, h);
    setMaximumSize(1910,1070);
 
-  /* QScrollBar* scroll = new QScrollBar(Qt::Horizontal,this);
-   scroll->setVisible(true);
-   scroll->setFixedWidth(1910);
-   scroll->setFixedHeight(10);
-   stackUnder(scroll);*/
-   
-   
-
    setShortcuts();
    startLineCommand();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void View::draw(Geometry* geo)
+void View::draw(Geometry& geo)
 {
-   std::vector<Point> points = geo->getPoints();
+   std::vector<Point> points = geo.getPoints();
 
    for (int i= 1; i < points.size(); i++)
    {
@@ -50,13 +41,11 @@ void View::draw(Geometry* geo)
    update();
 }
 
-void View::eraseGeo(Geometry* geo)
+void View::eraseGeo(Geometry& geo)
 {
-   if (geo) {
-      painter->setPen(Qt::white);
-      draw(geo);
-      painter->setPen(Qt::black);
-   }
+   painter->setPen(Qt::white);
+   draw(geo);
+   painter->setPen(Qt::black);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -87,11 +76,6 @@ void View::paintEvent(QPaintEvent* event)
    QPainter p(this);
    p.drawImage(0,0,*image);
    event->accept();
-}
-
-void View::resizeEvent(QResizeEvent* event)
-{
-  
 }
 
 void View::setShortcuts()
