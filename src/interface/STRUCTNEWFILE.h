@@ -6,14 +6,14 @@
 
 struct STRUCTNEWFILE
 {
-   int dialogExec;
+   int exec;
    std::string name;
    int width;
    int height;
 
-   STRUCTNEWFILE(int exec, std::string n, int w, int h)
+   STRUCTNEWFILE(int exe, std::string n, int w, int h)
    {
-      dialogExec = exec;
+      exec = exe;
 
       if (n.size() > 0)
          name = n;

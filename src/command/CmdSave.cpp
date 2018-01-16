@@ -68,9 +68,13 @@ void CmdSave::saveScale(std::ofstream& stream, int scale)
    stream.write((char*)&scale,sizeof(int));
 }
 
+/////////////////////////////////////////////////////////////////////////
 
 void CmdSave::execute(Data& d, MainScreen& s)
 {   
+   if (d.getCurrentFile()->getSaved())
+      return;
+
    std::string path= d.getCurrentFile()->getView()->getSavePath();
 
    std::ofstream stream;

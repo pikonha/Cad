@@ -35,6 +35,7 @@ public:
    void closeFile();
    std::string getFileName(std::string path);
    void discardFile(int tabIndex);   
+   View* createView(int option, int width, int height);
 
    /////TABS
    void addTab(View* view, std::string name);

@@ -130,6 +130,14 @@ void MainScreen::discardFile(int tabIndex)
    manager->discardFile(tabIndex);
 }
 
+View* MainScreen::createView(const int option, const int width, const int height)
+{
+   if (option == QDialog::Accepted)
+      return new View(manager,width,height);   
+
+   return nullptr;
+}
+
 void MainScreen::closeFile()
 {
    manager->closeFile();
@@ -155,31 +163,6 @@ void MainScreen::addTab(View* view, std::string name)
    tabs->setCurrentIndex(0);
  
    tabs->show();
-}
-
-void MainScreen::closeTabDialog()
-{
-   View* view = dynamic_cast<View*>(tabs->widget(tabs->tabPosition()));
-
-   if (view) {  
-      QMessageBox warning;
-      warning.setText("The document has been modified.");
-      warning.setInformativeText("Do you want to save your changes?");
-      warning.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-      warning.setDefaultButton(QMessageBox::Save);
-      warning.setIcon(QMessageBox::Question);
-
-      const int option = warning.exec();
-
-      switch (option)
-      {
-      case QMessageBox::Save: saveFile(); break;
-      case QMessageBox::Discard: discardFile(tabs->tabPosition()); break;
-      }    
-
-      if (tabs->count() == 0)
-         tabs->setVisible(false);
-   }
 }
 
 void MainScreen::tabChangedSignal(int index)
@@ -240,6 +223,31 @@ STRUCTNEWFILE MainScreen::newFileDialog()
    int width = wEdit->text().toInt();
 
    return STRUCTNEWFILE(exec,name,width,height);
+}
+
+void MainScreen::closeTabDialog()
+{
+   View* view = dynamic_cast<View*>(tabs->widget(tabs->tabPosition()));
+
+   if (view) {
+      QMessageBox warning;
+      warning.setText("The document has been modified.");
+      warning.setInformativeText("Do you want to save your changes?");
+      warning.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+      warning.setDefaultButton(QMessageBox::Save);
+      warning.setIcon(QMessageBox::Question);
+
+      const int option = warning.exec();
+
+      switch (option)
+      {
+      case QMessageBox::Save: saveFile(); break;
+      case QMessageBox::Discard: discardFile(tabs->tabPosition()); break;
+      }
+
+      if (tabs->count() == 0)
+         tabs->setVisible(false);
+   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
