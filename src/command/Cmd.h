@@ -6,12 +6,10 @@
 
 class Cmd {
 public:
-	//Cmd() {}
+	Cmd() {}
 	virtual ~Cmd() {}
 
 	virtual void execute(Data& d, MainScreen& s) = 0;
-
-   
 };
 
 #endif

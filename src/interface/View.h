@@ -10,6 +10,8 @@ class Manager;
 
 class View : public QWidget
 {
+   Q_OBJECT
+
    QPainter* painter;
 	Manager* manager;
    QImage* image;
@@ -23,7 +25,7 @@ public:
 
    /////SCALE
    int getScale() const { return scale; }
-   void setScale(int s) { scale = s; }
+   void setScale(const int s) { scale = s; }
 
    /////DRAW
    void draw(Geometry& geo);
@@ -46,11 +48,13 @@ public:
    void startLineCommand() const;
    void startBezierCommand() const;
    void startArchCommand() const;
-
+      
 protected:
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
+   
+   void dragMoveEvent(QDragMoveEvent* event) override;
 
    void paintEvent(QPaintEvent* event) override;
 };

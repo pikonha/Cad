@@ -24,6 +24,8 @@ View::View(Manager* m, int w, int h, QWidget* parent) : QWidget(parent)
 
    setShortcuts();
    startLineCommand();
+
+   setCursor(QCursor(Qt::CrossCursor));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +46,24 @@ void View::draw(Geometry& geo)
 void View::eraseGeo(Geometry& geo)
 {
    painter->setPen(Qt::white);
-   draw(geo);
+   
+   std::vector<Point> points = geo.getPoints();
+
+   for (int i= 1; i < points.size(); i++)
+   {
+      int j = i - 1;
+
+      QPoint p1(points[i].x,points[i].y);
+      QPoint p2(points[j].x,points[j].y);
+
+      if ( image->pixelColor(p1).value() <= 0 || image->pixelColor(p2).value() <= 0)
+         painter->drawLine(p1,p2);
+   }
+
+   update();
+
+  /* draw(geo);*/
+
    painter->setPen(Qt::black);
 }
 
@@ -52,24 +71,38 @@ void View::eraseGeo(Geometry& geo)
 
 void View::mousePressEvent(QMouseEvent* event)
 {
-	manager->mousePressEvent(qpointToPoint(event->pos()));
+   if (event->button() == Qt::LeftButton) 
+      manager->mousePressEvent(qpointToPoint(event->pos()));
 
-	event->accept();
+   else
+      setCursor(QCursor(Qt::ClosedHandCursor));
+
+   event->accept();
 }
 
 void View::mouseReleaseEvent(QMouseEvent* event)
 {
-	manager->mouseReleaseEvent(qpointToPoint(event->pos()));
+   if (event->button() == Qt::LeftButton)
+      manager->mouseReleaseEvent(qpointToPoint(event->pos()));      
+  
+   else
+      setCursor(QCursor(Qt::CrossCursor));
 
-	event->accept();	
+   event->accept();
 }
 
 void View::mouseMoveEvent(QMouseEvent* event)
 {
-	manager->mouseMoveEvent(qpointToPoint(event->pos()));
-	
-	event->accept();
+   manager->mouseMoveEvent(qpointToPoint(event->pos()));
+
+   event->accept(); 
 }
+
+void View::dragMoveEvent(QDragMoveEvent* event)
+{
+   //double i = Point::distance(qpointToPoint(event->pos()),qpointToPoint(event->oldPos()));
+}
+
 
 void View::paintEvent(QPaintEvent* event)
 {
@@ -80,8 +113,8 @@ void View::paintEvent(QPaintEvent* event)
 
 void View::setShortcuts()
 {
-   QShortcut* undone = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z),this);
-   connect(undone,&QShortcut::activated,this,&View::clearLastItem);
+   QShortcut* undo = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z),this);
+   connect(undo,&QShortcut::activated,this,&View::clearLastItem);
 
    QShortcut* saveSc = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S),this);
    connect(saveSc,&QShortcut::activated,this,&View::saveFile);
