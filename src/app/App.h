@@ -1,6 +1,7 @@
 #pragma once
 #ifndef INCLUDED_APP_H
 #define INCLUDED_APP_H
+#include <rpcndr.h>
 
 class Data;
 class Manager;
@@ -15,6 +16,7 @@ class App
 	MainScreen* screen;	
 
 	App();
+   
 public:
 	~App();
 
