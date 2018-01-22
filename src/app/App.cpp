@@ -43,7 +43,7 @@ int App::start(int argc, char** argv)
 	data= new Data;
 
 	manager= new Manager(*data,*screen);
-   screen->setManager(*manager);
+   screen->setManager(*manager);  
 
    return app.exec();
 }

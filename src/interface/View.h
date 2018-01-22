@@ -21,7 +21,7 @@ class View : public QWidget
    void setShortcuts();
 public:
    ~View() {}
-	View(Manager* m, int w, int h, QWidget* parent = 0);	
+	View(Manager* m, QWidget* parent = 0);	
 
    /////SCALE
    int getScale() const { return scale; }

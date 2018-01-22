@@ -7,7 +7,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-View::View(Manager* m, int w, int h, QWidget* parent) : QWidget(parent)
+View::View(Manager* m, QWidget* parent) : QWidget(parent)
 {
    setAutoFillBackground(true);
    setBackgroundRole(QPalette::Base);   
@@ -18,9 +18,7 @@ View::View(Manager* m, int w, int h, QWidget* parent) : QWidget(parent)
    image = new QImage(QApplication::desktop()->size(),QImage::Format_ARGB32_Premultiplied);
    painter = new QPainter(image);
    
-   setFixedSize(w,h);
-   setMinimumSize(w, h);
-   setMaximumSize(1910,1070);
+   setMaximumSize(QApplication::desktop()->size());
 
    setShortcuts();
    startLineCommand();

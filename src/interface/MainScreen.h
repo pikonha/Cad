@@ -4,9 +4,9 @@
 
 #include <QMainWindow>
 #include "View.h"
-#include "STRUCTNEWFILE.h"
 #include "../data/Instruction.h"
 #include <QSlider>
+class NewFileWidget;
 
 
 class MainScreen : public QMainWindow
@@ -19,6 +19,7 @@ public:
    QStatusBar* status;
    QTabWidget* tabs;
    QSlider* slider;
+   NewFileWidget* bottomBar;
 
    /////////////////////////////////////////////////
    ~MainScreen();
@@ -33,9 +34,12 @@ public:
 	void loadFile();
 	void saveFile();
    void closeFile();
+   void openBottomBar();
+   void closeBottomBar();
+   std::string getTextFromBottomBar();
    std::string getFileName(std::string path);
    void discardFile(int tabIndex);   
-   View* createView(int option, int width, int height);
+   View* createView();
 
    /////TABS
    void addTab(View* view, std::string name);
@@ -47,7 +51,6 @@ public:
    /////DIALOGS
    void errorMessage();
    void successMessage();	
-   STRUCTNEWFILE newFileDialog();
    void setStatusMessage(Instruction in);
 
    /////COMANDS

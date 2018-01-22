@@ -7,7 +7,7 @@
 
 void CmdLoad::execute(Data& d, MainScreen& s) 
 {
-   View* view = new View(s.getManager(),s.width(),s.height());
+   View* view = new View(s.getManager());
    std::string fileName = view->getLoadPath();
    
    File* file = new File(s.getFileName(fileName),view);

@@ -2,16 +2,17 @@ project(interface CXX)
 
 set (
 	INTERFACE_SOURCES
+	NewFileWidget.cpp
 	MainScreen.cpp
 	View.cpp
-	)
+)
 	
 set (
 	INTERFACE_HEADERS
+	NewFileWidget.h
 	MainScreen.h
 	View.h
-	STRUCTNEWFILE.h
-	)	
+)	
 
 include_directories("${PROJECT_SOURCE_DIR}/src/manager")
 
