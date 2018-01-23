@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource >
+    <file alias="clean">C:/Users/lucas.picollo/Documents/Projects/QT-Cad/icons/clean.png</file>
+	<file alias="close">C:/Users/lucas.picollo/Documents/Projects/QT-Cad/icons/close.png</file>
+	<file alias="new">C:/Users/lucas.picollo/Documents/Projects/QT-Cad/icons/new.png</file>
+	<file alias="open">C:/Users/lucas.picollo/Documents/Projects/QT-Cad/icons/open.png</file>
+	<file alias="save">C:/Users/lucas.picollo/Documents/Projects/QT-Cad/icons/save.png</file>
+</qresource>
+</RCC>
