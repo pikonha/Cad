@@ -15,8 +15,7 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent)
    manager= m;
    scale = 100;
 
-   image = new QImage(QApplication::desktop()->size(),QImage::Format_ARGB32_Premultiplied);
-   painter = new QPainter(image);
+   painter = new QPainter(this);
    
    setMaximumSize(QApplication::desktop()->size());
 
@@ -27,6 +26,11 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+void View::clear()
+{
+
+}
 
 void View::draw(Geometry& geo)
 {
@@ -39,30 +43,6 @@ void View::draw(Geometry& geo)
    }
 
    update();
-}
-
-void View::eraseGeo(Geometry& geo)
-{
-   painter->setPen(Qt::white);
-   
-   std::vector<Point> points = geo.getPoints();
-
-   for (int i= 1; i < points.size(); i++)
-   {
-      int j = i - 1;
-
-      QPoint p1(points[i].x,points[i].y);
-      QPoint p2(points[j].x,points[j].y);
-
-      if ( image->pixelColor(p1).value() <= 0 || image->pixelColor(p2).value() <= 0)
-         painter->drawLine(p1,p2);
-   }
-
-   update();
-
-  /* draw(geo);*/
-
-   painter->setPen(Qt::black);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,14 +78,11 @@ void View::mouseMoveEvent(QMouseEvent* event)
 
 void View::dragMoveEvent(QDragMoveEvent* event)
 {
-   //double i = Point::distance(qpointToPoint(event->pos()),qpointToPoint(event->oldPos()));
 }
-
 
 void View::paintEvent(QPaintEvent* event)
 {
-   QPainter p(this);
-   p.drawImage(0,0,*image);
+
    event->accept();
 }
 

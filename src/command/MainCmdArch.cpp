@@ -30,7 +30,6 @@ void MainCmdArch::mouseReleaseEvent(Point& p)
 
       arch.setP2(p);
 
-      data.getCurrentFile()->getView()->eraseGeo(*auxLine);
       delete auxLine;
    }
    else
@@ -41,15 +40,12 @@ void MainCmdArch::mouseReleaseEvent(Point& p)
 void MainCmdArch::mouseMoveEvent(Point& p)
 {
    if (auxDraw) { 
-      data.getCurrentFile()->getView()->eraseGeo(*auxLine);
-
       auxLine->setP2(p);      
       data.getCurrentFile()->getView()->draw(*auxLine);
    }
    
    else if( drawing )
    {
-      data.getCurrentFile()->getView()->eraseGeo(arch);
       arch.setP3(p); 
       data.getCurrentFile()->getView()->draw(arch);
 

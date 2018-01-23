@@ -16,8 +16,6 @@ void CmdSetZoom::execute(Data& d, MainScreen& s)
 
     for ( auto g : d.getCurrentFile()->getGeos())
     {
-       d.getCurrentFile()->getView()->eraseGeo(*g);
-
        g->setP1(getNewPoint(g->getP1(),oldScale));
        g->setP2(getNewPoint(g->getP2(),oldScale));
 
@@ -35,6 +33,7 @@ void CmdSetZoom::execute(Data& d, MainScreen& s)
           d.getCurrentFile()->getView()->draw(*g);
     }  
 
+    d.getCurrentFile()->reprint();
     d.getCurrentFile()->setSaved(false);
     d.getCurrentFile()->getView()->setScale(scale);
 }

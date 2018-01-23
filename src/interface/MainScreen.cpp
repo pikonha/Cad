@@ -1,20 +1,18 @@
-#include "MainScreen.h"
-#include <QMenuBar>
 #include <QMenu>
 #include <QIcon>
+#include <QMenuBar>
+#include <windows.h>
 #include <QKeyEvent>
-#include <QTabWidget>
-#include <QDockWidget>
 #include <QShortcut>
-#include <QFileDialog>
 #include <QStatusBar>
+#include <QFileDialog>
 #include <QPushButton>
 #include <QMessageBox>
+
+#include "MainScreen.h"
 #include "NewFileWidget.h"
 #include "../manager/Manager.h"
-#include <boost/filesystem/path.hpp>
 
-#include <iostream>
 
 MainScreen::~MainScreen()
 {
@@ -28,12 +26,13 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent),manager(nullptr
    setMinimumSize(800,600);
    setWindowTitle(QString("AudacesCAD"));
    showMaximized();
+   setStyleSheet("QMainWindow {background: #848484; }");
 
    navbar = menuBar();
-   navbar->setFixedWidth(1920);
-
+   navbar->setFixedWidth(GetSystemMetrics(SM_CXSCREEN));
    status = statusBar();
-   status->setFixedWidth(1920);
+   status->setFixedWidth(GetSystemMetrics(SM_CXSCREEN));
+   status->setStyleSheet("background: white;");
 
    tabs = new QTabWidget(this);
    setCentralWidget(tabs);
@@ -52,10 +51,13 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent),manager(nullptr
    status->addPermanentWidget(slider);
    connect(slider,&QSlider::sliderMoved,this,&MainScreen::sliderChange);
 
+   slider->setStyleSheet("QSlider::groove:horizontal{border: 1px solid #999999; height: 8px;background: qlineargradient(x1 : 0, y1 : 0, x2 : 0, y2 : 1, stop : 0 #B1B1B1, stop:1 #c4c4c4);margin: 2px 0;} QSlider::handle:horizontal{background: qlineargradient(x1 : 0, y1 : 0, x2 : 1, y2 : 1, stop : 0 #b4b4b4, stop:1 #8f8f8f); border: 1px solid #5c5c5c; width: 18px; margin: -2px 0; border - radius: 3px;}");
+
    bottomBar = new NewFileWidget(this);
    addToolBar(Qt::BottomToolBarArea,bottomBar);
    connect(bottomBar->confirm,&QPushButton::pressed,this,&MainScreen::newFile);
    connect(bottomBar->cancel,&QPushButton::pressed,this,&MainScreen::closeBottomBar);
+   bottomBar->setStyleSheet("QToolBar { background: #BDBDBD; }");
 
    QMenu* file = new QMenu("File");
    QAction* line = new QAction("Line");
@@ -74,11 +76,11 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent),manager(nullptr
    file->addAction(clear);
    file->addAction(close);
 
-   QIcon* iconNew = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/new.png");
-   QIcon* iconSave = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/save.png");
-   QIcon* iconClear = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/clean.png");
-   QIcon* iconClose = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/close.png");
-   QIcon* iconOpen = new QIcon("C:/Users/lucas.picollo/Documents/Projects/QT- Setup/icons/open.png");
+   QIcon* iconNew = new QIcon(":/new");
+   QIcon* iconSave = new QIcon(":/save");
+   QIcon* iconClear = new QIcon(":/clean");
+   QIcon* iconClose = new QIcon(":/close");
+   QIcon* iconOpen = new QIcon(":/open");
 
    newFile->setIcon(*iconNew);
    open->setIcon(*iconOpen);
@@ -167,14 +169,13 @@ std::string MainScreen::getTextFromBottomBar()
 
 std::string MainScreen::getFileName(std::string pathFile)
 {
-   boost::filesystem::path path(pathFile);
-
-   std::string arq = path.stem().string();
+   QFileInfo fileInfo(QString::fromStdString(pathFile));
+   QString arq = fileInfo.baseName();
 
    if (arq == ".")
       arq = "";
 
-   return arq;
+   return arq.toLocal8Bit().constData();
 }
 
 void MainScreen::addTab(View* view,std::string name)

@@ -26,7 +26,6 @@ void MainCmdBezier::mouseReleaseEvent(Point& p)
       setAuxDraw(false);
       setDrawing(true);
 
-      data.getCurrentFile()->getView()->eraseGeo(*auxLine);
       delete auxLine;
    }
    else
@@ -39,7 +38,6 @@ void MainCmdBezier::mouseMoveEvent(Point& p)
 {  
    if (auxDraw)
    {
-      data.getCurrentFile()->getView()->eraseGeo(*auxLine);
       bezier.setP2(p);
       auxLine->setP2(p);
 
@@ -50,7 +48,6 @@ void MainCmdBezier::mouseMoveEvent(Point& p)
    
    else if (drawing)
    {
-      data.getCurrentFile()->getView()->eraseGeo(bezier);
       bezier.setP3(p);      
       data.getCurrentFile()->getView()->draw(bezier);
    }

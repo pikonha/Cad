@@ -14,7 +14,6 @@ class View : public QWidget
 
    QPainter* painter;
 	Manager* manager;
-   QImage* image;
 
    int scale;
 
@@ -26,10 +25,10 @@ public:
    /////SCALE
    int getScale() const { return scale; }
    void setScale(const int s) { scale = s; }
-
+  
    /////DRAW
    void draw(Geometry& geo);
-   void eraseGeo(Geometry& geo);
+   void clear();
 
    /////CAST
    static Point qpointToPoint(QPoint p);
