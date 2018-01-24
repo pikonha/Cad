@@ -24,7 +24,10 @@ void File::removeGeo(Geometry* geo)
 {
    for (int i= 0; i < geometries.size(); i++) {
       if (geometries[i] == geo)
+      {
          geometries.erase(geometries.begin() + i);
+         view->removePath(geo);
+      }
    }
 }
 
@@ -40,9 +43,6 @@ void File::deleteLastGeo()
 
 void File::reprint()
 {
-   view->clearImg();
-
-   for ( Geometry* geo : geometries)
-      view->draw(*geo);
+   
 }
 

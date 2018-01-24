@@ -15,8 +15,6 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent)
    manager= m;
    scale = 100;
 
-   painter = new QPainter(this);
-   
    setMaximumSize(QApplication::desktop()->size());
 
    setShortcuts();
@@ -27,22 +25,36 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void View::clear()
+void View::clearView()
 {
-
+  
 }
 
-void View::draw(Geometry& geo)
+void View::addPath(Geometry* geo)
 {
-   std::vector<Point> points = geo.getPoints();
+   std::vector<Point> points = geo->getPoints();
+   
+   QPainterPath path;
+
+   path.moveTo(points[0].x,points[0].y);
 
    for (int i= 1; i < points.size(); i++)
    {
-      int j = i - 1;
-      painter->drawLine(points[i].x,points[i].y,points[j].x,points[j].y);
+      path.lineTo(points[i].x,points[i].y);
    }
 
+   geoPaths.push_back(GeoPath(geo,path));
+
    update();
+}
+
+void View::removePath(Geometry* geo) 
+{
+   for (int i= 0; i < geoPaths.size(); i++)
+   {
+      if (geoPaths[i].geo == geo)
+         geoPaths.erase(geoPaths.begin() + i);
+   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -82,8 +94,15 @@ void View::dragMoveEvent(QDragMoveEvent* event)
 
 void View::paintEvent(QPaintEvent* event)
 {
+   clearView();
 
-   event->accept();
+   QPainter p;
+   p.begin(this);
+  
+   for (GeoPath geo : geoPaths)
+      p.drawPath(geo.path);
+
+   p.end();
 }
 
 void View::setShortcuts()

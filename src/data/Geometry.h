@@ -24,7 +24,10 @@ public:
 
 	virtual std::vector<Point> getPoints() = 0;
 
-	bool operator==(const Geometry& i);
+	bool operator==(const Geometry& i) const
+	{
+      return (p1 == i.p1) && (p2 == i.p2);
+	}
 };
 
 #endif

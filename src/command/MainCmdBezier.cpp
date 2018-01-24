@@ -41,7 +41,7 @@ void MainCmdBezier::mouseMoveEvent(Point& p)
       bezier.setP2(p);
       auxLine->setP2(p);
 
-      data.getCurrentFile()->getView()->draw(*auxLine);
+      data.getCurrentFile()->getView()->addPath(auxLine);
 
       setMessageToScreen(MOUSEDRAG);
    }
@@ -49,6 +49,6 @@ void MainCmdBezier::mouseMoveEvent(Point& p)
    else if (drawing)
    {
       bezier.setP3(p);      
-      data.getCurrentFile()->getView()->draw(bezier);
+      data.getCurrentFile()->getView()->addPath(&bezier);
    }
 }

@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include "Point.h"
 
-bool Point::operator==(const Point& p)
+bool Point::operator==(const Point& p) const
 {
    return (std::abs(x - p.x) + std::abs(y - p.y)) == 0;
 }

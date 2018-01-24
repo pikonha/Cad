@@ -5,21 +5,35 @@
 #include <QWidget>
 #include "../data/Point.h"
 
-class Geometry;
 class Manager;
+class Geometry;
+
+struct GeoPath
+{
+   Geometry* geo;
+   QPainterPath path;
+
+   GeoPath(Geometry* g, QPainterPath p)
+   {
+      geo = g;
+      path = p;
+   }
+};
+
 
 class View : public QWidget
 {
    Q_OBJECT
 
-   QPainter* painter;
 	Manager* manager;
+   
+   std::vector<GeoPath> geoPaths;
 
    int scale;
 
    void setShortcuts();
 public:
-   ~View() {}
+   ~View() { }
 	View(Manager* m, QWidget* parent = 0);	
 
    /////SCALE
@@ -27,8 +41,9 @@ public:
    void setScale(const int s) { scale = s; }
   
    /////DRAW
-   void draw(Geometry& geo);
-   void clear();
+   void addPath(Geometry* geo);
+   void removePath(Geometry* geo);
+   void clearView();
 
    /////CAST
    static Point qpointToPoint(QPoint p);
@@ -39,15 +54,14 @@ public:
    std::string getLoadPath();
    void saveFile();
 
-   /////DELETE GEOS
-   void clearAllItems();
-   void clearLastItem();
-
    /////START CMD MAIN
    void startLineCommand() const;
    void startBezierCommand() const;
    void startArchCommand() const;
-      
+
+   void clearAllItems();
+   void clearLastItem();
+
 protected:
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;

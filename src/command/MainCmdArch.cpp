@@ -41,13 +41,13 @@ void MainCmdArch::mouseMoveEvent(Point& p)
 {
    if (auxDraw) { 
       auxLine->setP2(p);      
-      data.getCurrentFile()->getView()->draw(*auxLine);
+      data.getCurrentFile()->getView()->addPath(auxLine);
    }
    
    else if( drawing )
    {
       arch.setP3(p); 
-      data.getCurrentFile()->getView()->draw(arch);
+      data.getCurrentFile()->getView()->addPath(&arch);
 
    }
 }

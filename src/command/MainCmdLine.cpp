@@ -16,15 +16,16 @@ void MainCmdLine::mousePressEvent(Point& p)
 void MainCmdLine::mouseReleaseEvent(Point& p)
 {
    setDrawing(false);
+   data.getCurrentFile()->addGeo(&line);
 }
 
 void MainCmdLine::mouseMoveEvent(Point& p)
 {
    if (drawing) {
-      data.getCurrentFile()->removeGeo(&line);
+      data.getCurrentFile()->getView()->removePath(&line);
 
       line.setP2(p);
-      data.getCurrentFile()->addGeo(&line);
+      data.getCurrentFile()->getView()->addPath(&line);
 
       data.getCurrentFile()->reprint();
    }
