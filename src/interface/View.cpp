@@ -7,13 +7,16 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-View::View(Manager* m, QWidget* parent) : QWidget(parent)
+View::View(Manager* m, QWidget* parent) : QWidget(parent), map(QApplication::desktop()->size())
 {
    setAutoFillBackground(true);
    setBackgroundRole(QPalette::Base);   
 
    manager= m;
    scale = 100;
+   map.fill(Qt::transparent);
+
+   painter.begin(&map);
 
    setMaximumSize(QApplication::desktop()->size());
 
@@ -23,38 +26,33 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent)
    setCursor(QCursor(Qt::CrossCursor));
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////
 
 void View::clearView()
 {
-  
+   painter.fillRect(painter.window(),Qt::white);
 }
 
 void View::addPath(Geometry* geo)
-{
-   std::vector<Point> points = geo->getPoints();
-   
-   QPainterPath path;
-
-   path.moveTo(points[0].x,points[0].y);
-
-   for (int i= 1; i < points.size(); i++)
-   {
-      path.lineTo(points[i].x,points[i].y);
-   }
-
-   geoPaths.push_back(GeoPath(geo,path));
-
+{ 
+   painter.drawPath(getPath(geo));
    update();
 }
 
-void View::removePath(Geometry* geo) 
+
+QPainterPath View::getPath(Geometry* geo) const
 {
-   for (int i= 0; i < geoPaths.size(); i++)
-   {
-      if (geoPaths[i].geo == geo)
-         geoPaths.erase(geoPaths.begin() + i);
-   }
+   std::vector<Point> points = geo->getPoints();
+
+   QPainterPath auxPath;
+
+   auxPath.moveTo(points[0].x,points[0].y);
+
+   for (const auto p : points)
+      auxPath.lineTo(p.x,p.y);
+
+   return auxPath;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -94,15 +92,8 @@ void View::dragMoveEvent(QDragMoveEvent* event)
 
 void View::paintEvent(QPaintEvent* event)
 {
-   clearView();
-
-   QPainter p;
-   p.begin(this);
-  
-   for (GeoPath geo : geoPaths)
-      p.drawPath(geo.path);
-
-   p.end();
+   QPainter p(this);
+   p.drawPixmap(painter.window(),map);
 }
 
 void View::setShortcuts()
@@ -154,6 +145,7 @@ void View::clearLastItem()
 {
    manager->clearLastItem();
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////
 

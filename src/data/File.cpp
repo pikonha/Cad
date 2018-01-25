@@ -17,16 +17,26 @@ void File::deleteGeo(Geometry* geo)
    }
 
    reprint();
-   view->update();
+   
+}
+
+void File::addGeo(Geometry* geo)
+{
+   removeGeo(geo);
+
+   geometries.clear();
+
+   geometries.push_back(geo); 
+   
+   reprint();
 }
 
 void File::removeGeo(Geometry* geo)
 {
    for (int i= 0; i < geometries.size(); i++) {
-      if (geometries[i] == geo)
+      if (geometries[i]->operator==(*geo))
       {
          geometries.erase(geometries.begin() + i);
-         view->removePath(geo);
       }
    }
 }
@@ -43,6 +53,9 @@ void File::deleteLastGeo()
 
 void File::reprint()
 {
-   
+   view->clearView();
+
+   for (auto geo : geometries)
+      view->addPath(geo);
 }
 

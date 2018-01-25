@@ -29,6 +29,8 @@ public:
    void setManager(Manager& m) { manager= &m; }
    Manager* getManager() const { return manager; }
 
+   void setCss();
+
    /////FILE
    void newFile();
 	void loadFile();
