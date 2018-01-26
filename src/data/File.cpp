@@ -2,8 +2,8 @@
 
 void File::deleteAllGeos()
 {
-   //for (int i= 0; i < geometries.size(); i++) 
-   //   delete geometries[i];
+   /*for (int i= 0; i < geometries.size(); i++) 
+      delete geometries[i];*/
 
    geometries.clear();
    reprint();
@@ -12,21 +12,15 @@ void File::deleteAllGeos()
 void File::deleteGeo(Geometry* geo)
 {
    for (Geometry* g : geometries) {
-      if (g == geo) 
+      if (*g == *geo)
          delete g;   
-   }
-
-   reprint();
-   
+   } 
 }
 
 void File::addGeo(Geometry* geo)
 {
    removeGeo(geo);
-
-   geometries.clear();
-
-   geometries.push_back(geo); 
+   geometries.push_back(geo);
    
    reprint();
 }
@@ -34,10 +28,8 @@ void File::addGeo(Geometry* geo)
 void File::removeGeo(Geometry* geo)
 {
    for (int i= 0; i < geometries.size(); i++) {
-      if (geometries[i]->operator==(*geo))
-      {
-         geometries.erase(geometries.begin() + i);
-      }
+      if (geometries[i] == geo)
+         geometries.erase(geometries.begin() + i);      
    }
 }
 
@@ -53,9 +45,12 @@ void File::deleteLastGeo()
 
 void File::reprint()
 {
-   view->clearView();
+   view->clearPixmap();
+   view->update();
 
    for (auto geo : geometries)
-      view->addPath(geo);
+      view->drawInPixmap(*geo);
+
+   view->update();
 }
 

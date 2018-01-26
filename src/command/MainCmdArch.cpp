@@ -6,7 +6,8 @@ void MainCmdArch::mousePressEvent(Point& p)
 {
    if (!drawing)
    {
-      arch.setP1(p);
+      arch = new Arch();
+      arch->setP1(p);
       auxLine->setP1(p);
       
       setAuxDraw(true);
@@ -14,10 +15,7 @@ void MainCmdArch::mousePressEvent(Point& p)
       setMessageToScreen(MOUSEMOVE);
    }
    else
-   {
-      setDrawing(false);
       secondClick = true;
-   }
 }
 
 void MainCmdArch::mouseReleaseEvent(Point& p)
@@ -28,26 +26,28 @@ void MainCmdArch::mouseReleaseEvent(Point& p)
       setDrawing(true);
       setMessageToScreen(SECONDCLICK);
 
-      arch.setP2(p);
+      arch->setP2(p);
 
+      data.getCurrentFile()->removeGeo(auxLine);
       delete auxLine;
    }
    else
-      data.getCurrentFile()->addGeo(new Arch(arch));
+      data.getCurrentFile()->addGeo(arch);
     
 }
 
 void MainCmdArch::mouseMoveEvent(Point& p)
 {
    if (auxDraw) { 
-      auxLine->setP2(p);      
-      data.getCurrentFile()->getView()->addPath(auxLine);
+      auxLine->setP2(p); 
+
+      data.getCurrentFile()->addGeo(auxLine);
    }
    
    else if( drawing )
    {
-      arch.setP3(p); 
-      data.getCurrentFile()->getView()->addPath(&arch);
+      arch->setP3(p); 
+      data.getCurrentFile()->addGeo(arch);
 
    }
 }

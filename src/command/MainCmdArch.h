@@ -7,7 +7,7 @@
 
 class MainCmdArch :	public MainCmd
 {
-   Arch arch;
+   Arch* arch;
    Line* auxLine;
 public:
    ~MainCmdArch() {}

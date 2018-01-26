@@ -5,8 +5,7 @@
 
 void MainCmdLine::mousePressEvent(Point& p)
 {
-   line.setP1(p);
-   line.setP2(p);
+   line = new Line(p,p);
 
    drawing= true;
 
@@ -16,13 +15,13 @@ void MainCmdLine::mousePressEvent(Point& p)
 void MainCmdLine::mouseReleaseEvent(Point& p)
 {
    setDrawing(false);
-   data.getCurrentFile()->addGeo(&line);
+   data.getCurrentFile()->addGeo(line);
 }
 
 void MainCmdLine::mouseMoveEvent(Point& p)
 {
    if (drawing) {
-      line.setP2(p);
-      data.getCurrentFile()->addGeo(&line); 
+      line->setP2(p);
+      data.getCurrentFile()->addGeo(line);
    }
 }

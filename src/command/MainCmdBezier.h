@@ -8,7 +8,7 @@
 
 class MainCmdBezier : public MainCmd
 {
-   Bezier bezier;
+   Bezier* bezier;
    Line* auxLine;
 public:
    ~MainCmdBezier() {}

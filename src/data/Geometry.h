@@ -22,9 +22,9 @@ public:
 	void setP1(const Point& _p1) { p1 = _p1; }
 	void setP2(const Point& _p2) { p2 = _p2; }
 
-	virtual std::vector<Point> getPoints() = 0;
+	virtual std::vector<Point> getPoints() = 0 ;
 
-	bool operator==(const Geometry& i) const
+	bool operator==(const Geometry& i)
 	{
       return (p1 == i.p1) && (p2 == i.p2);
 	}

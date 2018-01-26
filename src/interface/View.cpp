@@ -29,21 +29,34 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent), map(QApplication::des
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void View::clearView()
+void View::clearScreen()
 {
+   QPainter p(this);
+   p.fillRect(p.window(),Qt::white);
+}
+
+void View::clearPixmap()
+{   
    painter.fillRect(painter.window(),Qt::white);
 }
 
-void View::addPath(Geometry* geo)
+void View::drawInScreen( Geometry& geo)
 { 
-   painter.drawPath(getPath(geo));
+   clearScreen();
+   drawInPixmap(geo);
    update();
 }
 
-
-QPainterPath View::getPath(Geometry* geo) const
+void View::drawInPixmap( Geometry& geo)
 {
-   std::vector<Point> points = geo->getPoints();
+   painter.drawPath(getPath(geo));
+}
+
+
+QPainterPath View::getPath( Geometry& geo) const
+{
+
+   std::vector<Point> points = geo.getPoints();
 
    QPainterPath auxPath;
 
@@ -91,7 +104,7 @@ void View::dragMoveEvent(QDragMoveEvent* event)
 }
 
 void View::paintEvent(QPaintEvent* event)
-{
+{ 
    QPainter p(this);
    p.drawPixmap(painter.window(),map);
 }

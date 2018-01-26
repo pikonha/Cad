@@ -21,16 +21,16 @@ void CmdSetZoom::execute(Data& d, MainScreen& s)
 
        if (Bezier* b = dynamic_cast<Bezier*>(g)) {
           b->setP3(getNewPoint(b->getP3(),oldScale));
-          d.getCurrentFile()->getView()->addPath(b);
+          d.getCurrentFile()->getView()->drawInPixmap(*b);
        }
 
        if (Arch* a = dynamic_cast<Arch*>(g)) {
           a->setP3(getNewPoint(a->getP3(),oldScale));
-          d.getCurrentFile()->getView()->addPath(a);
+          d.getCurrentFile()->getView()->drawInPixmap(*a);
        }
 
        else
-          d.getCurrentFile()->getView()->addPath(g);
+          d.getCurrentFile()->getView()->drawInPixmap(*g);
     }  
 
     d.getCurrentFile()->reprint();

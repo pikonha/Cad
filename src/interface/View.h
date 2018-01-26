@@ -4,7 +4,6 @@
 
 #include <QWidget>
 #include "../data/Point.h"
-#include <memory>
 
 class Manager;
 class Geometry;
@@ -28,31 +27,32 @@ public:
 
    /////SCALE
    int getScale() const { return scale; }
-   void setScale(const int s) { scale = s; }
-  
+   void setScale(const int s) { scale = s; }  
+
+   /////SAVE
+   std::string getSavePath();
+   std::string getLoadPath();
+   void saveFile(); 
+
    /////DRAW
-   void clearView();
+   void clearScreen();
+   void clearPixmap();
+
+   void clearAllItems();
+   void clearLastItem();
+
+   void drawInScreen( Geometry& geo);
+   void drawInPixmap( Geometry& geo);
+   QPainterPath getPath( Geometry& geo) const;
 
    /////CAST
    static Point qpointToPoint(QPoint p);
    static QPoint pointToQPoint(Point p1);
 
-   /////SAVE
-   std::string getSavePath();
-   std::string getLoadPath();
-   void saveFile();
-
    /////START CMD MAIN
    void startLineCommand() const;
    void startBezierCommand() const;
    void startArchCommand() const;
-
-   void clearAllItems();
-   void clearLastItem();
-
-   void addPath(Geometry* geo);
-   QPainterPath getPath(Geometry* geo) const;
-
 protected:
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;

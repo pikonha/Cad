@@ -7,10 +7,10 @@
 
 class MainCmdLine :	public MainCmd
 {
-   Line line;
+   Line* line;
 public:
    ~MainCmdLine() {}
-   MainCmdLine(Data& d) : MainCmd(d) {form = LINE; }
+   MainCmdLine(Data& d) : MainCmd(d) { form = LINE; }
 	
    void mousePressEvent(Point& p) override;
    void mouseReleaseEvent(Point& p) override;
