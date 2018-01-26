@@ -1,6 +1,9 @@
 #include "CmdClearLastItem.h"
 
-void CmdClearLastItem::execute(Data& d, MainScreen& s)
+void CmdClearLastItem::execute(Data& d,MainScreen& s)
 {
-   d.getCurrentFile()->deleteLastGeo();
+   if (d.getCurrentFile()->getGeos().size() > 0){
+      d.getCurrentFile()->removeGeo(d.getCurrentFile()->getLastGeometry());
+      d.getCurrentFile()->reprint();
+   }
 }

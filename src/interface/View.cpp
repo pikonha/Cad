@@ -26,7 +26,6 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent), map(QApplication::des
    setCursor(QCursor(Qt::CrossCursor));
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////
 
 void View::clearScreen()
@@ -51,7 +50,6 @@ void View::drawInPixmap( Geometry& geo)
 {
    painter.drawPath(getPath(geo));
 }
-
 
 QPainterPath View::getPath( Geometry& geo) const
 {
@@ -158,7 +156,6 @@ void View::clearLastItem()
 {
    manager->clearLastItem();
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 

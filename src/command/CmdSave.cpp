@@ -75,7 +75,12 @@ void CmdSave::execute(Data& d, MainScreen& s)
    if (d.getCurrentFile()->getSaved())
       return;
 
-   std::string path= d.getCurrentFile()->getView()->getSavePath();
+   std::string path;
+
+   if (d.getCurrentFile()->getPath().empty())
+      path= d.getCurrentFile()->getView()->getSavePath();
+   else
+      path = d.getCurrentFile()->getPath();
 
    std::ofstream stream;
 

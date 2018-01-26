@@ -40,10 +40,8 @@ public:
 
    /////GEOMETRIES
    void deleteAllGeos();
-   void deleteGeo(Geometry* geo);
    void addGeo(Geometry* geo);
    void removeGeo(Geometry* geo);
-   void deleteLastGeo();
 
    /////DRAW
    void reprint();

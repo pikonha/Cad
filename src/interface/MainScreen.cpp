@@ -123,7 +123,7 @@ void MainScreen::setCss()
    menuBar()->setStyleSheet("background: black; color: white; padding:0px;");
    status->setStyleSheet("background: black; color: white;");
    slider->setStyleSheet("QSlider{background:black;}QSlider::groove:horizontal{border: 1px solid #999999; height: 8px;background: white; margin: 2px 0;} QSlider::handle:horizontal{background: black; border: 1px solid #5c5c5c; width: 18px; margin: -2px 0; border - radius: 3px;}");
-   bottomBar->setStyleSheet("background: #848484; color:black;");
+   bottomBar->setStyleSheet("background: black; color:white;");
 }
 
 void MainScreen::newFile()
