@@ -5,9 +5,8 @@
 #include "../manager/Manager.h"
 #include <QFileDialog>
 #include <QApplication>
-#include <QDesktopWidget>
 
-View::View(Manager* m, QWidget* parent) : QWidget(parent), map(QApplication::desktop()->size())
+View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->size())
 {
    setAutoFillBackground(true);
    setBackgroundRole(QPalette::Base);   
@@ -17,8 +16,6 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent), map(QApplication::des
    map.fill(Qt::transparent);
 
    painter.begin(&map);
-
-   setMaximumSize(QApplication::desktop()->size());
 
    setShortcuts();
    startLineCommand();
@@ -99,12 +96,15 @@ void View::mouseMoveEvent(QMouseEvent* event)
 
 void View::dragMoveEvent(QDragMoveEvent* event)
 {
+   event->accept();
 }
 
 void View::paintEvent(QPaintEvent* event)
 { 
    QPainter p(this);
    p.drawPixmap(painter.window(),map);
+
+   event->accept();
 }
 
 void View::setShortcuts()

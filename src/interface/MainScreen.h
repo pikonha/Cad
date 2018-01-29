@@ -61,6 +61,8 @@ public:
    void archCommandSignal();
    void sliderChange();
 
+protected:
+   void paintEvent(QPaintEvent* event) override;
 };
 
 

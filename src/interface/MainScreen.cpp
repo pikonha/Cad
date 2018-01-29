@@ -25,13 +25,12 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent),manager(nullptr
 {
    setMinimumSize(800,600);
    setWindowTitle(QString("AudacesCAD"));
-   showMaximized();
-   
+   showMaximized();   
 
    navbar = menuBar();
    navbar->setFixedWidth(GetSystemMetrics(SM_CXSCREEN));
    status = statusBar();
-   status->setFixedWidth(GetSystemMetrics(SM_CXSCREEN));
+   status->setMaximumWidth(GetSystemMetrics(SM_CXSCREEN));
    status->setStyleSheet("background: white;");
 
    tabs = new QTabWidget(this);
@@ -55,7 +54,6 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent),manager(nullptr
    addToolBar(Qt::BottomToolBarArea,bottomBar);
    connect(bottomBar->confirm,&QPushButton::pressed,this,&MainScreen::newFile);
    connect(bottomBar->cancel,&QPushButton::pressed,this,&MainScreen::closeBottomBar);
-
 
    QMenu* file = new QMenu("File");
    QAction* line = new QAction("Line");
@@ -106,6 +104,7 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent),manager(nullptr
    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O),this),&QShortcut::activated,this,&MainScreen::loadFile);
 
    setCss();   
+   update();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -119,8 +118,8 @@ void MainScreen::start()
 
 void MainScreen::setCss()
 {
-   setStyleSheet("QMainWindow {background: #848484; } QMenuBar::item{height: 100%;} QMenuBar::item:selected{color: black; background:white;}");
-   menuBar()->setStyleSheet("background: black; color: white; padding:0px;");
+   setStyleSheet("QMainWindow {background-color: #848484; }  QMenuBar::item:selected{color: black; background:white;}");
+   navbar->setStyleSheet("background-color: black; color: white; padding:0px;");
    status->setStyleSheet("background: black; color: white;");
    slider->setStyleSheet("QSlider{background:black;}QSlider::groove:horizontal{border: 1px solid #999999; height: 8px;background: white; margin: 2px 0;} QSlider::handle:horizontal{background: black; border: 1px solid #5c5c5c; width: 18px; margin: -2px 0; border - radius: 3px;}");
    bottomBar->setStyleSheet("background: black; color:white;");
@@ -282,5 +281,11 @@ void MainScreen::sliderChange()
       int percent = slider->value() * 10;
       manager->setZoom(percent);
    }
+}
+
+void MainScreen::paintEvent(QPaintEvent* event)
+{
+   navbar->setMaximumWidth(GetSystemMetrics(SM_CXSCREEN));
+   status->setMaximumWidth(GetSystemMetrics(SM_CXSCREEN));
 }
 

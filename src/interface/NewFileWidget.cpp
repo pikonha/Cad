@@ -39,7 +39,6 @@ void NewFileWidget::clearEdit()
    lineEdit->clear();
 }
 
-
 NewFileWidget::~NewFileWidget()
 {
    delete label;
