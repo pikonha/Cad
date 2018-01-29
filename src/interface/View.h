@@ -16,7 +16,8 @@ class View : public QWidget
 
 	Manager* manager;
    QPainter painter;
-   QPixmap map;
+
+   QPixmap mapWorld;
 
    int scale;
 
@@ -27,7 +28,8 @@ public:
 
    /////SCALE
    int getScale() const { return scale; }
-   void setScale(const int s) { scale = s; }  
+   void setScale(const int s);
+   QPixmap mapTransform();
 
    /////SAVE
    std::string getSavePath();

@@ -31,7 +31,6 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent),manager(nullptr
    navbar->setFixedWidth(GetSystemMetrics(SM_CXSCREEN));
    status = statusBar();
    status->setMaximumWidth(GetSystemMetrics(SM_CXSCREEN));
-   status->setStyleSheet("background: white;");
 
    tabs = new QTabWidget(this);
    setCentralWidget(tabs);
@@ -44,8 +43,8 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent),manager(nullptr
 
    slider = new QSlider(Qt::Horizontal);
    slider->setValue(10);
-   slider->setMaximum(31);
-   slider->setMinimum(1);
+   slider->setMaximum(20);
+   slider->setMinimum(0);
    slider->setFixedSize(200,20);
    status->addPermanentWidget(slider);
    connect(slider,&QSlider::sliderMoved,this,&MainScreen::sliderChange);
@@ -104,7 +103,6 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent),manager(nullptr
    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O),this),&QShortcut::activated,this,&MainScreen::loadFile);
 
    setCss();   
-   update();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -278,7 +276,7 @@ void MainScreen::sliderChange()
 {
    if (tabs->count() > 0)
    {
-      int percent = slider->value() * 10;
+      int percent = (slider->value() + 1) * 10;
       manager->setZoom(percent);
    }
 }

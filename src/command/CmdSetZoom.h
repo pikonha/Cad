@@ -8,7 +8,6 @@ class CmdSetZoom : public Cmd
 {
    int scale;
 
-   Point getNewPoint(Point p, int oldScale);
 public:
    CmdSetZoom(int s ) : scale(s){}
    ~CmdSetZoom() {}

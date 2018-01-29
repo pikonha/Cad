@@ -6,16 +6,17 @@
 #include <QFileDialog>
 #include <QApplication>
 
-View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->size())
+View::View(Manager* m, QWidget* parent) : QWidget(parent), mapWorld(parentWidget()->size())
 {
    setAutoFillBackground(true);
    setBackgroundRole(QPalette::Base);   
 
    manager= m;
    scale = 100;
-   map.fill(Qt::transparent);
 
-   painter.begin(&map);
+   mapWorld.fill(Qt::transparent);
+
+   painter.begin(&mapWorld);
 
    setShortcuts();
    startLineCommand();
@@ -102,7 +103,7 @@ void View::dragMoveEvent(QDragMoveEvent* event)
 void View::paintEvent(QPaintEvent* event)
 { 
    QPainter p(this);
-   p.drawPixmap(painter.window(),map);
+   p.drawPixmap(painter.window(),mapWorld);
 
    event->accept();
 }
@@ -129,6 +130,20 @@ QPoint View::pointToQPoint(Point p1)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+void View::setScale(const int s)
+{
+   scale = s;
+
+}
+
+QPixmap View::mapTransform()
+{
+   int newWidth = (parentWidget()->width() * scale) / 100;
+   int newHeight = (parentWidget()->height() * scale) / 100;
+
+   return mapWorld.scaled(QSize(newWidth,newHeight),Qt::KeepAspectRatioByExpanding,Qt::FastTransformation);
+}
 
 std::string View::getSavePath()
 {
