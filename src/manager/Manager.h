@@ -23,7 +23,7 @@ public:
 	/////MOUSE
 	void mousePressEvent(Point mousePosition);
 	void mouseReleaseEvent(Point mousePosition);
-	void mouseMoveEvent(Point mousePosition);
+	void mouseMoveEvent(Point mousePosition);   
 
 	/////FILE
 	void newFile();

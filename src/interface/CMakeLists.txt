@@ -5,6 +5,7 @@ set (
 	NewFileWidget.cpp
 	MainScreen.cpp
 	View.cpp
+	Pixmap.cpp
 )
 	
 set (
@@ -12,6 +13,7 @@ set (
 	NewFileWidget.h
 	MainScreen.h
 	View.h
+	Pixmap.h
 )	
 
 include_directories("${PROJECT_SOURCE_DIR}/src/manager")

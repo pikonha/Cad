@@ -4,20 +4,19 @@
 
 #include <QWidget>
 #include "../data/Point.h"
+#include "Pixmap.h"
 
 class Manager;
 class Geometry;
-
-#include <QPainter>
 
 class View : public QWidget
 {
    Q_OBJECT
 
 	Manager* manager;
-   QPainter painter;
 
-   QPixmap mapWorld;
+   Pixmap World;
+   Pixmap Virtual;
 
    int scale;
 
@@ -29,7 +28,6 @@ public:
    /////SCALE
    int getScale() const { return scale; }
    void setScale(const int s);
-   QPixmap mapTransform();
 
    /////SAVE
    std::string getSavePath();
@@ -38,13 +36,14 @@ public:
 
    /////DRAW
    void clearScreen();
-   void clearPixmap();
+   void clearMaps();
 
    void clearAllItems();
    void clearLastItem();
 
    void drawInScreen( Geometry& geo);
-   void drawInPixmap( Geometry& geo);
+   void drawVirtual(Geometry& geo);
+   void drawWorld(Geometry& geo);
    QPainterPath getPath( Geometry& geo) const;
 
    /////CAST

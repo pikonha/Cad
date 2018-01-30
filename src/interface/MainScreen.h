@@ -29,7 +29,13 @@ public:
    void setManager(Manager& m) { manager= &m; }
    Manager* getManager() const { return manager; }
 
+   void setTabs();
+   void setNavbar();
+   void setStatusBar();
+   void setSlider();
+   void setBottomBar();
    void setCss();
+   void setShortCuts();  
 
    /////FILE
    void newFile();

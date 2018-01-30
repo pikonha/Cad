@@ -25,13 +25,28 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent),manager(nullptr
 {
    setMinimumSize(800,600);
    setWindowTitle(QString("AudacesCAD"));
-   showMaximized();   
+   showMaximized();
 
-   navbar = menuBar();
-   navbar->setFixedWidth(GetSystemMetrics(SM_CXSCREEN));
-   status = statusBar();
-   status->setMaximumWidth(GetSystemMetrics(SM_CXSCREEN));
+   setTabs();
+   setSlider();
+   setStatusBar();
+   setBottomBar();
+   setNavbar();
+   setCss();
+   setShortCuts();
 
+   setContextMenuPolicy(Qt::NoContextMenu);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void MainScreen::start()
+{
+   show();
+}
+
+void MainScreen::setTabs()
+{
    tabs = new QTabWidget(this);
    setCentralWidget(tabs);
    tabs->setTabsClosable(true);
@@ -40,19 +55,12 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent),manager(nullptr
 
    connect(tabs,&QTabWidget::tabCloseRequested,this,&MainScreen::closeTab);
    connect(tabs,&QTabWidget::tabBarClicked,this,&MainScreen::tabChangedSignal);
+}
 
-   slider = new QSlider(Qt::Horizontal);
-   slider->setValue(10);
-   slider->setMaximum(20);
-   slider->setMinimum(0);
-   slider->setFixedSize(200,20);
-   status->addPermanentWidget(slider);
-   connect(slider,&QSlider::sliderMoved,this,&MainScreen::sliderChange);
-
-   bottomBar = new NewFileWidget(this);
-   addToolBar(Qt::BottomToolBarArea,bottomBar);
-   connect(bottomBar->confirm,&QPushButton::pressed,this,&MainScreen::newFile);
-   connect(bottomBar->cancel,&QPushButton::pressed,this,&MainScreen::closeBottomBar);
+void MainScreen::setNavbar()
+{
+   navbar = menuBar();
+   navbar->setFixedWidth(GetSystemMetrics(SM_CXSCREEN));
 
    QMenu* file = new QMenu("File");
    QAction* line = new QAction("Line");
@@ -97,22 +105,34 @@ MainScreen::MainScreen(QMainWindow* parent) :QMainWindow(parent),manager(nullptr
    connect(save,&QAction::triggered,this,&MainScreen::saveFile);
    connect(clear,&QAction::triggered,this,&MainScreen::clearTab);
    connect(close,&QAction::triggered,this,&MainScreen::closeFile);
-
-   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_N),this),&QShortcut::activated,this,&MainScreen::openBottomBar);
-   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_W),this),&QShortcut::activated,this,&MainScreen::closeTab);
-   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O),this),&QShortcut::activated,this,&MainScreen::loadFile);
-
-   setCss();   
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
-void MainScreen::start()
+void MainScreen::setStatusBar()
 {
-   show();
+   status = statusBar();
+   status->setMaximumWidth(GetSystemMetrics(SM_CXSCREEN));
+   status->addPermanentWidget(slider);
 }
 
-////////////////////////////////////////////////////////////////////////////////
+void MainScreen::setSlider()
+{
+   slider = new QSlider(Qt::Horizontal);
+   slider->setValue(10);
+   slider->setMaximum(20);
+   slider->setMinimum(0);
+   slider->setFixedSize(200,20);
+
+   connect(slider,&QSlider::sliderMoved,this,&MainScreen::sliderChange);
+}
+
+void MainScreen::setBottomBar()
+{
+   bottomBar = new NewFileWidget(this);
+   addToolBar(Qt::BottomToolBarArea,bottomBar);
+
+   connect(bottomBar->confirm,&QPushButton::pressed,this,&MainScreen::newFile);
+   connect(bottomBar->cancel,&QPushButton::pressed,this,&MainScreen::closeBottomBar);
+}
 
 void MainScreen::setCss()
 {
@@ -122,6 +142,16 @@ void MainScreen::setCss()
    slider->setStyleSheet("QSlider{background:black;}QSlider::groove:horizontal{border: 1px solid #999999; height: 8px;background: white; margin: 2px 0;} QSlider::handle:horizontal{background: black; border: 1px solid #5c5c5c; width: 18px; margin: -2px 0; border - radius: 3px;}");
    bottomBar->setStyleSheet("background: black; color:white;");
 }
+
+void MainScreen::setShortCuts()
+{
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_N),this),&QShortcut::activated,this,&MainScreen::openBottomBar);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_W),this),&QShortcut::activated,this,&MainScreen::closeTab);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O),this),&QShortcut::activated,this,&MainScreen::loadFile);
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 void MainScreen::newFile()
 {
@@ -280,6 +310,8 @@ void MainScreen::sliderChange()
       manager->setZoom(percent);
    }
 }
+
+
 
 void MainScreen::paintEvent(QPaintEvent* event)
 {

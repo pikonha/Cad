@@ -6,17 +6,13 @@
 #include <QFileDialog>
 #include <QApplication>
 
-View::View(Manager* m, QWidget* parent) : QWidget(parent), mapWorld(parentWidget()->size())
+View::View(Manager* m, QWidget* parent) : QWidget(parent), World(parentWidget()->size()), Virtual(parentWidget()->size())
 {
    setAutoFillBackground(true);
    setBackgroundRole(QPalette::Base);   
 
    manager= m;
    scale = 100;
-
-   mapWorld.fill(Qt::transparent);
-
-   painter.begin(&mapWorld);
 
    setShortcuts();
    startLineCommand();
@@ -32,22 +28,34 @@ void View::clearScreen()
    p.fillRect(p.window(),Qt::white);
 }
 
-void View::clearPixmap()
-{   
-   painter.fillRect(painter.window(),Qt::white);
+void View::clearMaps()
+{
+   Virtual.clear();
+   World.clear();
 }
+
 
 void View::drawInScreen( Geometry& geo)
 { 
    clearScreen();
-   drawInPixmap(geo);
+
+   QPainterPath path = getPath(geo);
+
+   Virtual.draw(path);
+   World.draw(path);
+
    update();
 }
 
-void View::drawInPixmap( Geometry& geo)
+void View::drawVirtual(Geometry& geo)
 {
-   painter.drawPath(getPath(geo));
+   Virtual.draw(getPath(geo));
 }
+
+void View::drawWorld(Geometry& geo)
+{
+}
+
 
 QPainterPath View::getPath( Geometry& geo) const
 {
@@ -103,7 +111,7 @@ void View::dragMoveEvent(QDragMoveEvent* event)
 void View::paintEvent(QPaintEvent* event)
 { 
    QPainter p(this);
-   p.drawPixmap(painter.window(),mapWorld);
+   p.drawPixmap(p.window(),Virtual);
 
    event->accept();
 }
@@ -137,13 +145,6 @@ void View::setScale(const int s)
 
 }
 
-QPixmap View::mapTransform()
-{
-   int newWidth = (parentWidget()->width() * scale) / 100;
-   int newHeight = (parentWidget()->height() * scale) / 100;
-
-   return mapWorld.scaled(QSize(newWidth,newHeight),Qt::KeepAspectRatioByExpanding,Qt::FastTransformation);
-}
 
 std::string View::getSavePath()
 {

@@ -26,11 +26,11 @@ void File::removeGeo(Geometry* geo)
 
 void File::reprint()
 {
-   view->clearPixmap();
-   view->update();
+   view->clearScreen();
+   view->clearMaps();
 
    for (auto geo : geometries)
-      view->drawInPixmap(*geo);
+      view->drawVirtual(*geo);
 
    view->update();
 }
