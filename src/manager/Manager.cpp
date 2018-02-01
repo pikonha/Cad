@@ -35,7 +35,7 @@ void Manager::startLineCommand()
 
    cmdmain= new MainCmdLine(data);
 
-   screen.setStatusMessage(Instruction::MOUSECLICK);
+   screen.setStatusMessage(MOUSECLICK);
 }
 
 void Manager::startBezierCommand()
@@ -45,7 +45,7 @@ void Manager::startBezierCommand()
 
    cmdmain= new MainCmdBezier(data);
 
-   screen.setStatusMessage(Instruction::MOUSECLICK);
+   screen.setStatusMessage(MOUSECLICK);
 }
 
 void Manager::startArchCommand()
@@ -55,7 +55,7 @@ void Manager::startArchCommand()
 
    cmdmain= new MainCmdArch(data);
 
-   screen.setStatusMessage(Instruction::MOUSECLICK);
+   screen.setStatusMessage(MOUSECLICK);
 }
 
 void Manager::runCmd(Cmd* command)
@@ -101,6 +101,19 @@ void Manager::mouseMoveEvent(Point mousePosition)
    cmdmain->mouseMoveEvent(mousePosition);
 }
 
+void Manager::dragInitEvent(Point mousePosition)
+{
+   data.getCurrentFile()->getView()->setCursor(QCursor(Qt::ClosedHandCursor));
+
+   init = new Point(mousePosition);
+}
+
+void Manager::dragMoveEvent(Point mousePosition)
+{
+   final = new Point(mousePosition);
+
+   data.getCurrentFile()->getView()->translate(Point::difference(*init, *final));
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 

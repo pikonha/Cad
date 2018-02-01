@@ -6,6 +6,8 @@
 #include <QFileDialog>
 #include <QApplication>
 
+bool a = false;
+
 View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->size())
 {
    setAutoFillBackground(true);
@@ -14,7 +16,7 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->s
    manager= m;
    scale = 100;
 
-   painter.begin(&map);
+   painterMap.begin(&map);
    map.fill();
 
    setShortcuts();
@@ -51,7 +53,7 @@ void View::drawInScreen( Geometry& geo)
 
 void View::drawMap(Geometry& geo)
 {
-   painter.drawPath(getPath(geo));
+   painterMap.drawPath(getPath(geo));
 }
 
 QPainterPath View::getPath( Geometry& geo) const
@@ -73,11 +75,13 @@ QPainterPath View::getPath( Geometry& geo) const
 
 void View::mousePressEvent(QMouseEvent* event)
 {
-   if (event->button() == Qt::LeftButton) 
+   if (event->button() == Qt::LeftButton) {
       manager->mousePressEvent(qpointToPoint(event->pos()));
+      a = true;
+   }
 
    else
-      setCursor(QCursor(Qt::ClosedHandCursor));
+      manager->dragInitEvent(qpointToPoint(event->pos()));
 
    event->accept();
 }
@@ -95,7 +99,11 @@ void View::mouseReleaseEvent(QMouseEvent* event)
 
 void View::mouseMoveEvent(QMouseEvent* event)
 {
-   manager->mouseMoveEvent(qpointToPoint(event->pos()));
+   if (a)
+      manager->mouseMoveEvent(qpointToPoint(event->pos()));
+
+   else
+      manager->dragMoveEvent(qpointToPoint(event->pos()));
 
    event->accept(); 
 }
@@ -106,17 +114,11 @@ void View::dragMoveEvent(QDragMoveEvent* event)
 }
 
 void View::paintEvent(QPaintEvent* event)
-{ 
-   painter.end();
+{
+   painterScreen.begin(this);
+   painterScreen.drawPixmap(painterMap.window(),map);   
 
-   painter.begin(this);
-   painter.drawPixmap(painter.window(),map);
-   painter.end();
-
-   painter.begin(&map);
-
-   //QPainter p(this);
-   //p.drawPixmap(painter.window(),map);
+   painterScreen.end();
 
    event->accept();
 }
@@ -147,6 +149,14 @@ QPoint View::pointToQPoint(Point p1)
 void View::setScale(const int s)
 {
    scale = s;
+}
+
+void View::translate(Point point)
+{
+   painterMap.translate(point.x,point.y);
+
+   clearScreen();
+   update();
 }
 
 std::string View::getSavePath()

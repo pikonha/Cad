@@ -15,7 +15,9 @@ class View : public QWidget
 
 	Manager* manager;
 
-   QPainter painter;
+   QPainter painterMap;
+   QPainter painterScreen;
+
    QPixmap map;
 
    int scale;
@@ -28,6 +30,8 @@ public:
    /////SCALE
    int getScale() const { return scale; }
    void setScale(const int s);
+   
+   void translate(Point point);
 
    /////SAVE
    std::string getSavePath();

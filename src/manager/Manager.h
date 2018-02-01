@@ -16,6 +16,9 @@ class Manager
 
 	Cmd* cmd;
 	MainCmd* cmdmain;
+
+   Point* init;
+   Point* final;
 public:
 	Manager(Data& d, MainScreen& s);
    ~Manager();
@@ -24,6 +27,9 @@ public:
 	void mousePressEvent(Point mousePosition);
 	void mouseReleaseEvent(Point mousePosition);
 	void mouseMoveEvent(Point mousePosition);   
+   
+   void dragInitEvent(Point mousePosition);
+   void dragMoveEvent(Point mousePosition);
 
 	/////FILE
 	void newFile();
