@@ -4,7 +4,7 @@
 
 #include <QWidget>
 #include "../data/Point.h"
-#include "Pixmap.h"
+#include <QPainter>
 
 class Manager;
 class Geometry;
@@ -15,8 +15,8 @@ class View : public QWidget
 
 	Manager* manager;
 
-   Pixmap World;
-   Pixmap Virtual;
+   QPainter painter;
+   QPixmap map;
 
    int scale;
 
@@ -36,14 +36,15 @@ public:
 
    /////DRAW
    void clearScreen();
-   void clearMaps();
+   void clearMap();
+   void clearBoth();
 
    void clearAllItems();
    void clearLastItem();
 
    void drawInScreen( Geometry& geo);
-   void drawVirtual(Geometry& geo);
-   void drawWorld(Geometry& geo);
+   void drawMap(Geometry& geo);
+
    QPainterPath getPath( Geometry& geo) const;
 
    /////CAST

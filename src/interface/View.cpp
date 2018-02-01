@@ -6,13 +6,16 @@
 #include <QFileDialog>
 #include <QApplication>
 
-View::View(Manager* m, QWidget* parent) : QWidget(parent), World(parentWidget()->size()), Virtual(parentWidget()->size())
+View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->size())
 {
    setAutoFillBackground(true);
    setBackgroundRole(QPalette::Base);   
 
    manager= m;
    scale = 100;
+
+   painter.begin(&map);
+   map.fill();
 
    setShortcuts();
    startLineCommand();
@@ -28,34 +31,28 @@ void View::clearScreen()
    p.fillRect(p.window(),Qt::white);
 }
 
-void View::clearMaps()
+void View::clearMap()
 {
-   Virtual.clear();
-   World.clear();
+   map.fill();
 }
 
+void View::clearBoth()
+{
+   clearMap();
+   clearScreen();
+}
 
 void View::drawInScreen( Geometry& geo)
 { 
    clearScreen();
-
-   QPainterPath path = getPath(geo);
-
-   Virtual.draw(path);
-   World.draw(path);
-
+   drawMap(geo);
    update();
 }
 
-void View::drawVirtual(Geometry& geo)
+void View::drawMap(Geometry& geo)
 {
-   Virtual.draw(getPath(geo));
+   painter.drawPath(getPath(geo));
 }
-
-void View::drawWorld(Geometry& geo)
-{
-}
-
 
 QPainterPath View::getPath( Geometry& geo) const
 {
@@ -110,8 +107,16 @@ void View::dragMoveEvent(QDragMoveEvent* event)
 
 void View::paintEvent(QPaintEvent* event)
 { 
-   QPainter p(this);
-   p.drawPixmap(p.window(),Virtual);
+   painter.end();
+
+   painter.begin(this);
+   painter.drawPixmap(painter.window(),map);
+   painter.end();
+
+   painter.begin(&map);
+
+   //QPainter p(this);
+   //p.drawPixmap(painter.window(),map);
 
    event->accept();
 }
@@ -142,9 +147,7 @@ QPoint View::pointToQPoint(Point p1)
 void View::setScale(const int s)
 {
    scale = s;
-
 }
-
 
 std::string View::getSavePath()
 {
