@@ -12,7 +12,6 @@
 #include "NewFileWidget.h"
 #include "../manager/Manager.h"
 
-
 MainScreen::~MainScreen()
 {
    delete navbar;
@@ -118,10 +117,11 @@ void MainScreen::setSlider()
    slider = new QSlider(Qt::Horizontal);
    slider->setValue(10);
    slider->setMaximum(20);
-   slider->setMinimum(0);
+   slider->setMinimum(1);
    slider->setFixedSize(200,20);
 
    connect(slider,&QSlider::sliderMoved,this,&MainScreen::sliderChange);
+   connect(slider,&QSlider::valueChanged,this,&MainScreen::sliderChange);
 }
 
 void MainScreen::setBottomBar()
@@ -232,10 +232,10 @@ void MainScreen::clearTab()
    manager->clearAllItems();
 }
 
-void MainScreen::closeTab(int index)
+void MainScreen::closeTab()
 {
-   manager->closeTab(tabs->widget(index));
-   //manager->closeTab(tabs->widget(tabs->currentIndex()));
+   /*manager->closeTab(tabs->widget(index));*/
+   manager->closeTab(tabs->widget(tabs->currentIndex()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -312,11 +312,21 @@ void MainScreen::sliderChange()
    }
 }
 
-
-
 void MainScreen::paintEvent(QPaintEvent* event)
 {
    navbar->setMaximumWidth(GetSystemMetrics(SM_CXSCREEN));
    status->setMaximumWidth(GetSystemMetrics(SM_CXSCREEN));
+}
+
+void MainScreen::wheelEvent(QWheelEvent* event)
+{
+   if (tabs->count() > 0) {
+      int degrees = event->delta() / 8;
+      int steps = degrees / 15;
+
+      if (event->orientation() == Qt::Vertical)
+         slider->setValue(slider->value() + (steps));
+
+   }
 }
 

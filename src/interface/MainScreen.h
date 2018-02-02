@@ -54,7 +54,7 @@ public:
    void closeTabDialog();
    void tabChangedSignal(int index);
    void clearTab();
-   void closeTab(int index);
+   void closeTab();
 
    /////DIALOGS
    void errorMessage();
@@ -69,6 +69,7 @@ public:
 
 protected:
    void paintEvent(QPaintEvent* event) override;
+   void wheelEvent(QWheelEvent* event) override;
 };
 
 

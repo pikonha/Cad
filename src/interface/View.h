@@ -32,6 +32,7 @@ public:
    void setScale(const int s);
    
    void translate(Point point);
+   void painterScale(double percent);
 
    /////SAVE
    std::string getSavePath();

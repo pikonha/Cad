@@ -6,7 +6,7 @@
 #include <QFileDialog>
 #include <QApplication>
 
-#include <QAbstractScrollArea>
+#include <QDebug>
 
 View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->size())
 {
@@ -19,6 +19,8 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->s
 
    painter.begin(&map);
    map.fill();
+
+   
 
    setShortcuts();
    startLineCommand();
@@ -116,6 +118,7 @@ void View::paintEvent(QPaintEvent* event)
    QPainter painterScreen(this);   
    painterScreen.drawPixmap(painter.window(),map);   
 
+
    event->accept();
 }
 
@@ -151,6 +154,13 @@ void View::translate(Point point)
 {
    painter.translate(point.x,point.y);
 }
+
+void View::painterScale(double percent)
+{
+   painter.resetTransform();
+   painter.scale(percent,percent);
+}
+
 
 std::string View::getSavePath()
 {
