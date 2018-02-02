@@ -8,7 +8,6 @@
 #include <QFileDialog>
 #include <QPushButton>
 #include <QMessageBox>
-
 #include "MainScreen.h"
 #include "NewFileWidget.h"
 #include "../manager/Manager.h"
@@ -218,6 +217,7 @@ void MainScreen::addTab(View* view,std::string name)
 {
    tabs->insertTab(0,view,QString::fromStdString(name));
    tabs->setCurrentIndex(0);
+   tabs->setUsesScrollButtons(true);
 
    tabs->show();
 }
@@ -232,9 +232,10 @@ void MainScreen::clearTab()
    manager->clearAllItems();
 }
 
-void MainScreen::closeTab()
+void MainScreen::closeTab(int index)
 {
-   manager->closeTab(tabs->widget(tabs->currentIndex()));
+   manager->closeTab(tabs->widget(index));
+   //manager->closeTab(tabs->widget(tabs->currentIndex()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -54,7 +54,7 @@ public:
    void closeTabDialog();
    void tabChangedSignal(int index);
    void clearTab();
-   void closeTab();
+   void closeTab(int index);
 
    /////DIALOGS
    void errorMessage();

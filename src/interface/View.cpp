@@ -6,7 +6,7 @@
 #include <QFileDialog>
 #include <QApplication>
 
-bool a = false;
+#include <QAbstractScrollArea>
 
 View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->size())
 {
@@ -15,8 +15,9 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->s
 
    manager= m;
    scale = 100;
+   draw = false;
 
-   painterMap.begin(&map);
+   painter.begin(&map);
    map.fill();
 
    setShortcuts();
@@ -53,7 +54,7 @@ void View::drawInScreen( Geometry& geo)
 
 void View::drawMap(Geometry& geo)
 {
-   painterMap.drawPath(getPath(geo));
+   painter.drawPath(getPath(geo));
 }
 
 QPainterPath View::getPath( Geometry& geo) const
@@ -77,48 +78,43 @@ void View::mousePressEvent(QMouseEvent* event)
 {
    if (event->button() == Qt::LeftButton) {
       manager->mousePressEvent(qpointToPoint(event->pos()));
-      a = true;
+      draw = true;
    }
 
-   else
+   else 
       manager->dragInitEvent(qpointToPoint(event->pos()));
-
+   
    event->accept();
 }
 
 void View::mouseReleaseEvent(QMouseEvent* event)
 {
-   if (event->button() == Qt::LeftButton)
-      manager->mouseReleaseEvent(qpointToPoint(event->pos()));      
-  
-   else
+   if (event->button() == Qt::LeftButton) {
+      manager->mouseReleaseEvent(qpointToPoint(event->pos()));
+      draw = false;
+   }
+   else {
       setCursor(QCursor(Qt::CrossCursor));
+   }
 
    event->accept();
 }
 
 void View::mouseMoveEvent(QMouseEvent* event)
 {
-   if (a)
-      manager->mouseMoveEvent(qpointToPoint(event->pos()));
-
+   if (draw)
+      manager->mouseMoveEvent(qpointToPoint(event->pos()));      
+   
    else
       manager->dragMoveEvent(qpointToPoint(event->pos()));
 
    event->accept(); 
 }
 
-void View::dragMoveEvent(QDragMoveEvent* event)
-{
-   event->accept();
-}
-
 void View::paintEvent(QPaintEvent* event)
 {
-   painterScreen.begin(this);
-   painterScreen.drawPixmap(painterMap.window(),map);   
-
-   painterScreen.end();
+   QPainter painterScreen(this);   
+   painterScreen.drawPixmap(painter.window(),map);   
 
    event->accept();
 }
@@ -153,10 +149,7 @@ void View::setScale(const int s)
 
 void View::translate(Point point)
 {
-   painterMap.translate(point.x,point.y);
-
-   clearScreen();
-   update();
+   painter.translate(point.x,point.y);
 }
 
 std::string View::getSavePath()

@@ -15,12 +15,12 @@ class View : public QWidget
 
 	Manager* manager;
 
-   QPainter painterMap;
-   QPainter painterScreen;
+   QPainter painter;
 
    QPixmap map;
 
    int scale;
+   bool draw;
 
    void setShortcuts();
 public:
@@ -64,8 +64,6 @@ protected:
 	void mouseReleaseEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
    
-   void dragMoveEvent(QDragMoveEvent* event) override;
-
    void paintEvent(QPaintEvent* event) override;
 };
 

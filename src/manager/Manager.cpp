@@ -112,7 +112,13 @@ void Manager::dragMoveEvent(Point mousePosition)
 {
    final = new Point(mousePosition);
 
-   data.getCurrentFile()->getView()->translate(Point::difference(*init, *final));
+   int _x = init->x - final->x;
+   int _y = init->y - final->y;
+
+   data.getCurrentFile()->getView()->translate(Point(_x,_y));
+   data.getCurrentFile()->reprint();
+
+   init = final;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
