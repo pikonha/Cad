@@ -31,8 +31,10 @@ void MainCmdArch::mouseReleaseEvent(Point& p)
       data.getCurrentFile()->removeGeo(auxLine);
       delete auxLine;
    }
-   else
+   else {
       data.getCurrentFile()->addGeo(arch);
+      data.getCurrentFile()->getView()->setDraw(false);
+   }
     
 }
 

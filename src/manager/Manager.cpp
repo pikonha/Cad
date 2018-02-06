@@ -112,11 +112,11 @@ void Manager::dragMoveEvent(Point mousePosition)
 {
    final = new Point(mousePosition);
 
-   int _x = init->x - final->x;
-   int _y = init->y - final->y;
+   int _x = final->x - init->x;
+   int _y = (init->y - final->y) * -1;
 
    data.getCurrentFile()->getView()->translate(Point(_x,_y));
-   data.getCurrentFile()->reprint();
+   data.getCurrentFile()->reprint();   
 
    init = final;
 }

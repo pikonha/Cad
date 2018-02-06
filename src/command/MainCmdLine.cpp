@@ -16,6 +16,7 @@ void MainCmdLine::mouseReleaseEvent(Point& p)
 {
    setDrawing(false);
    data.getCurrentFile()->addGeo(line);
+   data.getCurrentFile()->getView()->setDraw(false);
 }
 
 void MainCmdLine::mouseMoveEvent(Point& p)

@@ -307,7 +307,7 @@ void MainScreen::sliderChange()
 {
    if (tabs->count() > 0)
    {
-      int percent = (slider->value() + 1) * 10;
+      int percent = slider->value() * 10;
       manager->setZoom(percent);
    }
 }
@@ -325,8 +325,7 @@ void MainScreen::wheelEvent(QWheelEvent* event)
       int steps = degrees / 15;
 
       if (event->orientation() == Qt::Vertical)
-         slider->setValue(slider->value() + (steps));
-
+         slider->setValue(slider->value() + steps);
    }
 }
 

@@ -16,7 +16,6 @@ class View : public QWidget
 	Manager* manager;
 
    QPainter painter;
-
    QPixmap map;
 
    int scale;
@@ -43,6 +42,7 @@ public:
    void clearScreen();
    void clearMap();
    void clearBoth();
+   void setDraw(bool status) { draw = status; setMouseTracking(status); }
 
    void clearAllItems();
    void clearLastItem();

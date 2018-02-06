@@ -8,6 +8,8 @@
 
 #include <QDebug>
 
+Point p(0,0);
+
 View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->size())
 {
    setAutoFillBackground(true);
@@ -17,11 +19,10 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->s
    scale = 100;
    draw = false;
 
-   painter.begin(&map);
-   map.fill();
+   painter.begin(&map);   
 
+   map.fill(); 
    
-
    setShortcuts();
    startLineCommand();
 
@@ -78,25 +79,29 @@ QPainterPath View::getPath( Geometry& geo) const
 
 void View::mousePressEvent(QMouseEvent* event)
 {
+   Point point = qpointToPoint(event->pos());
+
    if (event->button() == Qt::LeftButton) {
-      manager->mousePressEvent(qpointToPoint(event->pos()));
-      draw = true;
+      manager->mousePressEvent(point);
+      setDraw(true);
    }
 
-   else 
-      manager->dragInitEvent(qpointToPoint(event->pos()));
-   
+   else {
+      manager->dragInitEvent(point);
+      setMouseTracking(true);
+   }
+
    event->accept();
 }
 
 void View::mouseReleaseEvent(QMouseEvent* event)
 {
-   if (event->button() == Qt::LeftButton) {
+   if (event->button() == Qt::LeftButton) 
       manager->mouseReleaseEvent(qpointToPoint(event->pos()));
-      draw = false;
-   }
+   
    else {
       setCursor(QCursor(Qt::CrossCursor));
+      setMouseTracking(false);
    }
 
    event->accept();
@@ -115,9 +120,9 @@ void View::mouseMoveEvent(QMouseEvent* event)
 
 void View::paintEvent(QPaintEvent* event)
 {
-   QPainter painterScreen(this);   
-   painterScreen.drawPixmap(painter.window(),map);   
+   QPainter painterScreen(this); 
 
+   painterScreen.drawPixmap(painter.window(),map);  
 
    event->accept();
 }
@@ -152,7 +157,8 @@ void View::setScale(const int s)
 
 void View::translate(Point point)
 {
-   painter.translate(point.x,point.y);
+   painter.save();
+   painter.translate(point.x,point.y); 
 }
 
 void View::painterScale(double percent)
@@ -160,7 +166,6 @@ void View::painterScale(double percent)
    painter.resetTransform();
    painter.scale(percent,percent);
 }
-
 
 std::string View::getSavePath()
 {
