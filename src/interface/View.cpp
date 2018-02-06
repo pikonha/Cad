@@ -18,12 +18,13 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->s
    draw = false;
 
    painter.begin(&map);   
+   painter.setViewTransformEnabled(true);
 
    x = painter.viewport().x();
    y = painter.viewport().y();
 
    clearMap();
-   
+
    setShortcuts();
    startLineCommand();
 
@@ -58,12 +59,12 @@ void View::drawInScreen( Geometry& geo)
 
 void View::drawMap(Geometry& geo)
 {
+   
    painter.drawPath(getPath(geo));
 }
 
 QPainterPath View::getPath( Geometry& geo) const
 {
-
    std::vector<Point> points = geo.getPoints();
 
    QPainterPath auxPath;
@@ -81,10 +82,11 @@ QPainterPath View::getPath( Geometry& geo) const
 void View::mousePressEvent(QMouseEvent* event)
 {
    Point point = qpointToPoint(event->pos());
-   //point.x -= x;
-   //point.y += y * -1;
 
    if (event->button() == Qt::LeftButton) {
+      point.x -= x;
+      point.y -= y;
+
       manager->mousePressEvent(point);
       setDraw(true);
    }
@@ -99,12 +101,14 @@ void View::mousePressEvent(QMouseEvent* event)
 
 void View::mouseReleaseEvent(QMouseEvent* event)
 {
-   Point point = qpointToPoint(event->pos());
-   //point.x -= x;
-   //point.y += y * -1;
+   Point point = qpointToPoint(event->pos()); 
 
-   if (event->button() == Qt::LeftButton) 
+   if (event->button() == Qt::LeftButton) {
+      point.x -= x;
+      point.y -= y;
+
       manager->mouseReleaseEvent(point);
+   }
    
    else {
       setCursor(QCursor(Qt::CrossCursor));
@@ -116,13 +120,15 @@ void View::mouseReleaseEvent(QMouseEvent* event)
 
 void View::mouseMoveEvent(QMouseEvent* event)
 {
-   Point point = qpointToPoint(event->pos());
-   //point.x -= x;
-   //point.y += y * -1;
+   Point point = qpointToPoint(event->pos()); 
 
-   if (draw)
-      manager->mouseMoveEvent(point);      
-   
+   if (draw) {
+      point.x -= x;
+      point.y -= y;
+
+      manager->mouseMoveEvent(point);
+
+   }
    else
       manager->dragMoveEvent(point);
 
@@ -170,7 +176,8 @@ void View::changeViewPort(Point point)
 {
    auto v = painter.viewport();
    x = v.x() + point.x;
-   y = v.y() + point.y;
+   y = v.y() + point.y;   
+
    painter.setViewport(x,y,v.width(),v.height());
 }
 
