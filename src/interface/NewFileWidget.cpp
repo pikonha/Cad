@@ -16,7 +16,6 @@ NewFileWidget::NewFileWidget(QWidget *parent) : QToolBar(parent)
    addWidget(confirm);
    addWidget(cancel);
 
-   confirm->setAutoDefault(true);
    confirm->setDefault(true);
 
    setAllowedAreas(Qt::BottomToolBarArea);

@@ -21,6 +21,8 @@ class View : public QWidget
    int scale;
    bool draw;
 
+   int x,y;
+
    void setShortcuts();
 public:
    ~View() {}
@@ -30,7 +32,7 @@ public:
    int getScale() const { return scale; }
    void setScale(const int s);
    
-   void translate(Point point);
+   void changeViewPort(Point point);
    void painterScale(double percent);
 
    /////SAVE

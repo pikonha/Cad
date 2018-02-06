@@ -5,10 +5,8 @@
 #include "../manager/Manager.h"
 #include <QFileDialog>
 #include <QApplication>
-
 #include <QDebug>
 
-Point p(0,0);
 
 View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->size())
 {
@@ -21,7 +19,10 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->s
 
    painter.begin(&map);   
 
-   map.fill(); 
+   x = painter.viewport().x();
+   y = painter.viewport().y();
+
+   clearMap();
    
    setShortcuts();
    startLineCommand();
@@ -80,6 +81,8 @@ QPainterPath View::getPath( Geometry& geo) const
 void View::mousePressEvent(QMouseEvent* event)
 {
    Point point = qpointToPoint(event->pos());
+   //point.x -= x;
+   //point.y += y * -1;
 
    if (event->button() == Qt::LeftButton) {
       manager->mousePressEvent(point);
@@ -96,8 +99,12 @@ void View::mousePressEvent(QMouseEvent* event)
 
 void View::mouseReleaseEvent(QMouseEvent* event)
 {
+   Point point = qpointToPoint(event->pos());
+   //point.x -= x;
+   //point.y += y * -1;
+
    if (event->button() == Qt::LeftButton) 
-      manager->mouseReleaseEvent(qpointToPoint(event->pos()));
+      manager->mouseReleaseEvent(point);
    
    else {
       setCursor(QCursor(Qt::CrossCursor));
@@ -109,11 +116,15 @@ void View::mouseReleaseEvent(QMouseEvent* event)
 
 void View::mouseMoveEvent(QMouseEvent* event)
 {
+   Point point = qpointToPoint(event->pos());
+   //point.x -= x;
+   //point.y += y * -1;
+
    if (draw)
-      manager->mouseMoveEvent(qpointToPoint(event->pos()));      
+      manager->mouseMoveEvent(point);      
    
    else
-      manager->dragMoveEvent(qpointToPoint(event->pos()));
+      manager->dragMoveEvent(point);
 
    event->accept(); 
 }
@@ -122,7 +133,7 @@ void View::paintEvent(QPaintEvent* event)
 {
    QPainter painterScreen(this); 
 
-   painterScreen.drawPixmap(painter.window(),map);  
+   painterScreen.drawPixmap(painter.viewport(),map);    
 
    event->accept();
 }
@@ -155,10 +166,12 @@ void View::setScale(const int s)
    scale = s;
 }
 
-void View::translate(Point point)
+void View::changeViewPort(Point point)
 {
-   painter.save();
-   painter.translate(point.x,point.y); 
+   auto v = painter.viewport();
+   x = v.x() + point.x;
+   y = v.y() + point.y;
+   painter.setViewport(x,y,v.width(),v.height());
 }
 
 void View::painterScale(double percent)
