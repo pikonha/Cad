@@ -26,7 +26,7 @@ void File::removeGeo(Geometry* geo)
 
 void File::reprint()
 {
-   view->clearBoth();
+   view->clearMap();
 
    for (auto geo : geometries)
       view->drawMap(*geo);

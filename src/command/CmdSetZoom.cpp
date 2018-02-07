@@ -6,6 +6,6 @@ void CmdSetZoom::execute(Data& d, MainScreen& s)
 
    double percent = (double)scale/100;
 
-   d.getCurrentFile()->getView()->painterScale(percent);
+   d.getCurrentFile()->getView()->changeScale(percent);
    d.getCurrentFile()->reprint();
 }

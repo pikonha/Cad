@@ -17,6 +17,7 @@ class View : public QWidget
 
    QPainter painter;
    QPixmap map;
+   QTransform transform;
 
    int scale;
    bool draw;
@@ -33,7 +34,8 @@ public:
    void setScale(const int s);
    
    void changeViewPort(Point point);
-   void painterScale(double percent);
+   void changeScale(double percent);
+   Point getWorldPos(QPoint pos);
 
    /////SAVE
    std::string getSavePath();
@@ -41,9 +43,7 @@ public:
    void saveFile(); 
 
    /////DRAW
-   void clearScreen();
    void clearMap();
-   void clearBoth();
    void setDraw(bool status) { draw = status; setMouseTracking(status); }
 
    void clearAllItems();

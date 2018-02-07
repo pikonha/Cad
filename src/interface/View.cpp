@@ -17,8 +17,8 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->s
    scale = 100;
    draw = false;
 
-   painter.begin(&map);   
-   painter.setViewTransformEnabled(true);
+   painter.begin(&map);
+   painter.setTransform(transform);
 
    x = painter.viewport().x();
    y = painter.viewport().y();
@@ -33,33 +33,19 @@ View::View(Manager* m, QWidget* parent) : QWidget(parent), map(parentWidget()->s
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void View::clearScreen()
-{
-   QPainter p(this);
-   p.fillRect(p.window(),Qt::white);
-}
-
 void View::clearMap()
 {
    map.fill();
 }
 
-void View::clearBoth()
-{
-   clearMap();
-   clearScreen();
-}
-
 void View::drawInScreen( Geometry& geo)
 { 
-   clearScreen();
    drawMap(geo);
    update();
 }
 
 void View::drawMap(Geometry& geo)
 {
-   
    painter.drawPath(getPath(geo));
 }
 
@@ -81,12 +67,9 @@ QPainterPath View::getPath( Geometry& geo) const
 
 void View::mousePressEvent(QMouseEvent* event)
 {
-   Point point = qpointToPoint(event->pos());
+   const auto point = getWorldPos(event->pos());
 
-   if (event->button() == Qt::LeftButton) {
-      point.x -= x;
-      point.y -= y;
-
+   if (event->button() == Qt::LeftButton) {     
       manager->mousePressEvent(point);
       setDraw(true);
    }
@@ -101,14 +84,10 @@ void View::mousePressEvent(QMouseEvent* event)
 
 void View::mouseReleaseEvent(QMouseEvent* event)
 {
-   Point point = qpointToPoint(event->pos()); 
+   const auto point = getWorldPos(event->pos());
 
-   if (event->button() == Qt::LeftButton) {
-      point.x -= x;
-      point.y -= y;
-
+   if (event->button() == Qt::LeftButton) 
       manager->mouseReleaseEvent(point);
-   }
    
    else {
       setCursor(QCursor(Qt::CrossCursor));
@@ -120,15 +99,10 @@ void View::mouseReleaseEvent(QMouseEvent* event)
 
 void View::mouseMoveEvent(QMouseEvent* event)
 {
-   Point point = qpointToPoint(event->pos()); 
-
-   if (draw) {
-      point.x -= x;
-      point.y -= y;
-
+   const auto point = getWorldPos(event->pos());
+   if (draw) 
       manager->mouseMoveEvent(point);
-
-   }
+   
    else
       manager->dragMoveEvent(point);
 
@@ -172,19 +146,23 @@ void View::setScale(const int s)
    scale = s;
 }
 
-void View::changeViewPort(Point point)
+void View::changeViewPort(const Point point)
 {
-   auto v = painter.viewport();
-   x = v.x() + point.x;
-   y = v.y() + point.y;   
-
-   painter.setViewport(x,y,v.width(),v.height());
+   transform.translate(point.x,point.y);
+   painter.setTransform(transform);
 }
 
-void View::painterScale(double percent)
+void View::changeScale(double percent)
 {
-   painter.resetTransform();
-   painter.scale(percent,percent);
+   transform.scale(percent,percent);
+   painter.setTransform(transform);
+}
+
+Point View::getWorldPos(QPoint pos)
+{
+   const auto invTransform = painter.transform().inverted();
+   auto worldPos = invTransform * pos;
+   return qpointToPoint(worldPos);
 }
 
 std::string View::getSavePath()
